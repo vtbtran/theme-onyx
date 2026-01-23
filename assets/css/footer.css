@@ -1,0 +1,127 @@
+/* --- FOOTER STYLES --- */
+:root {
+    --footer-bg: #2d3138; /* Màu nền tối giống Header Button */
+    --footer-text: #b0b0b0; /* Màu chữ xám nhạt */
+    --footer-text-hover: #ffffff; /* Màu chữ khi hover */
+}
+
+.site-footer {
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
+    padding: 25px 0;
+    font-size: 14px;
+    width: 100%;
+    margin-top: auto; /* Đẩy footer xuống đáy nếu nội dung ngắn */
+}
+
+.footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Chia đều 3 phần trái - giữa - phải */
+}
+
+/* 1. COPYRIGHT (Bên trái) */
+.footer-copyright {
+    flex: 1; /* Chiếm 1 phần không gian */
+}
+
+/* 2. SOCIAL ICONS (Ở giữa) */
+.footer-socials {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.1); /* Màu nền tròn mờ */
+    border-radius: 50%;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    background: #fff;
+    color: var(--footer-bg);
+    transform: translateY(-2px);
+}
+
+.social-link svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor; /* Icon ăn theo màu chữ */
+}
+
+/* 3. FOOTER LINKS (Bên phải) */
+.footer-links {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end; /* Căn phải */
+}
+
+.footer-menu {
+    display: flex;
+    gap: 25px;
+    list-style: none !important;
+    margin: 0;
+    padding: 0;
+}
+
+.footer-menu li a {
+    color: var(--footer-text);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.footer-menu li a:hover {
+    color: var(--footer-text-hover);
+}
+
+/* --- RESPONSIVE MOBILE (Đã chỉnh sửa thứ tự) --- */
+@media (max-width: 768px) {
+    .site-footer {
+        padding: 30px 0; /* Tăng padding trên dưới cho thoáng */
+    }
+
+    .footer-container {
+        flex-direction: column; /* Xếp dọc */
+        gap: 25px; /* Khoảng cách giữa các khối */
+        text-align: center;
+    }
+
+    /* 1. Đưa Icon Mạng xã hội lên ĐẦU TIÊN */
+    .footer-socials {
+        order: 1; /* Ưu tiên số 1 */
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    /* 2. Đưa Menu Link ra GIỮA */
+    .footer-links {
+        order: 2; /* Ưu tiên số 2 */
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .footer-menu {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px; /* Khoảng cách giữa các chữ FAQ, Privacy... */
+    }
+
+    /* 3. Đưa Copyright xuống CUỐI CÙNG */
+    .footer-copyright {
+        order: 3; /* Ưu tiên số 3 */
+        width: 100%;
+        font-size: 13px; /* Chữ nhỏ hơn 1 chút trên mobile */
+    }
+}
