@@ -86,5 +86,20 @@ function theme_onyx_scripts()
             '1.0'
         );
     }
+        if (is_page_template('news-page.php')) {
+        wp_enqueue_style(
+            'onyx-news-css',
+            get_template_directory_uri() . '/assets/css/news-page.css',
+            array(),    
+            '1.0'
+        );
+    }
 }
 add_action('wp_enqueue_scripts', 'theme_onyx_scripts');
+
+/**
+ * Xử lý Contact Form Onyx Theme
+ */
+add_action('admin_post_nopriv_onyx_submit_form', 'onyx_handle_form'); // Cho khách vãng lai
+add_action('admin_post_onyx_submit_form', 'onyx_handle_form');        // Cho admin/user đăng nhập
+

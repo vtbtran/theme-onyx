@@ -39,7 +39,7 @@ get_header();
 
                 <div class="res-card">
                     <div class="res-img-box">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/resource-1.jpg" alt="Resource">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/featured-resource(1).png" alt="Resource">
                         <span class="res-tag yellow">Technology</span>
                         <span class="res-type">Guide</span>
                     </div>
@@ -63,7 +63,7 @@ get_header();
 
                 <div class="res-card">
                     <div class="res-img-box">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/resource-2.jpg" alt="Resource">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/featured-resources(2).png" alt="Resource">
                         <span class="res-tag yellow">Education</span>
                         <span class="res-type">Template</span>
                     </div>
@@ -85,7 +85,7 @@ get_header();
 
                 <div class="res-card">
                     <div class="res-img-box">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/resource-3.jpg" alt="Resource">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/featured-resources(3).png" alt="Resource">
                         <span class="res-tag yellow">Documentation</span>
                         <span class="res-type">Whitepaper</span>
                     </div>
@@ -107,7 +107,7 @@ get_header();
 
                 <div class="res-card">
                     <div class="res-img-box">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/resource-4.jpg" alt="Resource">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/featured-resources(4).png" alt="Resource">
                         <span class="res-tag yellow">Technology</span>
                         <span class="res-type">Guide</span>
                     </div>
@@ -129,7 +129,7 @@ get_header();
 
                 <div class="res-card">
                     <div class="res-img-box">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/resource-5.jpg" alt="Resource">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/featured-resources(5).png" alt="Resource">
                         <span class="res-tag yellow">Education</span>
                         <span class="res-type">Template</span>
                     </div>
@@ -151,7 +151,7 @@ get_header();
 
                 <div class="res-card">
                     <div class="res-img-box">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/resource-6.jpg" alt="Resource">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/featured-resources(6).png" alt="Resource">
                         <span class="res-tag yellow">Documentation</span>
                         <span class="res-type">Whitepaper</span>
                     </div>
@@ -235,7 +235,7 @@ get_header();
 
             <div class="faq-list">
                 <div class="faq-item">
-                    <h3 class="faq-question">HOW DO I ACCESS PREMIUM RESOURCES ?</h3>
+                    <h3 class="faq-question">How do i access premium resources?</h3>
                     <p class="faq-answer">Premium resources are available to customers with active support contracts. Contact our sales team to upgrade your access level.</p>
                     <span class="faq-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -246,7 +246,7 @@ get_header();
                 </div>
 
                 <div class="faq-item">
-                    <h3 class="faq-question">ARE THE RESOURCES REGULARLY UPDATED?</h3>
+                    <h3 class="faq-question">Are the resources regularly updated?</h3>
                     <p class="faq-answer">Yes, we update our resources quarterly and add new content based on customer feedback and product updates.</p>
                     <span class="faq-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -257,7 +257,7 @@ get_header();
                 </div>
 
                 <div class="faq-item">
-                    <h3 class="faq-question">CAN I REQUEST SPECIFIC RESOURCES?</h3>
+                    <h3 class="faq-question">Can i request specific resources?</h3>
                     <p class="faq-answer">We welcome resource requests from our community. Please contact our support team with your specific needs.</p>
                     <span class="faq-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -274,23 +274,7 @@ get_header();
         <div class="container">
             <h2 class="contact-title">More questions? Send them to us</h2>
 
-            <form class="res-contact-form" action="#" method="POST">
-                <div class="form-row-top">
-                    <input type="text" placeholder="Name" class="form-input">
-                    <input type="email" placeholder="E-mail" class="form-input">
-                </div>
-
-                <div class="form-row-bottom">
-                    <input type="text" placeholder="Describe your question" class="form-input full-width">
-
-                    <button type="submit" class="btn-submit">
-                        <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                            <path d="M22 2L11 13"></path>
-                            <path d="M22 2L15 22L11 13L2 9L22 2Z"></path>
-                        </svg>
-                    </button>
-                </div>
-            </form>
+            <?php echo do_shortcode('[contact-form-7 id="0ae09d0" title="Form question"]'); ?>
         </div>
     </section>
 </div>

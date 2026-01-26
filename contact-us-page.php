@@ -92,30 +92,9 @@ get_header();
                     <div class="map-wrapper">
                         <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d7858.00017132909!2d105.78316359241424!3d10.016850660357527!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1zxJDGsOG7nW5nIHPhu5EgOSwgS2h1IMSQTVQgSMawbmcgUGjDuiBQaMaw4budbmcgQ8OhaSBSxINuZywgVFAuIEPhuqduIFRoxqE!5e0!3m2!1svi!2s!4v1769323218298!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
-                    <div class="contact-form-box">
+                    <div class="contact-form-box" id="ket-qua-form">
                         <h3>Send us a Message</h3>
-                        <form action="" method="post" class="onyx-form">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>First Name</label>
-                                    <input type="text" placeholder="John">
-                                </div>
-                                <div class="form-group">
-                                    <label>Last Name</label>
-                                    <input type="text" placeholder="Doe">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input type="email" placeholder="john@example.com">
-                            </div>
-                            <div class="form-group">
-                                <label>Message</label>
-                                <textarea placeholder="Tell us about you project or how we can help you..."></textarea>
-                            </div>
-                            <button type="submit" class="btn-send">Send Message</button>
-                            <p class="form-note">Fill out the form below and we'll get back to you within 24 hours.</p>
-                        </form>
+                        <?php echo do_shortcode('[contact-form-7 id="ee1e918" title="Form contact"]'); ?>
                     </div>
                 </div>
 

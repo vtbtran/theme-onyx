@@ -1,0 +1,605 @@
+/* =========================================
+   NEWS PAGE STYLES (MATCH DESIGN)
+   ========================================= */
+:root {
+    --dark-bg: #2d3138;
+    /* Màu nút đậm */
+    --light-bg: #f2f2f4;
+    /* Màu nền card Latest */
+    --text-main: #1a1a1a;
+    --text-meta: #777;
+}
+
+.news-page-wrapper {
+    background: #fff;
+    position: relative;
+}
+
+.container {
+    max-width: 1200px;
+    /* Điều chỉnh cho vừa mắt */
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- 1. HEADER SECTION (Dark Gradient) --- */
+.news-header-section {
+    background: linear-gradient(180deg, #171F31 0%, #3D4453 50%, #696E7A 100%);
+    padding: 60px 0 100px 0;
+    /* Padding dưới lớn để tạo khoảng cách */
+    color: #fff;
+}
+
+.header-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    color: #fff;
+}
+
+/* LATEST NEWS CARD */
+.latest-news-card {
+    background: #f4f4f6;
+    /* Màu xám trắng nhạt như ảnh */
+    border-radius: 24px;
+    padding: 40px 50px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    color: #333;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.latest-img {
+    flex: 1.2;
+    height: 350px;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.latest-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.latest-content {
+    flex: 1;
+    padding-right: 20px;
+}
+
+.meta-info {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.latest-title {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 15px;
+}
+
+.latest-title a {
+    text-decoration: none;
+    color: #1a1a1a;
+}
+
+.latest-excerpt {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #444;
+    margin-bottom: 25px;
+}
+
+/* Button Style Common */
+.btn-dark-icon {
+    display: inline-flex;
+    align-items: center;
+    background: #2d3138;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.btn-dark-icon:hover {
+    background: #000;
+}
+
+.icon-box {
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border-radius: 4px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+}
+
+.icon-box svg {
+    width: 14px;
+    height: 14px;
+}
+
+
+/* --- 2. RECENT NEWS SECTION --- */
+.recent-news-section {
+    padding: 60px 0;
+    background: #fff;
+}
+
+/* Header Row: Title & Search */
+.recent-header-row {
+    display: flex;
+    justify-content: flex-start;
+    /* Title bên trái */
+    align-items: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.section-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    margin-right: auto;
+    /* Đẩy Search form sang phải hoặc giữ khoảng cách */
+}
+
+/* Search Form */
+.news-search-form {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 5px 5px 5px 15px;
+    width: 400px;
+    /* Độ rộng form search */
+    max-width: 100%;
+}
+
+.search-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.search-field {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    padding: 0 10px;
+    flex: 1;
+    color: #555;
+}
+
+.search-submit {
+    background: #2d3138;
+    color: #fff;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Grid Layout */
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 cột */
+    gap: 30px;
+}
+
+/* News Item Card */
+.news-item-card {
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s;
+}
+
+.news-item-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-thumb {
+    height: 230px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    background: #eee;
+}
+
+.card-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-meta {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 8px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 10px;
+    color: #1a1a1a;
+}
+
+.card-title a {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;      
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;    
+    text-decoration: none;     
+    line-height: 1.4;           
+    color: inherit;          
+}
+
+.card-desc {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.btn-card-full {
+    margin-top: auto;
+    /* Đẩy nút xuống đáy */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    /* Full width button */
+    background: #2d3138;
+    color: #fff;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.btn-card-full:hover {
+    background: #000;
+}
+
+
+/* --- 3. FLOATING BUTTON --- */
+.btn-floating-event {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    background: #2d3138;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+}
+/* =========================================
+   NEWSLETTER SECTION (DESKTOP)
+   ========================================= */
+.newsletter-section {
+    /* Gradient nền tối giống Header */
+    background: linear-gradient(180deg, #171F31 0%, #3D4453 100%);
+    padding: 80px 0;
+    color: #fff;
+    margin-top: 60px; /* Cách phần tin tức bên trên */
+}
+
+.newsletter-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Căn giữa theo chiều dọc */
+    gap: 60px;
+}
+
+/* --- Cột trái: Text --- */
+.newsletter-content {
+    flex: 1; /* Chiếm khoảng 50-60% */
+    max-width: 600px;
+}
+
+.nl-title {
+    font-size: 36px;
+    font-weight: 400; /* Font mảnh nhẹ như ảnh */
+    margin-bottom: 20px;
+    line-height: 1.2;
+    color: #fff;
+}
+
+.nl-desc {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #d1d5db; /* Màu xám sáng */
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+/* Icon vàng */
+.nl-icon-wrapper .highlight-icon {
+    width: 48px;
+    height: 48px;
+    background: #faff00; /* Màu vàng thương hiệu */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+}
+.highlight-icon svg {
+    width: 24px; height: 24px;
+}
+
+/* --- Cột phải: Form --- */
+.newsletter-form-wrapper {
+    flex: 1;
+    max-width: 550px;
+}
+
+.newsletter-form {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+
+/* Input nhập email */
+.nl-input {
+    flex: 1; /* Chiếm hết khoảng trống còn lại */
+    background: #f2f2f4; /* Màu nền xám nhạt */
+    border: none;
+    border-radius: 50px; /* Bo tròn dạng viên thuốc */
+    padding: 15px 25px;
+    font-size: 15px;
+    color: #333;
+    outline: none;
+    height: 54px; /* Chiều cao cố định */
+    box-sizing: border-box;
+}
+
+.nl-input::placeholder {
+    color: #999;
+}
+
+/* Nút Subscribe */
+.nl-submit-btn {
+    background: #2d3138; /* Màu nền tối */
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.3); /* Viền mờ nhẹ */
+    border-radius: 50px;
+    padding: 0 35px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    height: 54px;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+.nl-submit-btn:hover {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+}
+.news-bottom-action {
+    margin-top: 40px;
+    display: flex;
+    justify-content: flex-start; 
+}
+
+.btn-static-event {
+    display: inline-flex; 
+    align-items: center;
+    background: #2d3138; 
+    color: #fff;
+    padding: 12px 24px; 
+    border-radius: 8px;
+    font-size: 14px; 
+    font-weight: 600; 
+    text-decoration: none;
+    transition: background 0.3s;
+    margin-left: 130px;
+}
+
+.btn-static-event:hover {
+    background: #000;
+}
+
+/* Kế thừa style icon vuông trắng cũ */
+.btn-static-event .icon-box {
+    width: 30px; height: 30px; 
+    background: #fff;
+    border-radius: 4px; 
+    margin-right: 12px;
+    display: flex; align-items: center; justify-content: center;
+    color: #000;
+}
+.btn-static-event .icon-box svg { width: 24px; height: 24px; }
+
+/* =========================================
+   RESPONSIVE MOBILE
+   ========================================= */
+
+@media (max-width: 991px) {
+
+    /* 1. Header & Latest News */
+    .news-header-section {
+        padding: 40px 0 60px;
+    }
+
+    .header-title {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    .latest-news-card {
+        flex-direction: column;
+        /* Xếp dọc */
+        padding: 15px;
+        gap: 20px;
+        border-radius: 16px;
+    }
+
+    .latest-img {
+        width: 100%;
+        height: 200px;
+        /* Ảnh thấp hơn */
+    }
+
+    .latest-content {
+        padding-right: 0;
+        width: 100%;
+    }
+
+    .latest-title {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .latest-excerpt {
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+
+    /* 2. Recent News Header */
+    .recent-header-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .news-search-form {
+        width: 100%;
+        /* Search full width trên mobile */
+    }
+
+    /* 3. Grid 1 Cột */
+    .news-grid {
+        grid-template-columns: 1fr;
+        /* 1 Cột duy nhất */
+        gap: 20px;
+    }
+
+        .newsletter-section {
+        padding: 60px 0;
+        text-align: left;
+    }
+
+    .newsletter-container {
+        flex-direction: column; /* Xếp dọc */
+        align-items: flex-start; /* Căn trái toàn bộ */
+        gap: 40px;
+    }
+
+    /* Text adjustments */
+    .nl-title {
+        font-size: 28px;
+        margin-bottom: 15px;
+    }
+
+    .nl-desc {
+        font-size: 15px;
+        margin-bottom: 25px;
+    }
+
+    /* Form Mobile: Input trên, Nút dưới */
+    .newsletter-form-wrapper {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .newsletter-form {
+        flex-direction: column; /* Input và Nút xếp dọc */
+        align-items: flex-start; /* Căn trái */
+        gap: 20px;
+    }
+
+    .nl-input {
+        width: 100%; /* Input full chiều rộng */
+        height: 50px;
+    }
+
+    .nl-submit-btn {
+        width: auto; /* Nút tự co theo chữ */
+        min-width: 140px;
+        background: transparent; /* Nền trong suốt giống ảnh mobile */
+        border: 1px solid #fff; /* Viền trắng rõ */
+        height: 48px;
+    }
+    .news-bottom-action {
+        justify-content: center; /* Trên điện thoại thì căn giữa cho đẹp (giống nút View All trong ảnh mẫu mobile) */
+        margin-top: 30px;
+    }
+ews-bottom-action {
+        justify-content: center; /* Căn giữa nút cho đẹp trên mobile */
+        margin-top: 25px;
+    }
+
+    .btn-static-event {
+        /* 1. Xóa margin lệch trái của desktop */
+        margin-left: 0 !important; 
+        
+        /* 2. Giảm độ dày nút (Padding) */
+        /* Desktop đang là 12px 24px -> Mobile giảm còn 8px 16px */
+        padding: 12px 24px; 
+        
+        /* 3. Giảm cỡ chữ */
+        font-size: 12px; 
+    }
+    
+    /* 4. Thu nhỏ cả cái icon vuông màu trắng cho cân đối */
+    .btn-static-event .icon-box {
+        width: 18px; 
+        height: 18px;
+        margin-right: 8px;
+    }
+    
+    .btn-static-event .icon-box svg {
+        width: 10px;
+        height: 10px;
+    }
+    .recent-news-section {
+    padding: 60px 0;
+    background: #fff;
+}
+}

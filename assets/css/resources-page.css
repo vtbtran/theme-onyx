@@ -560,9 +560,67 @@
 }
 
 /* Dòng 1: Name & Email nằm ngang */
-.form-row-top {
-    display: flex;
-    gap: 15px;
+
+
+/* 1. Căn giữa tiêu đề */
+h2.contact-title {
+    text-align: center;
+    margin-bottom: 30px;
+    /* Thêm khoảng cách dưới tiêu đề cho thoáng */
+}
+
+.res-contact-form .form-row-top,
+.res-contact-form .form-row-bottom {
+    display: flex !important; /* Ép buộc dùng Flex */
+    flex-wrap: nowrap;        /* Quan trọng: Cấm rớt dòng */
+    gap: 20px;                /* Khoảng cách giữa các ô */
+    width: 100%;              /* Chiếm toàn bộ chiều rộng */
+    align-items: stretch;     /* Giãn chiều cao bằng nhau */
+}
+.res-contact-form .form-row-bottom {
+    align-items: center; 
+}
+/* 2. Căn giữa khung Form */
+form.res-contact-form {
+    width: 100%;
+    max-width: 700px;
+    /* Giới hạn chiều rộng tối đa cho đẹp */
+    margin: 0 auto;
+    /* Căn giữa block form */
+}
+
+div.wpcf7-response-output {
+    border: none !important;
+    background: transparent;
+    color: #27ae60;
+    padding: 10px 0;
+    margin: 15px auto 0 auto !important;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;
+    border-bottom: 2px solid #27ae60 !important;
+}
+
+
+div.wpcf7-response-output.wpcf7-validation-errors {
+    background-color: #f8d7da;
+    /* Nền đỏ nhạt */
+    color: #842029;
+    /* Chữ đỏ đậm */
+}
+
+.res-contact-form .form-row-bottom .wpcf7-form-control-wrap {
+    flex-grow: 1;
+    /* Cho phép ô nhập giãn hết cỡ */
+    max-width: 100%;
+}
+
+/* Đảm bảo span bao ngoài input không làm hỏng flexbox */
+.res-contact-form .wpcf7-form-control-wrap {
+    display: block;
+    width: 100%;
+    flex: 1;
 }
 
 /* Dòng 2: Message & Button nằm ngang */
@@ -574,13 +632,11 @@
 /* Nút Submit */
 .btn-submit {
     background: #2d3138;
-    /* Đen nhám */
     border: none;
     border-radius: 8px;
+    height: 50px;
     width: 60px;
-    /* Nút vuông */
     flex-shrink: 0;
-    /* Không bị co lại */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -600,6 +656,24 @@
     transform: rotate(45deg);
     /* Xoay icon máy bay cho đúng hướng */
 }
+
+/* 1. Căn giữa toàn bộ khu vực chứa form */
+.res-contact-section .container {
+    max-width: 900px;
+    /* Độ rộng vừa phải để giống hình 1 */
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Đảm bảo ô input chiếm hết không gian */
+.form-row-top .wpcf7-form-control-wrap {
+    display: block;
+    width: 50%;
+    /* Mỗi ô chiếm 50% */
+    flex: 1;
+    /* Co giãn đều */
+}
+
 /* =========================================
    RESPONSIVE MOBILE (Dưới 991px)
    FIX PADDING 20PX TOÀN TRANG
@@ -611,22 +685,23 @@
 
     /* --- 1. GLOBAL PADDING --- */
     /* Tạo khoảng thở cho nội dung trên màn hình nhỏ */
-    .res-hero-section, 
-    .res-featured-section, 
+    .res-hero-section,
+    .res-featured-section,
     .res-webinar-section,
-    .res-faq-section, 
+    .res-faq-section,
     .res-contact-section {
         padding-left: 20px !important;
         padding-right: 20px !important;
-        padding-top: 40px; 
+        padding-top: 40px;
         padding-bottom: 40px;
     }
-    
+
     /* --- 2. HERO SECTION --- */
     .res-title {
-        font-size: 28px; /* Giảm size chữ tiêu đề */
+        font-size: 28px;
+        /* Giảm size chữ tiêu đề */
     }
-    
+
     .res-subtitle {
         font-size: 16px;
         margin-bottom: 30px;
@@ -639,18 +714,21 @@
     }
 
     .res-input-container {
-        width: 100%; /* Input full chiều ngang */
+        width: 100%;
+        /* Input full chiều ngang */
         box-sizing: border-box;
     }
 
     .btn-search {
         justify-content: center;
-        margin-top: 0; 
+        margin-top: 0;
     }
 
     .res-tags {
-        gap: 8px; /* Thu hẹp khoảng cách các tags */
+        gap: 8px;
+        /* Thu hẹp khoảng cách các tags */
     }
+
     .tag-btn {
         font-size: 12px;
         padding: 6px 14px;
@@ -658,14 +736,15 @@
 
     /* --- 3. GRID SECTIONS (Resources & Webinars) --- */
     /* Chuyển từ 3 cột thành 1 cột */
-    .res-grid, 
+    .res-grid,
     .webinar-grid {
         grid-template-columns: 1fr;
         gap: 30px;
     }
 
     .res-img-box {
-        height: 200px; /* Điều chỉnh chiều cao ảnh cho cân đối */
+        height: 200px;
+        /* Điều chỉnh chiều cao ảnh cho cân đối */
     }
 
     /* --- 4. CONTACT FORM (FIXED) --- */
@@ -676,14 +755,16 @@
     }
 
     .res-contact-form {
-        max-width: 100%; /* Full chiều rộng container */
+        max-width: 100%;
+        /* Full chiều rộng container */
     }
 
     /* Hàng trên (Name + Email): Xếp chồng dọc */
     .form-row-top {
         flex-direction: column;
         gap: 15px;
-        margin-bottom: 15px; /* Tạo khoảng cách với hàng dưới */
+        margin-bottom: 15px;
+        /* Tạo khoảng cách với hàng dưới */
     }
 
     /* Hàng dưới (Message + Button): 
@@ -696,20 +777,25 @@
 
     .form-input {
         width: 100%;
-        box-sizing: border-box; /* Đảm bảo padding không làm vỡ khung */
+        box-sizing: border-box;
+        /* Đảm bảo padding không làm vỡ khung */
     }
 
     /* Nút gửi: Giữ kích thước cố định hoặc full width */
     .btn-submit {
-        width: 60px; /* Giữ nút vuông icon */
-        height: auto; /* Tự co giãn theo chiều cao input */
-        aspect-ratio: 1/1; /* Đảm bảo nút luôn vuông */
+        width: 60px;
+        /* Giữ nút vuông icon */
+        height: auto;
+        /* Tự co giãn theo chiều cao input */
+        aspect-ratio: 1/1;
+        /* Đảm bảo nút luôn vuông */
     }
 
     /* --- 5. FAQ SECTION --- */
     /* Xếp dọc layout: Câu hỏi -> Trả lời -> Icon */
     .faq-item {
-        grid-template-columns: 1fr; /* 1 cột duy nhất */
+        grid-template-columns: 1fr;
+        /* 1 cột duy nhất */
         grid-template-rows: auto auto auto;
         gap: 15px;
         padding: 25px;
@@ -721,13 +807,16 @@
         font-weight: 700;
         font-size: 18px;
     }
+
     .faq-answer {
         order: 2;
     }
 
     .faq-icon {
-        justify-self: start; /* Đưa icon về đầu dòng */
-        order: 3; /* Đẩy icon lên trên cùng cho đẹp (tuỳ chọn) */
+        justify-self: start;
+        /* Đưa icon về đầu dòng */
+        order: 3;
+        /* Đẩy icon lên trên cùng cho đẹp (tuỳ chọn) */
         color: #1a1a1a;
         margin-bottom: 5px;
     }

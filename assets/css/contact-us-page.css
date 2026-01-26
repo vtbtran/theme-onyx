@@ -1,7 +1,6 @@
 /* =========================================
    CONTACT PAGE STYLES (FULL UPDATED)
    ========================================= */
-
 /* --- RESET & COMMON --- */
 .contact-page-wrapper {
     font-family: 'Inter', sans-serif;
@@ -209,7 +208,7 @@
     font-size: 23px; font-weight: 500;
 }
 .onyx-form .form-row { display: flex; gap: 20px; }
-.onyx-form .form-group { margin-bottom: 20px; flex: 1; }
+.onyx-form .form-group { flex: 1; }
 .onyx-form label {
     display: block; font-size: 13px; font-weight: 600;
     margin-bottom: 8px; color: #333;
@@ -234,8 +233,41 @@
     font-size: 12px; color: #888; text-align: center;
     margin-top: 15px; margin-bottom: 0;
 }
+/* Tùy chỉnh nút gửi của Contact Form 7 */
+input.wpcf7-submit.btn-send {
+    background-color: #1e1e1e;
+    color: #ffffff;            
+    border: none;          
+    padding: 15px 30px;        
+    font-size: 16px;           
+    font-weight: 600;        
+    cursor: pointer;           
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
 
+/* Hiệu ứng khi di chuột vào (đổi màu nhẹ) */
+input.wpcf7-submit.btn-send:hover {
+    background-color: #333333; /* Màu đen nhạt hơn chút */
+    transform: translateY(-2px); /* Nút nảy lên nhẹ */
+}
+/* Style thông báo thành công - Soft Green */
+div.wpcf7-response-output {
+    border: none !important;
+    background: transparent;         /* Không màu nền */
+    color: #27ae60;                  /* Chữ màu xanh lá tươi */
+    padding: 10px 0;
+    margin: 15px 0 0 0 !important;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 2px solid #27ae60 !important; /* Chỉ giữ 1 gạch chân */
+}
 
+div.wpcf7-response-output.wpcf7-validation-errors {
+    background-color: #f8d7da;       /* Nền đỏ nhạt */
+    color: #842029;                  /* Chữ đỏ đậm */
+}
 /* CỘT PHẢI */
 .col-right { display: flex; flex-direction: column; gap: 20px; }
 .info-card {
@@ -354,7 +386,6 @@
     .map-wrapper { height: 250px; }
     .contact-form-box { padding: 25px; }
     .onyx-form .form-row { flex-direction: column; gap: 0; }
-    .onyx-form .form-group { margin-bottom: 20px; }
 
     /* 6. INFO CARDS */
     .col-right { gap: 20px; }

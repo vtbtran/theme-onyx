@@ -18,6 +18,7 @@ get_header();
 
                 <div class="service-card">
                     <div class="card-image-box">
+                         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Our Service.png" alt="Resource">
                         <span class="card-tag">Technology</span>
                     </div>
 
@@ -51,6 +52,8 @@ get_header();
 
                 <div class="service-card">
                     <div class="card-image-box">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Our Service (1).png" alt="Resource">
+                       
                         <span class="card-tag tag-yellow">Education</span>
                     </div>
                     <div class="card-content">
@@ -82,6 +85,8 @@ get_header();
 
                 <div class="service-card">
                     <div class="card-image-box">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Our Service (2).png" alt="Resource">
+                       
                         <span class="card-tag">Consulting</span>
                     </div>
                     <div class="card-content">
@@ -113,6 +118,8 @@ get_header();
 
                 <div class="service-card">
                     <div class="card-image-box">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Our Service (3).png" alt="Resource">
+                       
                         <span class="card-tag">Technology</span>
                     </div>
                     <div class="card-content">
@@ -144,6 +151,8 @@ get_header();
 
                 <div class="service-card">
                     <div class="card-image-box">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Our Service(4).png" alt="Resource">
+                       
                         <span class="card-tag">Consulting</span>
                     </div>
                     <div class="card-content">
@@ -175,6 +184,8 @@ get_header();
 
                 <div class="service-card">
                     <div class="card-image-box">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Our Service (5).png" alt="Resource">
+                       
                         <span class="card-tag">Training</span>
                     </div>
                     <div class="card-content">
@@ -239,7 +250,7 @@ get_header();
 
                         <div class="product-card">
                             <div class="prod-img-placeholder">
-                                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/product-1.jpg" alt="Product" style="width:100%; height:100%; object-fit:cover;">
+                                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Our Service.png" alt="Product" style="width:100%; height:100%; object-fit:cover;">
                             </div>
                             <div class="prod-body">
                                 <h3 class="prod-title">AI Smart Camera Pro</h3>
@@ -263,7 +274,7 @@ get_header();
 
                         <div class="product-card">
                             <div class="prod-img-placeholder">
-                                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/product-2.jpg" alt="Product" style="width:100%; height:100%; object-fit:cover;">
+                                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Our Service (2).png" alt="Product" style="width:100%; height:100%; object-fit:cover;">
                             </div>
                             <div class="prod-body">
                                 <h3 class="prod-title">STEM Education Kit</h3>
@@ -287,7 +298,7 @@ get_header();
 
                         <div class="product-card">
                             <div class="prod-img-placeholder">
-                                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/product-3.jpg" alt="Product" style="width:100%; height:100%; object-fit:cover;">
+                                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Our Service (3).png" alt="Product" style="width:100%; height:100%; object-fit:cover;">
                             </div>
                             <div class="prod-body">
                                 <h3 class="prod-title">Smart Home Security System</h3>
@@ -310,7 +321,7 @@ get_header();
                         </div>
                         <div class="product-card">
                             <div class="prod-img-placeholder">
-                                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/product-4.jpg" alt="Product" style="width:100%; height:100%; object-fit:cover;">
+                                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Our Service(4).png" alt="Product" style="width:100%; height:100%; object-fit:cover;">
                             </div>
                             <div class="prod-body">
                                 <h3 class="prod-title">Smart Home System</h3>

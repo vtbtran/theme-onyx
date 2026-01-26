@@ -62,7 +62,7 @@
 }
 
 /* KHUNG ẢNH VUÔNG */
-.card-image-box {
+.card-image-box img {
     background-color: var(--img-box-bg);
     width: 100%;
     aspect-ratio: 1 / 1; 
@@ -404,8 +404,6 @@
     font-size: 13px; 
     font-weight: 600;
     width: fit-content;
-    
-    /* Đẩy nút xuống sát đáy */
     margin-top: auto; 
 }   
 
@@ -468,10 +466,6 @@
     grid-template-columns: 350px 1fr 70px; 
     align-items: center; 
     gap: 40px;
-    
-    /* Thêm gạch chân mờ giữa các bước (giống ảnh mẫu 2) - Tuỳ chọn */
-    /* border-bottom: 1px solid #eee; */
-    /* padding-bottom: 40px; */
 }
 
 /* Header: Số + Tên */
