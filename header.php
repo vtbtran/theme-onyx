@@ -52,7 +52,7 @@
       </nav>
 
       <div class="header-cta">
-        <a href="/contact" class="btn-contact">
+        <a href="<?php echo esc_url(home_url('/contact-us/')); ?>" class="btn-contact">
           <span class="icon-box">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <line x1="7" y1="17" x2="17" y2="7"></line>
@@ -62,30 +62,45 @@
           <span class="btn-text">Contact Us</span>
         </a>
       </div>
+
     </div>
   </header>
+  <div class="mobile-menu-overlay" id="mobileMenu">
 
-  <div id="mobile-menu-overlay" class="mobile-menu-overlay">
-    <div class="overlay-content">
-      <div class="overlay-header">
-        <button id="mobile-menu-close" class="close-btn">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-        <div class="overlay-logo">
-          <?php the_custom_logo(); ?>
-        </div>
+    <div class="mobile-menu-header">
+      <button class="btn-close-menu" id="closeMenuBtn">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="mobile-logo">
+        <a href="<?php echo home_url(); ?>">
+          <?php
+          if (has_custom_logo()) {
+            $custom_logo_id = get_theme_mod('custom_logo');
+            $logo = wp_get_attachment_image_src($custom_logo_id, 'full');
+            echo '<img src="' . esc_url($logo[0]) . '" alt="' . get_bloginfo('name') . '">';
+          } else {
+            // Đường dẫn logo mặc định của bạn
+            echo '<img src="' . get_template_directory_uri() . '/assets/images/onyx-logo.webp" alt="Onyx Default Logo">';
+          }
+          ?>
+        </a>
       </div>
-      <nav class="mobile-nav-links">
-        <?php
-        wp_nav_menu(array(
-          'theme_location' => 'mobile',
-          'container'      => false,
-          'menu_class'     => 'mobile-list',
-        ));
-        ?>
-      </nav>
     </div>
+    <?php
+    wp_nav_menu(array(
+      'theme_location' => 'primary',       // Lấy menu "Primary" giống hệt Desktop
+      'container'      => false,           // Không tạo thẻ div bao ngoài
+      'menu_class'     => 'mobile-nav-list', // Gán class CSS bạn đã viết vào thẻ <ul>
+      'fallback_cb'    => false,           // Không hiển thị gì nếu chưa cài menu
+    ));
+    ?>
   </div>
+
+  <?php wp_footer(); ?>
+</body>
+
+</html>

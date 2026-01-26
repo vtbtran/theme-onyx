@@ -1,0 +1,734 @@
+/* --- 1. HERO SECTION --- */
+.res-hero-section {
+    padding: 50px 0 60px;
+    background: #fff;
+    text-align: center;
+}
+
+.res-hero-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.res-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+}
+
+.res-subtitle {
+    font-size: 27px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+/* Search Bar */
+.res-search-box {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 4px 4px 4px 15px;
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+    transition: all 0.3s;
+}
+
+.res-search-box:focus-within {
+    border-color: #1a1a1a;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.res-search-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    /* Khoảng cách giữa ô tìm kiếm và nút */
+    max-width: 700px;
+    margin: 0 auto 30px auto;
+}
+
+/* 2. Khối nhập liệu (Màu trắng, có viền) */
+.res-input-container {
+    flex: 1;
+    /* Chiếm hết chiều rộng còn lại */
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    /* Viền xám nhạt */
+    border-radius: 8px;
+    padding: 6px 15px;
+    transition: all 0.3s;
+}
+
+/* Hiệu ứng focus vào ô nhập liệu */
+.res-input-container:focus-within {
+    border-color: #1a1a1a;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.search-icon {
+    color: #999;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.search-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.search-input {
+    flex: 1;
+    /* Chiếm hết chỗ trống */
+    border: none !important;
+    /* Bắt buộc tắt viền mặc định */
+    background: transparent !important;
+    /* Nền trong suốt */
+    outline: none;
+    /* Tắt viền xanh khi click */
+    padding: 10px 0;
+    font-size: 15px;
+    color: #333;
+}
+
+.btn-search {
+    background: #2d3138;
+    color: #fff;
+    border: none;
+
+    /* Bo góc nhỏ hơn hộp ngoài một chút cho đẹp */
+    border-radius: 6px;
+
+    padding: 10px 24px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    /* Đảm bảo nút không bị méo */
+    flex-shrink: 0;
+}
+
+.btn-search:hover {
+    background: #000;
+}
+
+/* Filter Tags */
+.res-tags {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tag-btn {
+    background: #f3f4f6;
+    /* Xám nhạt mặc định */
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #444;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tag-btn:hover,
+.tag-btn.active {
+    background: #faff00;
+    /* Vàng neon */
+    color: #000;
+}
+
+
+/* --- 2. FEATURED RESOURCES GRID --- */
+.res-featured-section {
+    padding: 5px 60px 100px;
+    background: #fff;
+    /* Nền web trắng */
+}
+
+.section-heading {
+    font-size: 28px;
+    /* Tăng size tiêu đề chút cho cân đối */
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 40px;
+}
+
+.res-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* Tăng khoảng cách giữa các thẻ lên 50px (cũ là 30px) */
+    gap: 50px;
+    margin-bottom: 40px;
+}
+
+/* RESOURCE CARD */
+.res-card {
+    background: #f5f5f5;
+    border: none;
+    /* Bỏ viền cũ */
+    border-radius: 24px;
+    padding: 24px 30px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.res-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.06);
+    /* Bóng đổ nhẹ nhàng */
+}
+
+/* Card Image Area */
+.res-img-box {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+    background: #fff;
+
+    /* Bo góc cho ảnh (để khớp với padding của thẻ) */
+    border-radius: 16px;
+
+    width: 100%;
+}
+
+.res-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.res-tag {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: #faff00;
+    color: #000;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+}
+
+.res-type {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #fff;
+    color: #1a1a1a;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+}
+
+/* Card Body */
+.res-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.res-card-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #1a1a1a;
+}
+
+.res-card-desc {
+    font-size: 11px;
+    color: #666;
+    line-height: 1.6;
+    flex: 1;
+}
+
+/* Card Footer */
+.res-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 15px;
+    margin-top: auto;
+}
+
+.file-info {
+    font-size: 11px;
+    color: #777;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.btn-download {
+    display: flex;
+    align-items: center;
+    background: #2d3138;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 16px 8px 8px;
+    /* Tăng padding chút cho đẹp */
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.btn-download:hover {
+    background: #000;
+}
+
+.icon-box-dark-sm {
+    background: #fff;
+    color: #2d3138;
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+}
+
+.icon-box-dark-sm svg {
+    width: 12px;
+    height: 12px;
+}
+
+/* Button View News */
+.res-view-news-wrap {
+    text-align: left;
+}
+
+.btn-view-news {
+    display: inline-flex;
+    align-items: center;
+    background: #2d3138;
+    color: #fff;
+    padding: 10px 20px 10px 10px;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.icon-box-square-white {
+    background: #fff;
+    color: #2d3138;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.icon-box-square-white svg {
+    width: 14px;
+    height: 14px;
+}
+
+
+/* --- 3. WEBINARS & NEWS (DARK) --- */
+.res-webinar-section {
+    background: linear-gradient(90deg, #171F31 0%, #3D4453 50%, #696E7A 100%);
+    padding: 20px 0;
+    color: #fff;
+}
+
+.res-webinar-section .section-title-center {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 50px;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.webinar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 50px;
+    max-width: 1200px;
+    margin: 0 auto 50px auto;
+}
+
+.webinar-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 20px 30px;
+    color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+}
+
+.webinar-tag {
+    background: #faff00;
+    color: #000;
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    width: fit-content;
+    margin-bottom: 15px;
+}
+
+.webinar-card:nth-child(2) .webinar-tag,
+.webinar-card:nth-child(3) .webinar-tag {
+    background: #ffeb3b;
+    /* Vàng đậm hơn chút cho Recorded nếu thích */
+}
+
+.webinar-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    line-height: 1.4;
+    flex: 1;
+    /* Đẩy nút xuống */
+}
+
+.webinar-meta p {
+    font-size: 12px;
+    color: #666;
+    margin: 0 0 5px 0;
+}
+
+.webinar-meta {
+    margin-bottom: 25px;
+}
+
+.btn-webinar {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 12px 0;
+    background: #2d3138;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.btn-webinar:hover {
+    background: #000;
+}
+
+.btn-webinar.dark {
+    background: #4a505e;
+}
+
+.btn-webinar.dark:hover {
+    background: #2d3138;
+}
+
+.webinar-read-more-wrap {
+    text-align: center;
+}
+
+.btn-read-more-white {
+    background: #fff;
+    color: #1a1a1a;
+    padding: 17px 40px;
+    border-radius: 10px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.res-faq-section {
+    padding: 20px 0 80px 0;
+    background: #fff;
+}
+
+.res-faq-section .section-title-center {
+    text-align: center;
+    font-size: 35px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 50px;
+}
+
+.faq-list {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.faq-item {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 40px;
+    display: grid;
+    grid-template-columns: 30% 1fr auto;
+    align-items: center;
+    gap: 40px;
+    transition: all 0.3s;
+}
+
+.faq-item:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+    border-color: #1a1a1a;
+}
+
+.faq-question {
+    font-size: 16px;
+    color: #1a1a1a;
+    flex-shrink: 0;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.faq-answer {
+    font-size: 16px;
+    color: #1a1a1a;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.faq-icon {
+    width: 24px;
+    height: 24px;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.faq-icon svg {
+    width: 30px;
+    height: 30px;
+}
+
+
+/* =========================================
+   5. CONTACT FORM SECTION (DARK)
+   ========================================= */
+.res-contact-section {
+    /* Gradient tối màu giống phần Webinars */
+    background: linear-gradient(90deg, #171F31 0%, #3D4453 50%, #696E7A 100%);
+    padding: 30px 0 80px 0;
+    color: #fff;
+    text-align: center;
+}
+
+.contact-title {
+    font-size: 44px;
+    font-weight: 400;
+    /* Font mảnh hơn chút */
+    margin-bottom: 50px;
+    color: #fff;
+}
+
+.res-contact-form {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Style chung cho Input */
+.form-input {
+    background: #f3f4f6;
+    /* Xám nhạt */
+    border: none;
+    border-radius: 8px;
+    padding: 15px 20px;
+    font-size: 15px;
+    color: #333;
+    outline: none;
+    width: 100%;
+}
+
+.form-input::placeholder {
+    color: #9ca3af;
+}
+
+/* Dòng 1: Name & Email nằm ngang */
+.form-row-top {
+    display: flex;
+    gap: 15px;
+}
+
+/* Dòng 2: Message & Button nằm ngang */
+.form-row-bottom {
+    display: flex;
+    gap: 15px;
+}
+
+/* Nút Submit */
+.btn-submit {
+    background: #2d3138;
+    /* Đen nhám */
+    border: none;
+    border-radius: 8px;
+    width: 60px;
+    /* Nút vuông */
+    flex-shrink: 0;
+    /* Không bị co lại */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-submit:hover {
+    background: #000;
+}
+
+.btn-submit svg {
+    width: 24px;
+    height: 24px;
+    color: #faff00;
+    /* Màu vàng icon */
+    transform: rotate(45deg);
+    /* Xoay icon máy bay cho đúng hướng */
+}
+/* =========================================
+   RESPONSIVE MOBILE (Dưới 991px)
+   FIX PADDING 20PX TOÀN TRANG
+   ========================================= */
+/* =========================================
+   RESPONSIVE MOBILE (Dưới 991px)
+   ========================================= */
+@media (max-width: 991px) {
+
+    /* --- 1. GLOBAL PADDING --- */
+    /* Tạo khoảng thở cho nội dung trên màn hình nhỏ */
+    .res-hero-section, 
+    .res-featured-section, 
+    .res-webinar-section,
+    .res-faq-section, 
+    .res-contact-section {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        padding-top: 40px; 
+        padding-bottom: 40px;
+    }
+    
+    /* --- 2. HERO SECTION --- */
+    .res-title {
+        font-size: 28px; /* Giảm size chữ tiêu đề */
+    }
+    
+    .res-subtitle {
+        font-size: 16px;
+        margin-bottom: 30px;
+    }
+
+    /* Search Box: Chuyển sang xếp dọc */
+    .res-search-wrapper {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .res-input-container {
+        width: 100%; /* Input full chiều ngang */
+        box-sizing: border-box;
+    }
+
+    .btn-search {
+        justify-content: center;
+        margin-top: 0; 
+    }
+
+    .res-tags {
+        gap: 8px; /* Thu hẹp khoảng cách các tags */
+    }
+    .tag-btn {
+        font-size: 12px;
+        padding: 6px 14px;
+    }
+
+    /* --- 3. GRID SECTIONS (Resources & Webinars) --- */
+    /* Chuyển từ 3 cột thành 1 cột */
+    .res-grid, 
+    .webinar-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .res-img-box {
+        height: 200px; /* Điều chỉnh chiều cao ảnh cho cân đối */
+    }
+
+    /* --- 4. CONTACT FORM (FIXED) --- */
+    .contact-title {
+        font-size: 26px;
+        line-height: 1.3;
+        margin-bottom: 30px;
+    }
+
+    .res-contact-form {
+        max-width: 100%; /* Full chiều rộng container */
+    }
+
+    /* Hàng trên (Name + Email): Xếp chồng dọc */
+    .form-row-top {
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 15px; /* Tạo khoảng cách với hàng dưới */
+    }
+
+    /* Hàng dưới (Message + Button): 
+       Giữ nằm ngang nhìn cho hiện đại (kiểu chat), 
+       hoặc xếp dọc nếu muốn nút to dễ bấm */
+    .form-row-bottom {
+        display: flex;
+        gap: 10px;
+    }
+
+    .form-input {
+        width: 100%;
+        box-sizing: border-box; /* Đảm bảo padding không làm vỡ khung */
+    }
+
+    /* Nút gửi: Giữ kích thước cố định hoặc full width */
+    .btn-submit {
+        width: 60px; /* Giữ nút vuông icon */
+        height: auto; /* Tự co giãn theo chiều cao input */
+        aspect-ratio: 1/1; /* Đảm bảo nút luôn vuông */
+    }
+
+    /* --- 5. FAQ SECTION --- */
+    /* Xếp dọc layout: Câu hỏi -> Trả lời -> Icon */
+    .faq-item {
+        grid-template-columns: 1fr; /* 1 cột duy nhất */
+        grid-template-rows: auto auto auto;
+        gap: 15px;
+        padding: 25px;
+        text-align: left;
+    }
+
+    .faq-question {
+        order: 1;
+        font-weight: 700;
+        font-size: 18px;
+    }
+    .faq-answer {
+        order: 2;
+    }
+
+    .faq-icon {
+        justify-self: start; /* Đưa icon về đầu dòng */
+        order: 3; /* Đẩy icon lên trên cùng cho đẹp (tuỳ chọn) */
+        color: #1a1a1a;
+        margin-bottom: 5px;
+    }
+}

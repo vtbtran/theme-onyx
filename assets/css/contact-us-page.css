@@ -1,0 +1,384 @@
+/* =========================================
+   CONTACT PAGE STYLES (FULL UPDATED)
+   ========================================= */
+
+/* --- RESET & COMMON --- */
+.contact-page-wrapper {
+    font-family: 'Inter', sans-serif;
+    color: #333;
+}
+
+.container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- 1. INTRO SECTION --- */
+.contact-intro-section {
+    padding: 20px 0 40px;
+}
+
+.intro-title {
+    font-size: 38px;
+    font-weight: 200;
+    margin-bottom: 20px;
+}
+
+.intro-desc {
+    font-size: 26px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    font-weight: 100;
+}
+
+.text-bold {
+    font-weight: 700;
+}
+
+.intro-icon svg {
+    display: block;
+    width: 60px;
+    height: 60px;
+}
+
+
+/* --- 2. FEATURES BAR (CẬP NHẬT: CĂN CHỈNH ICON CHUẨN) --- */
+.features-bar {
+    background: linear-gradient(90deg, #171F31 0%, #3D4453 50%, #696E7A 100%);
+    padding: 25px 0;
+    color: #fff;
+}
+
+.features-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Căn theo mép trên */
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: flex-start; /* Căn icon theo dòng chữ đầu tiên */
+    gap: 15px;
+    font-size: 17px;
+    font-weight: 200;
+    max-width: 230px;
+    line-height: 1.5; /* Giãn dòng để dễ căn icon */
+}
+
+/* --- QUY TẮC CĂN ICON THẲNG HÀNG (QUAN TRỌNG) --- */
+.feature-item .feat-icon {
+    /* Tạo khung cố định 24px cho mọi icon (dù là ảnh hay svg) */
+    min-width: 24px;
+    width: 24px;
+    height: 24px; /* Chiều cao cố định để căn giữa */
+    color: #ffffff;
+    background-color: transparent;
+    display: flex;
+    align-items: center;     /* Căn giữa dọc */
+    justify-content: center; /* Căn giữa ngang */
+    
+    margin-top: 3px; /* Nhích xuống xíu cho cân với dòng chữ đầu tiên */
+}
+
+
+/* 1. Với 3 ảnh Vector (PNG) -> Full khung 24px */
+.feature-item .feat-icon img {
+    width: 100%;
+    height: auto;
+}
+
+/* --- FIX LỖI ICON BẮT TAY BỊ LEM/NHEM NHUỐC --- */
+.features-grid .feature-item:nth-child(4) .feat-icon svg {
+    width: 28px !important; 
+    height: auto !important;
+    margin-top: 0 !important;
+}
+
+/* --- 3. MAIN CONTACT AREA --- */
+.contact-main {
+    padding: 10px 0 100px;
+    background: #fff;
+}
+
+.page-title {
+    font-size: 64px;
+    font-weight: 400;
+    margin-bottom: 40px;
+    color: #333;
+    text-transform: uppercase;
+}
+
+/* Business Hours Bar */
+.business-hours-bar {
+    border: 1px solid #eee;
+    border-radius: 16px;
+    padding: 25px 40px;
+    background: #fff;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.handshake-item .feat-icon svg path {
+    fill: #ffffff !important;
+}
+
+.bh-label {
+    font-weight: 500;
+    font-size: 22px;
+    color: #1a1a1a;
+    text-transform: uppercase;
+    min-width: 150px;
+}
+
+/* Cột Ngày */
+.bh-days {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: #555;
+    font-size: 20px;
+    text-align: left;
+    font-weight: 100;
+}
+
+/* Cột Giờ */
+.bh-times {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: #1a1a1a;
+    font-weight: 100;
+    font-size: 18px;
+    text-align: right;
+}
+
+/* Icon Mũi tên */
+.bh-icon {
+    display: flex;
+    align-items: center;
+    color: #1a1a1a;
+}
+.bh-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+
+/* GRID LAYOUT (Desktop) */
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 30px;
+}
+
+/* CỘT TRÁI */
+.col-left {
+    display: flex; flex-direction: column; gap: 30px;
+}
+
+.map-wrapper {
+    width: 100%;
+    height: 350px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: transparent;
+    border: 1px solid #e5e7eb;
+    position: relative;
+    display: flex;
+}
+.map-wrapper iframe {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    display: block;
+    border: none;
+}
+
+/* Form */
+.contact-form-box {
+    border: 1px solid #eee;
+    border-radius: 20px;
+    padding: 30px;
+}
+.contact-form-box h3 {
+    margin-top: 0; margin-bottom: 25px;
+    font-size: 23px; font-weight: 500;
+}
+.onyx-form .form-row { display: flex; gap: 20px; }
+.onyx-form .form-group { margin-bottom: 20px; flex: 1; }
+.onyx-form label {
+    display: block; font-size: 13px; font-weight: 600;
+    margin-bottom: 8px; color: #333;
+}
+.onyx-form input, .onyx-form textarea {
+    width: 100%; padding: 12px 15px;
+    border: 1px solid #e5e7eb; border-radius: 8px;
+    font-size: 14px; outline: none; box-sizing: border-box;
+    background: #fff; font-family: inherit;
+}
+.onyx-form textarea { height: 100px; resize: vertical; }
+
+.btn-send {
+    width: 100%; padding: 14px;
+    background: #2d3138; color: #fff;
+    border: none; border-radius: 8px;
+    font-weight: 600; cursor: pointer;
+    transition: background 0.3s;
+}
+.btn-send:hover { background: #000; }
+.form-note {
+    font-size: 12px; color: #888; text-align: center;
+    margin-top: 15px; margin-bottom: 0;
+}
+
+
+/* CỘT PHẢI */
+.col-right { display: flex; flex-direction: column; gap: 20px; }
+.info-card {
+    border: 1px solid #eee; border-radius: 16px;
+    padding: 20px; background: #fff;
+}
+.info-card h4 {
+    margin: 0 0 10px; font-size: 19px;
+    color: #333; font-weight: 400;
+}
+.info-desc {
+    font-size: 20px; color: #777;
+    margin-bottom: 20px; font-weight: 100;
+}
+.info-detail p {
+    margin: 3px 0; font-size: 13px;
+    color: #444; font-weight: 500;
+}
+
+
+/* =========================================
+   RESPONSIVE MOBILE (FINAL)
+   ========================================= */
+@media (max-width: 991px) {
+    .container {
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 60px 35px 35px 35px;
+    }
+
+    /* 1. INTRO & TITLE */
+    .intro-title { font-size: 28px; font-weight: 400; }
+    .intro-desc { font-size: 16px; }
+    .page-title { font-size: 42px; margin-bottom: 30px; }
+
+    /* --- 2. FEATURES BAR MOBILE (GRID 2 CỘT) --- */
+    .features-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Chia 2 cột */
+        gap: 30px 20px;
+        align-items: start;
+    }
+
+    .feature-item {
+        max-width: 100%;
+        font-size: 14px; /* Chữ nhỏ hơn trên mobile */
+        line-height: 1.5;
+        gap: 12px; /* Khoảng cách icon-chữ nhỏ hơn */
+    }
+
+    /* Tinh chỉnh lại margin-top cho icon trên mobile để khớp với font chữ nhỏ */
+    .feature-item .feat-icon {
+        margin-top: 0px; 
+        color: #ffffff;
+    }
+    
+    /* Icon SVG bắt tay vẫn giữ size 20px trên mobile cho đồng bộ */
+    .features-grid .feature-item:nth-child(4) .feat-icon svg {
+        width: 20px; /* Không dùng 14px vì quá bé */
+        height: auto;
+    }
+
+/* --- 3. MAIN LAYOUT (CẬP NHẬT: ĐƯA FORM XUỐNG DƯỚI CÙNG) --- */
+    .contact-grid {
+        /* Chuyển sang Flex thay vì Grid để dễ dùng thuộc tính Order */
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .col-left {
+        display: contents;
+    }
+    
+    /* Vị trí 1: Bản đồ (Map) nằm trên cùng */
+    .map-wrapper {
+        order: 1;
+        width: 100%; /* Đảm bảo full chiều rộng */
+    }
+
+    /* Vị trí 2: Cột thông tin (Info Cards) nằm giữa */
+    .col-right {
+        order: 2;
+        width: 100%;
+    }
+
+    /* Vị trí 3: Form gửi email nằm dưới cùng */
+    .contact-form-box {
+        order: 3;
+        width: 100%;
+    }
+
+    /* 4. BUSINESS HOURS BAR */
+    .business-hours-bar {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 15px;
+        padding: 20px;
+        align-items: start;
+    }
+
+    .bh-label {
+        grid-column: 1 / -1;
+        margin-bottom: 10px;
+        font-size: 18px;
+    }
+    .bh-icon {
+        position: absolute;
+        top: 25px; right: 25px;
+    }
+    .bh-days { font-size: 15px; gap: 10px; }
+    .bh-times { font-size: 15px; text-align: right; gap: 10px; }
+
+
+    /* 5. FORM & MAP */
+    .map-wrapper { height: 250px; }
+    .contact-form-box { padding: 25px; }
+    .onyx-form .form-row { flex-direction: column; gap: 0; }
+    .onyx-form .form-group { margin-bottom: 20px; }
+
+    /* 6. INFO CARDS */
+    .col-right { gap: 20px; }
+    .info-card { padding: 20px; }
+    .info-card h4 { font-size: 18px; }
+    .info-desc { font-size: 14px; }
+
+    /* INTRO SECTION */
+    .contact-intro-section { padding: 30px 0; }
+    .intro-title {
+        font-size: 24px; font-weight: 100;
+        line-height: 1.3; margin-bottom: 12px;
+        color: #1a1a1a;
+    }
+    .intro-desc {
+        font-size: 16px; line-height: 1.6; color: #4b5563;
+    }
+    .intro-icon svg {
+        width: 40px; height: 40px; margin-top: 10px;
+    }
+    .contact-main {
+        padding-bottom: 40px; 
+    }
+    .container {
+        padding: 20px; 
+    }
+}
