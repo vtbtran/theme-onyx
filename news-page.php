@@ -11,10 +11,10 @@ $hero_post = [
     'date'  => 'March 10, 2024',
     'read'  => '5 min read',
     'desc'  => 'Our latest AI-powered camera system brings advanced security and learning analytics to schools worldwide, featuring real-time behavior analysis and automated attendance tracking.',
-    'img'   => get_template_directory_uri() . '/assets/images/news.png'
+    // Đảm bảo file ảnh này tồn tại trong thư mục assets/images theme của bạn
+    'img'   => get_template_directory_uri() . '/assets/images/news.png' 
 ];
 
-// 2. Danh sách bài viết (Recent News) - Mô phỏng 6 bài như trong ảnh thiết kế
 $recent_posts = [
     [
         'title' => 'Partnership with Global Education Network Expands STEM Reach',
@@ -76,10 +76,12 @@ $recent_posts = [
                         <?php echo $hero_post['desc']; ?>
                     </div>
                     <a href="#" class="btn-dark-icon">
-                        <span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <span class="icon-box">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <line x1="7" y1="17" x2="17" y2="7"></line>
                                 <polyline points="7 7 17 7 17 17"></polyline>
-                            </svg></span>
+                            </svg>
+                        </span>
                         Read Full Article
                     </a>
                 </div>
@@ -110,7 +112,7 @@ $recent_posts = [
                 <?php foreach ($recent_posts as $post) : ?>
                     <div class="news-item-card">
                         <div class="card-thumb">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/placeholder_small.jpg" alt="News Thumb">
+                            <img src="<?php echo esc_url($post['img']); ?>" alt="<?php echo esc_attr($post['title']); ?>">
                         </div>
                         <div class="card-body">
                             <div class="card-meta">
@@ -123,10 +125,12 @@ $recent_posts = [
                                 <?php echo $post['desc']; ?>
                             </div>
                             <a href="#" class="btn-card-full">
-                                <span class="icon-box"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <span class="icon-box">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <line x1="7" y1="7" x2="17" y2="17"></line>
                                         <polyline points="17 7 17 17 7 17"></polyline>
-                                    </svg></span>
+                                    </svg>
+                                </span>
                                 Read More
                             </a>
                         </div>
@@ -134,24 +138,19 @@ $recent_posts = [
                 <?php endforeach; ?>
             </div>
 
-        </div>
-        <div class="news-grid">
-        </div>
+            <div class="news-bottom-action">
+                <a href="#" class="btn-static-event">
+                    <span class="icon-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="7" y1="7" x2="17" y2="17"></line>
+                            <polyline points="17 7 17 17 7 17"></polyline>
+                        </svg>
+                    </span>
+                    View All
+                </a>
+            </div>
 
-        <div class="news-bottom-action">
-            <a href="#" class="btn-static-event">
-                <span class="icon-box">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="7" y1="7" x2="17" y2="17"></line>
-                        <polyline points="17 7 17 17 7 17"></polyline>
-                    </svg>
-                </span>
-                View All
-            </a>
-        </div>
-
-        </div>
-    </section>
+        </div> </section>
 
 
     <section class="newsletter-section">

@@ -115,8 +115,8 @@
 }
 
 .icon-box {
-    width: 20px;
-    height: 20px;
+    width: 28px;
+    height: 28px;
     background: #fff;
     border-radius: 4px;
     margin-right: 10px;
@@ -438,7 +438,6 @@
     font-weight: 600; 
     text-decoration: none;
     transition: background 0.3s;
-    margin-left: 130px;
 }
 
 .btn-static-event:hover {

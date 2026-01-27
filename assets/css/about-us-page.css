@@ -1,0 +1,411 @@
+/* =========================================
+   FIX LỖI SÁT LỀ (GỘP CODE GỌN GÀNG)
+   ========================================= */
+
+.about-us-section {
+    padding: 80px 0; /* Giảm padding trên dưới chút cho gọn */
+    background: #fff;
+    color: #1a1a1a;
+    width: 100%; /* Đảm bảo section full màn */
+    overflow: hidden; /* Tránh thanh cuộn ngang */
+}
+
+/* CLASS QUAN TRỌNG: CONTAINER */
+.about-container {
+    /* 1. Cấu hình Layout */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 60px;
+
+    /* 2. Cấu hình Kích thước & Căn giữa */
+    width: 100%;
+    max-width: 1300px; /* Giới hạn chiều rộng chuẩn */
+    margin: 0 auto;
+    box-sizing: border-box; 
+}
+
+/* --- CỘT TRÁI --- */
+.about-content {
+    flex: 0 0 40%;
+    max-width: 40%;
+    display: flex;
+    flex-direction: column;
+    /* Thêm padding phải để chữ không dính sát vào cột thống kê */
+    padding-right: 20px; 
+}
+/* CSS chỉnh lại ảnh trong ô thống kê */
+.stat-icon-wrapper img.stat-img-custom {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Giúp ảnh nằm gọn trong khung */
+}
+
+.about-title {
+    font-size: 36px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    color: #333;
+    margin-top: 0;
+}
+
+.about-desc {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #444;
+    margin-bottom: 30px;
+}
+.about-desc strong {
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+/* Icon mũi tên vàng */
+.about-decor-icon {
+    width: 48px; height: 48px;
+    background: #faff00;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #000;
+    margin-bottom: 60px;
+}
+.about-decor-icon svg { width: 24px; height: 24px; }
+
+/* Nút Action */
+.btn-about-action {
+    display: inline-flex; align-items: center;
+    background: #2d3138; color: #fff;
+    padding: 12px 24px; border-radius: 8px;
+    font-size: 14px; font-weight: 600; text-decoration: none;
+    transition: background 0.3s;
+    width: fit-content;
+    margin-top: 150px;
+}
+.btn-about-action:hover { background: #000; }
+.btn-about-action .icon-box {
+    width: 20px; height: 20px; background: #fff;
+    border-radius: 4px; margin-right: 12px;
+    display: flex; align-items: center; justify-content: center;
+    color: #000;
+}
+.btn-about-action .icon-box svg { width: 14px; height: 14px; }
+
+
+/* --- CỘT PHẢI: STATS GRID --- */
+.about-stats-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.stat-card {
+    background: #f4f4f4;
+    border-radius: 12px;
+    padding: 30px 20px;
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    transition: transform 0.3s;
+}
+.stat-card:hover { transform: translateY(-5px); }
+
+.stat-icon-wrapper {
+    background: #e0e0e0;
+    width: 100%;
+    max-width: 300px;
+    height: 140px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+    color: #2d3138;
+    padding: 20px;
+}
+.stat-icon-wrapper svg { width: 40px; height: 40px; stroke-width: 1.5px; }
+
+.stat-number {
+    font-size: 24px; font-weight: 700; color: #1a1a1a;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 14px; color: #666; font-weight: 400;
+}
+.mission-vision-section {
+    /* Đổi sang nền tối Gradient */
+    background: linear-gradient(180deg, #171F31 0%, #3D4453 100%);
+    padding: 80px 0 100px;
+    color: #fff;
+}
+
+.mission-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+.mission-grid {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 50px;
+}
+
+/* Style cho từng Card Mission/Vision */
+.mv-card {
+    flex: 1;
+    background: #fff; /* Card màu trắng nổi bật trên nền tối */
+    border-radius: 24px;
+    padding: 20px 25px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1); /* Bóng nhẹ */
+    display: flex; flex-direction: column; align-items: center;
+    position: relative;
+    color: #1a1a1a; /* Chữ trong card màu đen */
+}
+
+/* Icon dấu hoa thị */
+.mv-icon-top, .mv-icon-bottom {
+    color: #5b9bf3; /* Màu xanh dương nhạt giống ảnh */
+    width: 24px; height: 24px;
+}
+.mv-icon-top { margin-bottom: 20px; }
+.mv-icon-bottom { margin-top: auto; opacity: 0.6; } /* Nằm dưới cùng */
+
+.mv-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.mv-desc {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 30px;
+    max-width: 90%;
+}
+
+/* Nút Action ở giữa 2 section */
+.mv-action-wrapper {
+    display: flex; justify-content: flex-start;
+}
+.btn-core-values {
+    display: inline-flex; 
+    align-items: center;
+    background: #ffffff;      /* Nền trắng tinh */
+    color: #1a1a1a;           /* Chữ màu đen đậm */
+    padding: 12px 24px;       /* Padding rộng rãi */
+    border-radius: 8px;
+    font-size: 14px; 
+    font-weight: 700;         /* Chữ đậm hơn chút cho rõ */
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;             /* Bỏ viền */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* Thêm bóng nhẹ cho nút nổi lên */
+}
+.btn-core-values:hover {
+    background: #f2f2f2;      /* Hover chuyển xám nhẹ */
+    transform: translateY(-2px); /* Hiệu ứng nhún nhẹ */
+}
+.btn-core-values .icon-box {
+    width: 24px; height: 24px; 
+    background: #1a1a1a;      /* Nền icon màu đen */
+    border-radius: 6px; 
+    margin-right: 12px;
+    display: flex; align-items: center; justify-content: center;
+    color: #ffffff;           /* Mũi tên màu trắng */
+}
+.btn-core-values .icon-box svg { 
+    width: 14px; height: 14px; 
+}
+
+
+/* =========================================
+   2. CORE VALUES (NỀN TRẮNG - CARD XÁM)
+   ========================================= */
+.core-values-section {
+    /* Đổi sang nền Trắng */
+    background: #fff;
+    padding: 80px 0;
+    color: #1a1a1a;
+}
+
+.values-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 30px;
+    text-align: center;
+}
+
+.values-heading {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 60px;
+    color: #1a1a1a;
+}
+
+/* Grid 4 cột */
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+/* Style cho Card Value */
+.value-card {
+    /* Đổi sang nền xám nhạt để tách biệt với nền trắng */
+    background: #f8f9fa; 
+    border-radius: 20px;
+    padding: 40px 25px;
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center;
+    transition: transform 0.3s;
+    border: 1px solid #eee; /* Viền mờ */
+}
+.value-card:hover { 
+    transform: translateY(-10px); 
+    background: #fff;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.08); /* Hover thì nổi lên và trắng */
+}
+
+/* Icon Values (Màu xanh dương) */
+.value-icon {
+    width: 60px; height: 60px;
+    color: #4a90e2 !important; /* Xanh dương */
+    margin-bottom: 25px;
+}
+.value-icon svg, 
+.value-icon svg path {
+    fill: currentColor !important; /* Lệnh này bắt icon lấy màu của thẻ cha */
+    color: currentColor !important;
+}
+
+.value-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #1a1a1a;
+}
+
+.value-desc {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #666;
+}
+
+/* =========================================
+   RESPONSIVE MOBILE (CẬP NHẬT)
+   ========================================= */
+@media (max-width: 991px) {
+    .about-us-section {
+        padding: 50px 0;
+    }
+
+    .about-container {
+        flex-direction: column; /* Xếp dọc */
+        gap: 40px;
+        
+        /* QUAN TRỌNG: Trên mobile vẫn phải giữ padding 2 bên */
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+
+    .about-content {
+        flex: none;
+        max-width: 100%;
+        width: 100%;
+        padding-right: 0; /* Mobile không cần padding phải nữa */
+    }
+
+    .about-title { font-size: 28px; margin-bottom: 15px; }
+    
+    .about-decor-icon {
+        margin-bottom: 0;
+    }
+
+    /* Ẩn nút Leader trên mobile giống ảnh mẫu */
+    .btn-about-action {
+        margin-top: 0;
+        display: none; 
+    }
+
+    .about-stats-grid {
+        width: 100%;
+        grid-template-columns: 1fr; /* 1 Cột duy nhất */
+        gap: 20px;
+    }
+    .mission-vision-section {
+        padding: 50px 0;
+    }
+    .mission-grid {
+        flex-direction: column; /* Xếp dọc */
+        gap: 20px;
+    }
+    .mv-action-wrapper {
+        justify-content: center; /* Căn giữa nút */
+    }
+
+    /* Core Values Mobile */
+    .core-values-section {
+        padding: 50px 0;
+    }
+    .values-heading {
+        font-size: 28px;
+        margin-bottom: 40px;
+    }
+    .values-grid {
+        grid-template-columns: 1fr; /* 1 Cột xếp dọc */
+        gap: 20px;
+    }
+}
+
+/* =========================================
+   ANIMATION & EFFECTS (SCROLL TRIGGER)
+   Cập nhật: Hiệu ứng chỉ chạy khi cuộn tới
+   ========================================= */
+
+/* 1. Trạng thái ban đầu: Ẩn và nằm thấp xuống 40px */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(40px);
+    
+    /* Thiết lập chuyển động mượt mà trong 0.8 giây */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    
+    /* Tối ưu hiệu suất cho trình duyệt */
+    will-change: opacity, transform;
+}
+
+/* 2. Trạng thái hiển thị: Được kích hoạt bởi JavaScript (thêm class này vào) */
+.animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0); /* Trở về vị trí gốc */
+}
+
+/* 3. Các lớp Delay (Độ trễ) để tạo hiệu ứng xuất hiện lần lượt */
+.delay-100 { transition-delay: 0.1s; }
+.delay-200 { transition-delay: 0.2s; }
+.delay-300 { transition-delay: 0.3s; }
+.delay-400 { transition-delay: 0.4s; }
+.delay-500 { transition-delay: 0.5s; }
+.delay-600 { transition-delay: 0.6s; }
+
+/* 4. Giữ lại hiệu ứng Hover nhún nhảy đẹp mắt cho các Card */
+/* Kết hợp transition của hover và animation xuất hiện */
+.stat-card, .value-card, .mv-card {
+    transition: 
+        transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), /* Hiệu ứng nhún khi hover */
+        box-shadow 0.4s ease, 
+        opacity 0.8s ease-out, /* Giữ hiệu ứng hiện ra */
+        transform 0.8s ease-out; /* Giữ hiệu ứng hiện ra */
+}
+
+/* Khi hover vào card thì nhấc lên nhẹ */
+.stat-card:hover, .value-card:hover, .mv-card:hover {
+    transform: translateY(-10px); 
+}
+body.elementor-editor-active .animate-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+    transition: none !important;
+}

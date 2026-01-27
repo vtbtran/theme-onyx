@@ -223,3 +223,30 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    // 1. Tạo bộ quan sát (Observer)
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1 // Khi phần tử hiện ra 10% trong màn hình thì bắt đầu chạy
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            // Nếu phần tử xuất hiện trong màn hình
+            if (entry.isIntersecting) {
+                // Thêm class 'is-visible' để kích hoạt CSS
+                entry.target.classList.add('is-visible');
+                // Ngừng quan sát (để animation chỉ chạy 1 lần)
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // 2. Tìm tất cả các phần tử có class "animate-on-scroll" để theo dõi
+    const elements = document.querySelectorAll('.animate-on-scroll');
+    elements.forEach(el => {
+        observer.observe(el);
+    });
+});
