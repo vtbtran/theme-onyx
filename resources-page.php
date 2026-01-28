@@ -4,7 +4,14 @@ Template Name: Resources Page
 */
 get_header();
 ?>
-<div class="resources-page-wrapper">
+<?php
+while ( have_posts() ) :
+    the_post();
+    the_content();
+
+endwhile;
+?>
+<!-- <div class="resources-page-wrapper">
     <section class="res-hero-section">
         <div class="container">
             <div class="res-hero-content">
@@ -278,5 +285,5 @@ get_header();
         </div>
     </section>
 </div>
-</div>
+</div> -->
 <?php get_footer(); ?>

@@ -26,6 +26,11 @@
 /* 1. COPYRIGHT (Bên trái) */
 .footer-copyright {
     flex: 1; /* Chiếm 1 phần không gian */
+
+}
+.footer-copyright p {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 /* 2. SOCIAL ICONS (Ở giữa) */

@@ -82,6 +82,11 @@
     font-weight: 800;
     line-height: 1.3;
     margin-bottom: 15px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .latest-title a {
@@ -251,17 +256,22 @@
     line-height: 1.4;
     margin-bottom: 10px;
     color: #1a1a1a;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .card-title a {
     display: -webkit-box;
-    -webkit-line-clamp: 2;      
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;    
-    text-decoration: none;     
-    line-height: 1.4;           
-    color: inherit;          
+    text-overflow: ellipsis;
+    text-decoration: none;
+    line-height: 1.4;
+    color: inherit;
 }
 
 .card-desc {
@@ -315,6 +325,7 @@
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
     z-index: 999;
 }
+
 /* =========================================
    NEWSLETTER SECTION (DESKTOP)
    ========================================= */
@@ -323,25 +334,29 @@
     background: linear-gradient(180deg, #171F31 0%, #3D4453 100%);
     padding: 80px 0;
     color: #fff;
-    margin-top: 60px; /* Cách phần tin tức bên trên */
+    /* margin-top: 60px; */
+    /* Cách phần tin tức bên trên */
 }
 
 .newsletter-container {
     display: flex;
     justify-content: space-between;
-    align-items: center; /* Căn giữa theo chiều dọc */
+    align-items: center;
+    /* Căn giữa theo chiều dọc */
     gap: 60px;
 }
 
 /* --- Cột trái: Text --- */
 .newsletter-content {
-    flex: 1; /* Chiếm khoảng 50-60% */
+    flex: 1;
+    /* Chiếm khoảng 50-60% */
     max-width: 600px;
 }
 
 .nl-title {
     font-size: 36px;
-    font-weight: 400; /* Font mảnh nhẹ như ảnh */
+    font-weight: 400;
+    /* Font mảnh nhẹ như ảnh */
     margin-bottom: 20px;
     line-height: 1.2;
     color: #fff;
@@ -350,7 +365,8 @@
 .nl-desc {
     font-size: 16px;
     line-height: 1.6;
-    color: #d1d5db; /* Màu xám sáng */
+    color: #d1d5db;
+    /* Màu xám sáng */
     margin-bottom: 30px;
     font-weight: 300;
 }
@@ -359,15 +375,18 @@
 .nl-icon-wrapper .highlight-icon {
     width: 48px;
     height: 48px;
-    background: #faff00; /* Màu vàng thương hiệu */
+    background: #faff00;
+    /* Màu vàng thương hiệu */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #000;
 }
+
 .highlight-icon svg {
-    width: 24px; height: 24px;
+    width: 24px;
+    height: 24px;
 }
 
 /* --- Cột phải: Form --- */
@@ -385,15 +404,19 @@
 
 /* Input nhập email */
 .nl-input {
-    flex: 1; /* Chiếm hết khoảng trống còn lại */
-    background: #f2f2f4; /* Màu nền xám nhạt */
+    flex: 1;
+    /* Chiếm hết khoảng trống còn lại */
+    background: #f2f2f4;
+    /* Màu nền xám nhạt */
     border: none;
-    border-radius: 50px; /* Bo tròn dạng viên thuốc */
+    border-radius: 50px;
+    /* Bo tròn dạng viên thuốc */
     padding: 15px 25px;
     font-size: 15px;
     color: #333;
     outline: none;
-    height: 54px; /* Chiều cao cố định */
+    height: 54px;
+    /* Chiều cao cố định */
     box-sizing: border-box;
 }
 
@@ -403,9 +426,11 @@
 
 /* Nút Subscribe */
 .nl-submit-btn {
-    background: #2d3138; /* Màu nền tối */
+    background: #2d3138;
+    /* Màu nền tối */
     color: #fff;
-    border: 1px solid rgba(255,255,255,0.3); /* Viền mờ nhẹ */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    /* Viền mờ nhẹ */
     border-radius: 50px;
     padding: 0 35px;
     font-size: 15px;
@@ -421,21 +446,22 @@
     color: #000;
     border-color: #fff;
 }
+
 .news-bottom-action {
     margin-top: 40px;
     display: flex;
-    justify-content: flex-start; 
+    justify-content: flex-start;
 }
 
 .btn-static-event {
-    display: inline-flex; 
+    display: inline-flex;
     align-items: center;
-    background: #2d3138; 
+    background: #2d3138;
     color: #fff;
-    padding: 12px 24px; 
+    padding: 12px 24px;
     border-radius: 8px;
-    font-size: 14px; 
-    font-weight: 600; 
+    font-size: 14px;
+    font-weight: 600;
     text-decoration: none;
     transition: background 0.3s;
 }
@@ -446,14 +472,21 @@
 
 /* Kế thừa style icon vuông trắng cũ */
 .btn-static-event .icon-box {
-    width: 30px; height: 30px; 
+    width: 30px;
+    height: 30px;
     background: #fff;
-    border-radius: 4px; 
+    border-radius: 4px;
     margin-right: 12px;
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: #000;
 }
-.btn-static-event .icon-box svg { width: 24px; height: 24px; }
+
+.btn-static-event .icon-box svg {
+    width: 24px;
+    height: 24px;
+}
 
 /* =========================================
    RESPONSIVE MOBILE
@@ -498,6 +531,11 @@
     .latest-excerpt {
         font-size: 13px;
         margin-bottom: 20px;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     /* 2. Recent News Header */
@@ -519,14 +557,16 @@
         gap: 20px;
     }
 
-        .newsletter-section {
+    .newsletter-section {
         padding: 60px 0;
         text-align: left;
     }
 
     .newsletter-container {
-        flex-direction: column; /* Xếp dọc */
-        align-items: flex-start; /* Căn trái toàn bộ */
+        flex-direction: column;
+        /* Xếp dọc */
+        align-items: flex-start;
+        /* Căn trái toàn bộ */
         gap: 40px;
     }
 
@@ -548,57 +588,68 @@
     }
 
     .newsletter-form {
-        flex-direction: column; /* Input và Nút xếp dọc */
-        align-items: flex-start; /* Căn trái */
+        flex-direction: column;
+        /* Input và Nút xếp dọc */
+        align-items: flex-start;
+        /* Căn trái */
         gap: 20px;
     }
 
     .nl-input {
-        width: 100%; /* Input full chiều rộng */
+        width: 100%;
+        /* Input full chiều rộng */
         height: 50px;
     }
 
     .nl-submit-btn {
-        width: auto; /* Nút tự co theo chữ */
+        width: auto;
+        /* Nút tự co theo chữ */
         min-width: 140px;
-        background: transparent; /* Nền trong suốt giống ảnh mobile */
-        border: 1px solid #fff; /* Viền trắng rõ */
+        background: transparent;
+        /* Nền trong suốt giống ảnh mobile */
+        border: 1px solid #fff;
+        /* Viền trắng rõ */
         height: 48px;
     }
+
     .news-bottom-action {
-        justify-content: center; /* Trên điện thoại thì căn giữa cho đẹp (giống nút View All trong ảnh mẫu mobile) */
+        justify-content: center;
+        /* Trên điện thoại thì căn giữa cho đẹp (giống nút View All trong ảnh mẫu mobile) */
         margin-top: 30px;
     }
-ews-bottom-action {
-        justify-content: center; /* Căn giữa nút cho đẹp trên mobile */
+
+    ews-bottom-action {
+        justify-content: center;
+        /* Căn giữa nút cho đẹp trên mobile */
         margin-top: 25px;
     }
 
     .btn-static-event {
         /* 1. Xóa margin lệch trái của desktop */
-        margin-left: 0 !important; 
-        
+        margin-left: 0 !important;
+
         /* 2. Giảm độ dày nút (Padding) */
         /* Desktop đang là 12px 24px -> Mobile giảm còn 8px 16px */
-        padding: 12px 24px; 
-        
+        padding: 12px 24px;
+
         /* 3. Giảm cỡ chữ */
-        font-size: 12px; 
+        font-size: 12px;
     }
-    
+
     /* 4. Thu nhỏ cả cái icon vuông màu trắng cho cân đối */
     .btn-static-event .icon-box {
-        width: 18px; 
+        width: 18px;
         height: 18px;
         margin-right: 8px;
     }
-    
+
     .btn-static-event .icon-box svg {
         width: 10px;
         height: 10px;
     }
+
     .recent-news-section {
-    padding: 60px 0;
-    background: #fff;
-}
+        padding: 60px 0;
+        background: #fff;
+    }
 }

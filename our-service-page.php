@@ -4,8 +4,17 @@ Template Name: Our Service Page
 */
 get_header();
 ?>
+<?php
+while ( have_posts() ) :
+    the_post();
+    
+    // ĐÂY LÀ CHÌA KHÓA ĐỂ ELEMENTOR CHẠY
+    the_content();
 
-<main id="main-content">
+endwhile;
+?>
+
+<!-- <main id="main-content">
 
     <section class="service-section">
         <div class="container">
@@ -440,6 +449,6 @@ get_header();
         </div>
     </section>
 
-</main>
+</main> -->
 
 <?php get_footer(); ?>

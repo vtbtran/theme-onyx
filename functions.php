@@ -89,8 +89,10 @@ add_action('wp_enqueue_scripts', 'theme_onyx_scripts');
    (Lưu ý: Widget Elementor mới không dùng cái này nữa, 
    nhưng mình cứ để đây, nếu không dùng bạn có thể xóa) 
 --- */
-function create_home_slider_cpt() {
-    register_post_type('home_slider',
+function create_home_slider_cpt()
+{
+    register_post_type(
+        'home_slider',
         array(
             'labels'      => array(
                 'name'          => 'Home Sliders',
@@ -109,34 +111,103 @@ add_action('init', 'create_home_slider_cpt');
 
 
 /* --- ĐĂNG KÝ WIDGET ELEMENTOR (QUAN TRỌNG) --- */
-function register_custom_elementor_widgets( $widgets_manager ) {
+function register_custom_elementor_widgets($widgets_manager)
+{
     $widget_file = get_template_directory() . '/widgets/home-widget.php';
-    
+
     // Tạm thời ẩn 2 dòng này đi bằng dấu //
-    if ( file_exists( $widget_file ) ) {
-        require_once( $widget_file );
-        $widgets_manager->register( new \Home_Hero_Widget() );
+    if (file_exists($widget_file)) {
+        require_once($widget_file);
+        $widgets_manager->register(new \Home_Hero_Widget());
     }
 
     $file_about = get_template_directory() . '/widgets/about-stats-widget.php';
-    if ( file_exists( $file_about ) ) {
-        require_once( $file_about );
-        $widgets_manager->register( new \Onyx_About_Stats_Widget() );
+    if (file_exists($file_about)) {
+        require_once($file_about);
+        $widgets_manager->register(new \Onyx_About_Stats_Widget());
     }
     $file_mv = get_template_directory() . '/widgets/mission-vision-widget.php';
-    if ( file_exists( $file_mv ) ) {
-        require_once( $file_mv );
-        $widgets_manager->register( new \Onyx_Mission_Vision_Widget() );
+    if (file_exists($file_mv)) {
+        require_once($file_mv);
+        $widgets_manager->register(new \Onyx_Mission_Vision_Widget());
     }
     $file_cv = get_template_directory() . '/widgets/core-values-widget.php';
-    if ( file_exists( $file_cv ) ) {
-        require_once( $file_cv );
-        $widgets_manager->register( new \Onyx_Core_Values_Widget() );
+    if (file_exists($file_cv)) {
+        require_once($file_cv);
+        $widgets_manager->register(new \Onyx_Core_Values_Widget());
+    }
+
+    $file_service = get_template_directory() . '/widgets/service-grid-widget.php';
+    if (file_exists($file_service)) {
+        require_once($file_service);
+        $widgets_manager->register(new \Onyx_Service_Grid_Widget());
+    }
+
+    $file_product = get_template_directory() . '/widgets/product-slider-widget.php';
+    if (file_exists($file_product)) {
+        require_once($file_product);
+        $widgets_manager->register(new \Onyx_Product_Slider_Widget());
+    }
+
+    $file_process = get_template_directory() . '/widgets/process-list-widget.php';
+    if (file_exists($file_process)) {
+        require_once($file_process);
+        $widgets_manager->register(new \Onyx_Process_List_Widget());
+    }
+    $file_process = get_template_directory() . '/widgets/resource-library-widget.php';
+    if (file_exists($file_process)) {
+        require_once($file_process);
+        $widgets_manager->register(new \Onyx_Resource_Library_Widget());
+    }
+    $file_process = get_template_directory() . '/widgets/resource-webinar-news-widget.php';
+    if (file_exists($file_process)) {
+        require_once($file_process);
+        $widgets_manager->register(new \Onyx_Webinar_News_Widget());
+    }
+    $file_faq = get_template_directory() . '/widgets/resource-faq-widget.php';
+    if (file_exists($file_faq)) {
+        require_once($file_faq);
+        $widgets_manager->register(new \Onyx_FAQ_Widget());
+    }
+    $file_contact = get_template_directory() . '/widgets/resource-more-questions-widget.php';
+    if (file_exists($file_contact)) {
+        require_once($file_contact);
+        $widgets_manager->register(new \Onyx_More_Questions_Widget());
+    }
+    $file_contact = get_template_directory() . '/widgets/contact-intro-widget.php';
+    if (file_exists($file_contact)) {
+        require_once($file_contact);
+        $widgets_manager->register(new \Onyx_Contact_Intro_Widget());
+    }
+    $file_contact = get_template_directory() . '/widgets/contact-features-widget.php';
+    if (file_exists($file_contact)) {
+        require_once($file_contact);
+        $widgets_manager->register(new \Onyx_Contact_Features_Widget());
+    }
+    $file_contact = get_template_directory() . '/widgets/contact-business-hours-widget.php';
+    if (file_exists($file_contact)) {
+        require_once($file_contact);
+        $widgets_manager->register(new \Onyx_Business_Hours_Widget());
+    }
+    $file_contact = get_template_directory() . '/widgets/contact-info-grid-widget.php';
+    if (file_exists($file_contact)) {
+        require_once($file_contact);
+        $widgets_manager->register(new \Onyx_Contact_Grid_Widget());
+    }
+    $file_contact = get_template_directory() . '/widgets/news-hero-widget.php';
+    if (file_exists($file_contact)) {
+        require_once($file_contact);
+        $widgets_manager->register(new \Onyx_News_Hero_Widget());
+    }
+    $file_contact = get_template_directory() . '/widgets/news-grid-widget.php';
+    if (file_exists($file_contact)) {
+        require_once($file_contact);
+        $widgets_manager->register(new \Onyx_News_Grid_Widget());
+    }
+        $file_contact = get_template_directory() . '/widgets/newsletter-signup-widget.php';
+    if (file_exists($file_contact)) {
+        require_once($file_contact);
+        $widgets_manager->register(new \Onyx_Newsletter_Widget());
     }
 }
-add_action( 'elementor/widgets/register', 'register_custom_elementor_widgets' );
-
-
-/* --- Xử lý Form --- */
-// add_action('admin_post_nopriv_onyx_submit_form', 'onyx_handle_form');
-// add_action('admin_post_onyx_submit_form', 'onyx_handle_form');
+add_action('elementor/widgets/register', 'register_custom_elementor_widgets');
