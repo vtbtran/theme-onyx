@@ -19,13 +19,7 @@ class Onyx_Newsletter_Widget extends \Elementor\Widget_Base {
             'label' => 'Mô tả', 'type' => \Elementor\Controls_Manager::TEXTAREA, 'default' => 'Subscribe to our newsletter and be the first to know...'
         ]);
 
-        $this->add_control('placeholder', [
-            'label' => 'Placeholder Input', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Enter your email...'
-        ]);
-
-        $this->add_control('btn_text', [
-            'label' => 'Chữ nút', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Subscribe'
-        ]);
+        // Đã xóa ô nhập Shortcode vì không cần nữa
 
         $this->end_controls_section();
     }
@@ -51,10 +45,11 @@ class Onyx_Newsletter_Widget extends \Elementor\Widget_Base {
                 </div>
 
                 <div class="newsletter-form-wrapper">
-                    <form class="newsletter-form" action="#">
-                        <input type="email" class="nl-input" placeholder="<?php echo esc_attr($settings['placeholder']); ?>" required>
-                        <button type="submit" class="nl-submit-btn"><?php echo esc_html($settings['btn_text']); ?></button>
-                    </form>
+                    <?php 
+                    // GỌI TRỰC TIẾP SHORTCODE TẠI ĐÂY
+                    // Lưu ý: Nếu bạn lỡ tay xóa form bên Contact Form 7 thì code này sẽ lỗi
+                    echo do_shortcode( '[mailpoet_form id="1"]' ); 
+                    ?>
                 </div>
 
             </div>

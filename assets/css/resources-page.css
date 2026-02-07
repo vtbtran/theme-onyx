@@ -462,3 +462,60 @@ div.wpcf7-response-output.wpcf7-validation-errors {
         gap: 10px; /* Khoảng cách giữa Name và Email trên mobile */
     }
 }
+
+/* =========================================
+   7. ANIMATIONS & EFFECTS (CẬP NHẬT CHO JS)
+   ========================================= */
+
+/* Định nghĩa chuyển động */
+@keyframes fadeInUpCustom {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 1. Trạng thái khởi tạo (Khi chưa lướt tới) */
+/* Chỉ áp dụng khi KHÔNG PHẢI trong Elementor Editor */
+body:not(.elementor-editor-active) .onyx-animate-init {
+    opacity: 0; /* Ẩn đi */
+    will-change: transform, opacity; /* Tối ưu hiệu năng */
+}
+
+/* 2. Trạng thái kích hoạt (Khi JS thêm class này vào) */
+body:not(.elementor-editor-active) .onyx-animate-active {
+    animation: fadeInUpCustom 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* 3. Độ trễ (Stagger) cho các thẻ nằm cạnh nhau để nó bay lên lần lượt */
+/* Card tài nguyên */
+.res-card.onyx-animate-active:nth-child(1) { animation-delay: 0.1s; }
+.res-card.onyx-animate-active:nth-child(2) { animation-delay: 0.2s; }
+.res-card.onyx-animate-active:nth-child(3) { animation-delay: 0.3s; }
+
+/* Card Webinar */
+.webinar-card.onyx-animate-active:nth-child(1) { animation-delay: 0.1s; }
+.webinar-card.onyx-animate-active:nth-child(2) { animation-delay: 0.2s; }
+.webinar-card.onyx-animate-active:nth-child(3) { animation-delay: 0.3s; }
+
+/* --- CÁC HIỆU ỨNG HOVER & KHÁC GIỮ NGUYÊN --- */
+.res-card, .webinar-card, .faq-item {
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.res-card:hover .res-img-box img {
+    transform: scale(1.08);
+    transition: transform 0.6s ease;
+}
+
+/* --- BẢO VỆ TRONG ELEMENTOR EDITOR (GIỮ NGUYÊN) --- */
+.elementor-editor-active .onyx-animate-init {
+    opacity: 1 !important;
+    animation: none !important;
+    transform: none !important;
+}

@@ -1,4 +1,4 @@
-/* --- 1. GLOBAL RESET (QUAN TRỌNG ĐỂ KHÔNG BỊ THANH NGANG) --- */
+
 * { 
     box-sizing: border-box; /* Bắt buộc phải có dòng này */
 }
@@ -129,13 +129,12 @@ header, .site-header {
     }
 
     .header-container { padding: 0; }
-    .site-logo { flex-grow: 1; display: flex; justify-content: center; }
-    .site-logo img { height: 28px; } /* Logo mobile nhỏ hơn */
+    .site-logo { flex-grow: 1; display: flex; justify-content:first baseline; }
 
     /* Nút contact trên mobile */
     .btn-contact {
-        height: 36px;
-        padding: 4px 12px 4px 4px;
+        height: 40px;
+        padding: 10px 18px 10px 10px;
         border-radius: 50px;
     }
     .icon-box { width: 26px; height: 26px; border-radius: 50%; }
@@ -218,9 +217,9 @@ header, .site-header {
 }
 
 .mobile-logo img {
-    height: 30px; /* Chiều cao logo (điều chỉnh cho vừa mắt) */
     width: auto;
     display: block;
+        height: 100px;
 }
 
 /* 3. Danh sách Menu Links */

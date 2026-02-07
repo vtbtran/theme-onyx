@@ -334,6 +334,9 @@
     background: linear-gradient(180deg, #171F31 0%, #3D4453 100%);
     padding: 80px 0;
     color: #fff;
+    margin-bottom: -1px !important;
+    position: relative;
+    z-index: 10;
     /* margin-top: 60px; */
     /* Cách phần tin tức bên trên */
 }
@@ -488,6 +491,29 @@
     height: 24px;
 }
 
+/* Fix lỗi Contact Form 7 bị vỡ dòng */
+.newsletter-form-wrapper form,
+.newsletter-form-wrapper .wpcf7 {
+    width: 100%;
+}
+
+.newsletter-form {
+    display: flex; /* Bắt buộc để xếp ngang */
+    gap: 15px;
+    width: 100%;
+    position: relative;
+}
+
+/* Ẩn thông báo lỗi/thành công làm vỡ giao diện */
+.wpcf7-response-output {
+    position: absolute;
+    bottom: -40px;
+    left: 0;
+    margin: 0 !important;
+    padding: 0 !important; 
+    border: none !important;
+    color: #faff00;
+}
 /* =========================================
    RESPONSIVE MOBILE
    ========================================= */
@@ -652,4 +678,37 @@
         padding: 60px 0;
         background: #fff;
     }
+}
+/* =========================================
+   SCROLL TRIGGER ANIMATION (LƯỚT TỚI ĐÂU HIỆN TỚI ĐÓ)
+   ========================================= */
+
+.header-title,
+.latest-news-card,
+.recent-header-row,
+.news-item-card,
+.newsletter-section {
+    opacity: 0;
+    transform: translateY(60px); /* Nằm thấp xuống 60px */
+    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); /* Chuyển động mượt như iPhone */
+    will-change: opacity, transform;
+}
+.onyx-in-view {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+.news-item-card:nth-child(2) { transition-delay: 0.15s; }
+.news-item-card:nth-child(3) { transition-delay: 0.3s; }
+
+
+body.elementor-editor-active .header-title,
+body.elementor-editor-active .latest-news-card,
+body.elementor-editor-active .recent-header-row,
+body.elementor-editor-active .news-item-card,
+body.elementor-editor-active .newsletter-section {
+    opacity: 1 !important;        /* Bắt buộc hiện */
+    transform: none !important;   /* Bỏ hiệu ứng bay lên */
+    transition: none !important;  /* Bỏ độ trễ */
+    visibility: visible !important;
 }

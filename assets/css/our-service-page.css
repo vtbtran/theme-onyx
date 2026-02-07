@@ -114,7 +114,7 @@
     font-size: 13px;
     color: var(--text-grey);
     line-height: 1.4; 
-    margin-bottom: 12px;
+    margin-bottom: 12px !important;
     display: -webkit-box;
     -webkit-line-clamp: 3;        /* Số dòng muốn hiển thị */
     -webkit-box-orient: vertical;
@@ -183,7 +183,6 @@
     align-items: center;
     justify-content: space-between;
     margin-top: auto;
-    padding-top: 20px;
 }
 
 .price-info { display: flex; flex-direction: column; }
@@ -410,7 +409,7 @@
     font-size: 13px; 
     color: #555; 
     line-height: 1.5; 
-    margin-bottom: 15px; 
+    margin-bottom: 15px !important; 
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
@@ -582,7 +581,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     padding: 0 10px;
 }
 /* Body: Text Mô tả */
@@ -660,4 +658,62 @@
 @media (max-width: 768px) {
     .section-title { font-size: 48px; }
     .service-grid { grid-template-columns: 1fr; max-width: 400px; }
+}
+/* =========================================
+   ANIMATION CHO TRANG SERVICE
+   ========================================= */
+
+/* 1. Định nghĩa cú bay: Từ dưới lên 40px và mờ dần ra */
+@keyframes fadeInUpService {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 2. Trạng thái KHỞI TẠO (Ẩn đi chờ lệnh) */
+/* Chỉ áp dụng khi khách xem (không phải Admin sửa) */
+body:not(.elementor-editor-active) .onyx-service-init {
+    opacity: 0;
+    will-change: transform, opacity; /* Giúp trình duyệt vẽ mượt hơn */
+}
+
+/* 3. Trạng thái KÍCH HOẠT (Bay lên!) */
+body:not(.elementor-editor-active) .onyx-service-active {
+    animation: fadeInUpService 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* --- HIỆU ỨNG CASCADE (XUẤT HIỆN LẦN LƯỢT) --- */
+
+/* A. Cho lưới Service Card (3 cột) */
+.service-card.onyx-service-active:nth-child(1) { animation-delay: 0.1s; }
+.service-card.onyx-service-active:nth-child(2) { animation-delay: 0.2s; }
+.service-card.onyx-service-active:nth-child(3) { animation-delay: 0.3s; }
+/* Nếu có hàng 2 */
+.service-card.onyx-service-active:nth-child(4) { animation-delay: 0.1s; } 
+.service-card.onyx-service-active:nth-child(5) { animation-delay: 0.2s; }
+.service-card.onyx-service-active:nth-child(6) { animation-delay: 0.3s; }
+
+/* B. Cho Slider Product Card */
+.product-card.onyx-service-active:nth-child(1) { animation-delay: 0.1s; }
+.product-card.onyx-service-active:nth-child(2) { animation-delay: 0.2s; }
+.product-card.onyx-service-active:nth-child(3) { animation-delay: 0.3s; }
+
+/* C. Cho danh sách Process (Từng dòng một) */
+.process-item.onyx-service-active:nth-child(1) { animation-delay: 0.1s; }
+.process-item.onyx-service-active:nth-child(2) { animation-delay: 0.25s; } /* Chậm hơn xíu cho rõ nhịp */
+.process-item.onyx-service-active:nth-child(3) { animation-delay: 0.4s; }
+.process-item.onyx-service-active:nth-child(4) { animation-delay: 0.55s; }
+
+/* --- BẢO VỆ ELEMENTOR EDITOR (QUAN TRỌNG) --- */
+/* Khi vào chế độ sửa, bắt buộc hiện hết ra để không bị lỗi tàng hình */
+.elementor-editor-active .onyx-service-init {
+    opacity: 1 !important;
+    animation: none !important;
+    transform: none !important;
+    visibility: visible !important;
 }

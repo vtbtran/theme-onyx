@@ -250,3 +250,139 @@ document.addEventListener("DOMContentLoaded", function() {
         observer.observe(el);
     });
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    // 1. Chọn tất cả các phần tử cần hiệu ứng
+    const targets = document.querySelectorAll('.header-title, .latest-news-card, .recent-header-row, .news-item-card, .newsletter-section');
+
+    // 2. Tạo "Người quan sát" (Intersection Observer)
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            // Nếu phần tử lọt vào khung hình (viewport)
+            if (entry.isIntersecting) {
+                // Thêm class để kích hoạt CSS hiện lên
+                entry.target.classList.add('onyx-in-view');
+                
+                // Xong việc rồi thì thôi, không theo dõi nữa (để đỡ tốn RAM)
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        rootMargin: '0px',
+        threshold: 0.15 // Khi thấy 15% chiều cao của vật thể thì bắt đầu hiệu ứng
+    });
+
+    // 3. Bắt đầu theo dõi từng phần tử
+    targets.forEach(el => observer.observe(el));
+});
+document.addEventListener("DOMContentLoaded", function() {
+    // 1. Kiểm tra: Nếu đang ở trong trình sửa Elementor thì KHÔNG CHẠY (để tránh lỗi hiển thị khi sửa)
+    if (document.body.classList.contains('elementor-editor-active')) {
+        return;
+    }
+
+    // 2. Thiết lập thông số quan sát
+    const observerOptions = {
+        root: null,       // Quan sát theo khung nhìn trình duyệt
+        rootMargin: '0px',
+        threshold: 0.15   // Khi phần tử hiện ra 15% diện tích thì bắt đầu hiệu ứng
+    };
+
+    // 3. Tạo bộ quan sát (Observer)
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            // Nếu phần tử xuất hiện trong màn hình
+            if (entry.isIntersecting) {
+                // Thêm class 'onyx-animate-active' để kích hoạt CSS
+                entry.target.classList.add('onyx-animate-active');
+                
+                // Ngừng quan sát phần tử này (để hiệu ứng chỉ chạy 1 lần)
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // 4. Chọn các phần tử cần hiệu ứng (theo đúng các class CSS đã làm)
+    const targetElements = document.querySelectorAll('.res-card, .webinar-card, .faq-item, .res-hero-content');
+    
+    targetElements.forEach(el => {
+        // Thêm class 'onyx-animate-init' để set trạng thái ẩn ban đầu
+        el.classList.add('onyx-animate-init');
+        // Bắt đầu theo dõi
+        observer.observe(el);
+    });
+});
+document.addEventListener("DOMContentLoaded", function() {
+    // 1. AN TOÀN: Nếu đang sửa bằng Elementor thì KHÔNG CHẠY (để dễ sửa)
+    if (document.body.classList.contains('elementor-editor-active')) {
+        return;
+    }
+
+    // 2. Cấu hình bộ quan sát
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.15 // Hiện 15% thì bắt đầu hiệu ứng
+    };
+
+    // 3. Tạo bộ quan sát (Observer)
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Kích hoạt hiệu ứng
+                entry.target.classList.add('onyx-service-active');
+                // Chỉ chạy 1 lần rồi thôi
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // 4. CHỌN CÁC PHẦN TỬ CẦN ANIMATION TRÊN TRANG SERVICE
+    // Bao gồm: Tiêu đề, Card dịch vụ, Card sản phẩm, Dòng quy trình
+    const serviceTargets = document.querySelectorAll(
+        '.section-title, .section-title-center, .service-card, .product-card, .process-item'
+    );
+    
+    serviceTargets.forEach(el => {
+        // Gắn class ẩn ban đầu
+        el.classList.add('onyx-service-init');
+        // Bắt đầu theo dõi
+        observer.observe(el);
+    });
+});
+document.addEventListener("DOMContentLoaded", function() {
+    // 1. AN TOÀN: Nếu đang sửa bằng Elementor thì KHÔNG CHẠY
+    if (document.body.classList.contains('elementor-editor-active')) {
+        return;
+    }
+
+    // 2. Cấu hình bộ quan sát
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.15 // Hiện 15% thì bắt đầu hiệu ứng
+    };
+
+    // 3. Tạo bộ quan sát
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Kích hoạt hiệu ứng
+                entry.target.classList.add('onyx-contact-active');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // 4. CHỌN CÁC PHẦN TỬ CẦN ANIMATION TRÊN TRANG CONTACT
+    const contactTargets = document.querySelectorAll(
+        '.intro-title, .intro-desc, .feature-item, .business-hours-bar, .map-wrapper, .contact-form-box, .info-card'
+    );
+    
+    contactTargets.forEach(el => {
+        // Gắn class ẩn ban đầu
+        el.classList.add('onyx-contact-init');
+        // Bắt đầu theo dõi
+        observer.observe(el);
+    });
+});

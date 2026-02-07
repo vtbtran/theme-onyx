@@ -83,12 +83,6 @@ function theme_onyx_scripts()
 }
 add_action('wp_enqueue_scripts', 'theme_onyx_scripts');
 
-
-/* --- 
-   CUSTOM POST TYPE: SLIDER 
-   (Lưu ý: Widget Elementor mới không dùng cái này nữa, 
-   nhưng mình cứ để đây, nếu không dùng bạn có thể xóa) 
---- */
 function create_home_slider_cpt()
 {
     register_post_type(
@@ -108,7 +102,13 @@ function create_home_slider_cpt()
     );
 }
 add_action('init', 'create_home_slider_cpt');
-
+/* --- ĐĂNG KÝ WIDGET ELEMENTOR HEADER & FOOTER (QUAN TRỌNG) --- */
+function onyx_register_elementor_locations($elementor_theme_manager)
+{
+    $elementor_theme_manager->register_location('header');
+    $elementor_theme_manager->register_location('footer');
+}
+add_action('elementor/theme/register_locations', 'onyx_register_elementor_locations');
 
 /* --- ĐĂNG KÝ WIDGET ELEMENTOR (QUAN TRỌNG) --- */
 function register_custom_elementor_widgets($widgets_manager)
@@ -204,10 +204,51 @@ function register_custom_elementor_widgets($widgets_manager)
         require_once($file_contact);
         $widgets_manager->register(new \Onyx_News_Grid_Widget());
     }
-        $file_contact = get_template_directory() . '/widgets/newsletter-signup-widget.php';
+    $file_contact = get_template_directory() . '/widgets/newsletter-signup-widget.php';
     if (file_exists($file_contact)) {
         require_once($file_contact);
         $widgets_manager->register(new \Onyx_Newsletter_Widget());
     }
+    $file_header = get_template_directory() . '/widgets/header-widget.php';
+    if (file_exists($file_header)) {
+        require_once($file_header);
+        $widgets_manager->register(new \Onyx_Header_Widget());
+    }
+    $file_footer = get_template_directory() . '/widgets/footer-widget.php';
+    if (file_exists($file_footer)) {
+        require_once($file_footer);
+        if ( class_exists( 'Onyx_Footer_Widget' ) ) {
+            $widgets_manager->register(new \Onyx_Footer_Widget());
+        }
+    }
 }
 add_action('elementor/widgets/register', 'register_custom_elementor_widgets');
+
+
+// --- START: CODE CẤP CỨU QUYỀN MAILPOET ---
+add_action('init', 'onyx_force_restore_mailpoet_permissions');
+function onyx_force_restore_mailpoet_permissions()
+{
+    // 1. Lấy vai trò Administrator (Quản lý)
+    $role = get_role('administrator');
+
+    if (! empty($role)) {
+        // 2. Danh sách các quyền cần khôi phục
+        $caps = array(
+            'manage_mailpoet',
+            'mailpoet_manage_emails',
+            'mailpoet_manage_subscribers',
+            'mailpoet_manage_forms',
+            'mailpoet_manage_segments',
+            'mailpoet_manage_settings',
+            'edit_users',
+            'promote_users',
+            'manage_options' // Quyền quan trọng nhất của Admin
+        );
+
+        // 3. Vòng lặp add từng quyền vào
+        foreach ($caps as $cap) {
+            $role->add_cap($cap);
+        }
+    }
+}
