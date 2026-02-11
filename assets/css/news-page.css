@@ -689,13 +689,11 @@
 .news-item-card,
 .newsletter-section {
     opacity: 0;
-    transform: translateY(60px); /* Nằm thấp xuống 60px */
     transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); /* Chuyển động mượt như iPhone */
     will-change: opacity, transform;
 }
 .onyx-in-view {
     opacity: 1 !important;
-    transform: translateY(0) !important;
 }
 
 .news-item-card:nth-child(2) { transition-delay: 0.15s; }

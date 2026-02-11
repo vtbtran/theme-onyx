@@ -22,6 +22,14 @@ ul { list-style: none !important; margin: 0; padding: 0; }
 a { text-decoration: none !important; color: inherit; }
 button { border: none; background: none; cursor: pointer; }
 
+header, .site-header {
+    top: 0; 
+    z-index: 9999; 
+    background-color: #ffffff; 
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    width: 100%;
+}
+
 /* --- 2. HEADER CONTAINER (Đã thu gọn) --- */
 .site-header {
     background: #fff;
@@ -99,14 +107,7 @@ button { border: none; background: none; cursor: pointer; }
 /* --- 6. MOBILE RESPONSIVE --- */
 .mobile-toggle { display: none; }
 
-header, .site-header {
-    position: sticky; 
-    top: 0; 
-    z-index: 9999; 
-    background-color: #ffffff; 
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    width: 100%;
-}
+
 
 @media (max-width: 1024px) {
     .desktop-navigation { display: none; }

@@ -49,17 +49,25 @@ function theme_onyx_scripts()
         array('onyx-main-style'),
         '1.0.0'
     );
-
+    // 4.1. CSS cho Bài viết chi tiết (Single Post)
+    if (is_single()) {
+        wp_enqueue_style(
+            'onyx-single-post-css', 
+            get_template_directory_uri() . '/assets/css/single-page.css', 
+            array('onyx-main-style'), 
+            time()
+        );
+    }
     // 5. CSS cho Trang chủ
     if (is_front_page()) {
         wp_enqueue_style('onyx-front-page', get_template_directory_uri() . '/assets/css/front-page.css', array('onyx-main-style'), '1.0.0');
     }
 
-    // 6. Nhúng JS (Đã sửa lỗi trùng lặp: Chỉ giữ lại 1 dòng load ở footer)
+    // 6. Nhúng JS (ĐÃ SỬA: Thêm dependency 'jquery' để tránh lỗi Ajax)
     wp_enqueue_script(
         'onyx-main-js',
         get_template_directory_uri() . '/assets/js/main.js',
-        array(), // Không phụ thuộc jQuery (nếu cần jQuery thì điền array('jquery'))
+        array('jquery'), // Quan trọng: Phải có jquery
         '1.0',
         true // Load ở footer
     );
@@ -251,4 +259,146 @@ function onyx_force_restore_mailpoet_permissions()
             $role->add_cap($cap);
         }
     }
+}
+/* --- CẤU HÌNH GIAO DIỆN BÀI VIẾT (NEWS TEMPLATE) --- */
+
+// 1. Tạo Metabox chọn giao diện
+function onyx_add_post_layout_metabox() {
+    add_meta_box(
+        'onyx_post_layout',           // ID
+        'Cấu hình Giao diện',         // Tiêu đề hiển thị
+        'onyx_render_layout_metabox', // Hàm hiển thị HTML
+        'post',                       // Áp dụng cho bài viết (Post)
+        'side',                       // Vị trí: Cột bên phải
+        'default'
+    );
+}
+add_action('add_meta_boxes', 'onyx_add_post_layout_metabox');
+
+// 2. Hiển thị HTML của Metabox
+function onyx_render_layout_metabox($post) {
+    // Lấy giá trị đã lưu trong Database
+    $value = get_post_meta($post->ID, '_onyx_post_layout', true);
+    ?>
+    <label for="onyx_post_layout_select" style="font-weight:600;">Chọn kiểu hiển thị:</label>
+    <select name="onyx_post_layout" id="onyx_post_layout_select" style="width:100%; margin-top:10px; padding: 5px;">
+        <option value="style-1" <?php selected($value, 'style-1'); ?>>Style 1: Có Sidebar (Chuẩn)</option>
+        <option value="style-2" <?php selected($value, 'style-2'); ?>>Style 2: Full Width (Hero)</option>
+    </select>
+    <p style="font-size:12px; color:#666; margin-top:5px;">
+        *Style 1: Nội dung trái, Sidebar phải.<br>
+        *Style 2: Ảnh nền to, nội dung ở giữa.
+    </p>
+    <?php
+}
+
+// 3. Lưu dữ liệu khi bấm "Cập nhật" bài viết
+function onyx_save_post_layout($post_id) {
+    if (array_key_exists('onyx_post_layout', $_POST)) {
+        update_post_meta(
+            $post_id,
+            '_onyx_post_layout',
+            sanitize_text_field($_POST['onyx_post_layout'])
+        );
+    }
+}
+add_action('save_post', 'onyx_save_post_layout');
+
+// --- PHẦN XỬ LÝ AJAX LOAD MORE (ĐÃ SỬA LỖI HOÀN TOÀN) ---
+add_action('wp_ajax_onyx_load_more_posts', 'onyx_load_more_posts_handler');
+add_action('wp_ajax_nopriv_onyx_load_more_posts', 'onyx_load_more_posts_handler');
+
+/* --- DÁN ĐÈ VÀO FUNCTIONS.PHP (CODE KIỂM TRA LỖI) --- */
+
+/* --- DÁN VÀO CUỐI FILE FUNCTIONS.PHP (CODE ĐÃ SỬA LỖI HIỂN THỊ) --- */
+
+// 1. Xóa các action cũ để tránh xung đột
+remove_action('wp_ajax_onyx_load_more_posts', 'onyx_load_more_posts_handler');
+remove_action('wp_ajax_nopriv_onyx_load_more_posts', 'onyx_load_more_posts_handler');
+
+// 2. Đăng ký lại action mới
+add_action('wp_ajax_onyx_load_more_posts', 'onyx_load_more_posts_handler');
+add_action('wp_ajax_nopriv_onyx_load_more_posts', 'onyx_load_more_posts_handler');
+
+function onyx_load_more_posts_handler() {
+    // 1. Nhận dữ liệu từ Ajax
+    $offset = isset($_POST['offset']) ? intval($_POST['offset']) : 0;
+    $card_btn_text = isset($_POST['card_btn_text']) ? sanitize_text_field($_POST['card_btn_text']) : 'Read More';
+    $keyword = isset($_POST['keyword']) ? sanitize_text_field($_POST['keyword']) : ''; // Nhận từ khóa tìm kiếm
+
+    // 2. Thiết lập Query
+    $args = [
+        'post_type'      => 'post',
+        'post_status'    => 'publish',
+        'posts_per_page' => -1, // Mặc định lấy hết bài còn lại
+    ];
+
+    // --- LOGIC QUAN TRỌNG: PHÂN BIỆT TÌM KIẾM VS LOAD MORE ---
+    if (!empty($keyword)) {
+        // Nếu có từ khóa -> Chế độ TÌM KIẾM
+        $args['s'] = $keyword; // Tham số tìm kiếm của WordPress
+        $args['offset'] = 0;   // Tìm kiếm thì phải tìm từ đầu, không bỏ qua bài nào
+    } else {
+        // Nếu không có từ khóa -> Chế độ LOAD MORE
+        $args['offset'] = $offset; // Bỏ qua số bài đã hiện
+    }
+
+    $query = new WP_Query($args);
+
+    // 3. Xuất HTML
+    if ($query->have_posts()) :
+        while ($query->have_posts()) : $query->the_post();
+            
+            // Xử lý dữ liệu hiển thị (Giữ nguyên logic cũ của bạn)
+            $content = get_post_field('post_content', get_the_ID());
+            $word_count = str_word_count(strip_tags($content));
+            $reading_time = ceil($word_count / 200);
+            
+            $thumb_url = '';
+            // Ưu tiên dùng Placeholder của Elementor nếu có
+            $placeholder_img = 'https://via.placeholder.com/600x400/cccccc/969696?text=No+Image';
+            if (class_exists('\Elementor\Utils')) {
+                 $placeholder_img = \Elementor\Utils::get_placeholder_image_src(); 
+            }
+
+            if (has_post_thumbnail()) {
+                $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'medium_large');
+            } else {
+                $thumb_url = $placeholder_img;
+            }
+
+            $excerpt = get_the_excerpt();
+            if (empty($excerpt)) $excerpt = wp_trim_words(strip_tags($content), 20, '...');
+            else $excerpt = wp_trim_words($excerpt, 20, '...');
+            ?>
+            
+            <div class="news-item-card js-news-item" style="opacity: 1; visibility: visible;">
+                <div class="card-thumb">
+                    <a href="<?php the_permalink(); ?>">
+                        <img src="<?php echo esc_url($thumb_url); ?>" 
+                             alt="<?php the_title_attribute(); ?>" 
+                             class="attachment-medium_large size-medium_large wp-post-image"
+                             style="width:100%; height:auto; object-fit:cover; display:block; min-height: 200px; background-color: #eee;">
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="card-meta"><?php echo get_the_date('F j, Y'); ?> • <?php echo $reading_time; ?> min read</div>
+                    <h3 class="card-title js-search-target"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                    <div class="card-desc js-search-target"><?php echo $excerpt; ?></div>
+                    <a href="<?php the_permalink(); ?>" class="btn-card-full">
+                        <span class="icon-box">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="7" x2="17" y2="17"></line><polyline points="17 7 17 17 7 17"></polyline></svg>
+                        </span>
+                        <?php echo esc_html($card_btn_text); ?>
+                    </a>
+                </div>
+            </div>
+
+            <?php
+        endwhile;
+    else:
+        // Nếu không tìm thấy bài nào thì không in gì cả (để JS xử lý hiển thị thông báo)
+    endif;
+    wp_reset_postdata();
+    die();
 }

@@ -1,94 +1,136 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // Đảm bảo chạy sau khi mọi thứ tải xong (để tính toán kích thước đúng)
+    if (document.readyState === 'complete') {
+        initSliderAllInOne();
+    } else {
+        window.addEventListener('load', initSliderAllInOne);
+    }
+});
 
+function initSliderAllInOne() {
     const track = document.querySelector('.product-track');
     const nextBtn = document.querySelector('.slider-nav-outside.next');
     const prevBtn = document.querySelector('.slider-nav-outside.prev');
 
-    // Kiểm tra và thực thi
-    if (track && nextBtn && prevBtn) {
+    if (!track || !nextBtn || !prevBtn) return;
 
-        // --- 1. CLONE ITEM (QUAN TRỌNG) ---
-        // Nhân bản danh sách sản phẩm để tạo hiệu ứng vô tận mượt mà
-        // Nếu ít hơn 6 thẻ, ta nhân đôi lên
-        const cards = Array.from(track.children);
-        if (cards.length > 0 && cards.length < 6) {
-            cards.forEach(card => {
-                const clone = card.cloneNode(true);
-                track.appendChild(clone);
-            });
-            // Nhân thêm lần nữa nếu cần thiết (để chắc chắn full màn hình)
-            cards.forEach(card => {
-                const clone = card.cloneNode(true);
-                track.appendChild(clone);
-            });
-        }
+    // --- PHẦN 1: BƠM CSS BẰNG JS (KHÔNG CẦN SỬA FILE CSS) ---
+    // Ép khung chứa dài vô tận và nằm ngang
+    track.style.display = 'flex';
+    track.style.flexWrap = 'nowrap'; 
+    track.style.width = 'max-content'; 
+    track.style.gap = '30px'; 
+    track.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+    track.style.willChange = 'transform'; // Tối ưu hiệu năng để ko giật
 
-        let isAnimating = false;
-        const gap = 30; // Khớp với CSS
-        // Lấy lại danh sách thẻ sau khi clone
-        let allCards = document.querySelectorAll('.product-card');
-        // Kích thước bước nhảy = Width thẻ đầu tiên + gap
-        let slideWidth = allCards[0].offsetWidth + gap;
-
-        // --- 2. HÀM NEXT ---
-        nextBtn.addEventListener('click', () => {
-            if (isAnimating) return;
-            isAnimating = true;
-
-            // Cập nhật lại width (phòng trường hợp resize)
-            slideWidth = track.firstElementChild.offsetWidth + gap;
-
-            // Hiệu ứng trượt
-            track.style.transition = 'transform 0.4s ease-in-out'; // 0.4s cho nhanh gọn
-            track.style.transform = `translateX(-${slideWidth}px)`;
-
-            // Sau khi trượt xong
-            track.addEventListener('transitionend', function () {
-                // Tắt hiệu ứng để thao tác ngầm
-                track.style.transition = 'none';
-
-                // Bốc thẻ đầu tiên bỏ xuống cuối cùng
-                track.appendChild(track.firstElementChild);
-
-                // Reset vị trí về 0 ngay lập tức
-                track.style.transform = 'translateX(0)';
-
-                // Mở khoá nút bấm
-                setTimeout(() => { isAnimating = false; }, 0);
-
-            }, { once: true }); // Chỉ chạy 1 lần mỗi cú click
-        });
-
-        // --- 3. HÀM PREV ---
-        prevBtn.addEventListener('click', () => {
-            if (isAnimating) return;
-            isAnimating = true;
-
-            slideWidth = track.firstElementChild.offsetWidth + gap;
-
-            // Tắt hiệu ứng để thao tác ngầm trước
-            track.style.transition = 'none';
-
-            // Bốc thẻ cuối cùng bỏ lên đầu
-            track.prepend(track.lastElementChild);
-
-            // Dịch đường ray sang trái 1 bước (để giấu thẻ vừa bốc lên)
-            track.style.transform = `translateX(-${slideWidth}px)`;
-
-            // Bắt trình duyệt vẽ lại (Reflow)
-            void track.offsetWidth;
-
-            // Bật hiệu ứng và trượt về 0 (Hiển thị thẻ đó ra)
-            track.style.transition = 'transform 0.4s ease-in-out';
-            track.style.transform = 'translateX(0)';
-
-            track.addEventListener('transitionend', function () {
-                isAnimating = false;
-            }, { once: true });
-        });
+    // Ép từng thẻ sản phẩm không được co lại (Fix lỗi mất khối)
+    function enforceItemStyle(item) {
+        item.style.flexShrink = '0';
+        item.style.flexGrow = '0';
+        item.style.height = 'auto'; 
+        // Nếu ảnh bị mất, ép hiển thị block
+        const img = item.querySelector('img');
+        if(img) img.style.display = 'block';
     }
 
-});
+    // Áp dụng style cho các thẻ gốc
+    Array.from(track.children).forEach(enforceItemStyle);
+
+
+    // --- PHẦN 2: LOGIC NHÂN BẢN (CLONE) ---
+    const originalItems = Array.from(track.children);
+    const originalCount = originalItems.length;
+
+    // Nếu ít sản phẩm, nhân bản lên 10 lần để tạo "vùng đệm" khổng lồ
+    // Giúp bấm Next/Prev thoải mái mà không chạm đáy
+    if (originalCount > 0) {
+        const fragment = document.createDocumentFragment();
+        for (let i = 0; i < 10; i++) { // Clone 10 bộ
+            originalItems.forEach(item => {
+                const clone = item.cloneNode(true);
+                enforceItemStyle(clone); // Nhớ ép style cho thẻ clone luôn
+                fragment.appendChild(clone);
+            });
+        }
+        track.appendChild(fragment);
+    }
+
+    // --- PHẦN 3: LOGIC TRƯỢT MƯỢT ---
+    let currentIndex = 0;
+    let isAnimating = false;
+
+    function getStep() {
+        const firstCard = track.firstElementChild;
+        // Lấy chiều rộng chính xác
+        const width = firstCard.getBoundingClientRect().width; 
+        const gap = 30; // Khớp với gap bên trên
+        return width + gap;
+    }
+
+    function updateSlide(animate = true) {
+        const step = getStep();
+        if (animate) {
+            track.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+        } else {
+            track.style.transition = 'none'; // Tắt hiệu ứng để nhảy tức thì
+        }
+        track.style.transform = `translateX(-${currentIndex * step}px)`;
+    }
+
+    // --- Xử lý Next ---
+    nextBtn.onclick = () => {
+        if (isAnimating) return;
+        isAnimating = true;
+        currentIndex++;
+        updateSlide(true);
+    };
+
+    // --- Xử lý Prev ---
+    prevBtn.onclick = () => {
+        if (isAnimating) return;
+        isAnimating = true;
+        
+        // Nếu đang ở vị trí 0 mà bấm lùi -> Nhảy tới vị trí tương đương ở xa tít
+        if (currentIndex <= 0) {
+            track.style.transition = 'none';
+            // Nhảy đến giữa danh sách clone (ví dụ vị trí số 10)
+            currentIndex = originalCount * 5; 
+            updateSlide(false);
+            
+            // Ép trình duyệt vẽ lại (Anti-jerk)
+            void track.offsetWidth; 
+            
+            // Sau đó mới cho lùi về
+            requestAnimationFrame(() => {
+                currentIndex--;
+                updateSlide(true);
+            });
+        } else {
+            currentIndex--;
+            updateSlide(true);
+        }
+    };
+
+    // --- Xử lý Reset Ngầm (Tránh đi quá giới hạn) ---
+    track.addEventListener('transitionend', (e) => {
+        if (e.target !== track) return;
+        isAnimating = false;
+
+        // Nếu đi quá xa về bên phải (gần hết thẻ clone)
+        // Ta âm thầm nhảy lùi về đầu nhưng vẫn giữ đúng hình ảnh đang xem
+        const totalItems = track.children.length;
+        if (currentIndex >= totalItems - originalCount) {
+            track.style.transition = 'none';
+            currentIndex = originalCount; // Reset về vị trí đầu của set clone
+            updateSlide(false);
+        }
+    });
+    
+    // Fix lỗi resize màn hình bị lệch
+    window.addEventListener('resize', () => {
+        updateSlide(false);
+    });
+}
 
 document.addEventListener('DOMContentLoaded', function () {
     // 1. Lấy các phần tử cần thiết

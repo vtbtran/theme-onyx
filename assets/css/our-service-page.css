@@ -577,7 +577,6 @@
     font-weight: 500; 
 }
 .proc-body {
-    text-align: center !important; 
     display: flex;
     flex-direction: column;
     justify-content: center;
