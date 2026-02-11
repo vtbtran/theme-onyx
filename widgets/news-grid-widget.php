@@ -200,51 +200,78 @@ class Onyx_News_Grid_Widget extends \Elementor\Widget_Base
     <?php
     }
 
-    private function render_post_card($settings)
+   private function render_post_card($settings)
     {
-        // 1. Lấy nội dung & tính thời gian đọc
-        $content = get_post_field('post_content', get_the_ID());
+        $post_id = get_the_ID();
+        $thumb_url = ''; // Biến chứa link ảnh cuối cùng
+
+        // 1. LẤY ẢNH TỪ ONYX EDITOR (ƯU TIÊN)
+        if (class_exists('Onyx_Editor_Database')) {
+            // Gọi hàm lấy dữ liệu (không cần sửa database.php)
+            $onyx_article = Onyx_Editor_Database::get_article_by_post_id($post_id);
+
+            if ($onyx_article && !empty($onyx_article['hero_image'])) {
+                $hero_data = $onyx_article['hero_image'];
+
+                // TRƯỜNG HỢP 1: Dữ liệu là Mảng (Do database.php đã json_decode)
+                if (is_array($hero_data)) {
+                    // Kiểm tra các key phổ biến chứa link ảnh
+                    if (isset($hero_data['url'])) {
+                        $thumb_url = $hero_data['url'];
+                    } elseif (isset($hero_data['link'])) {
+                        $thumb_url = $hero_data['link'];
+                    } elseif (isset($hero_data['src'])) {
+                        $thumb_url = $hero_data['src'];
+                    }
+                } 
+                // TRƯỜNG HỢP 2: Dữ liệu là Chuỗi (Link trực tiếp)
+                elseif (is_string($hero_data)) {
+                    $thumb_url = $hero_data;
+                }
+            }
+        }
+
+        // 2. FALLBACK (NẾU KHÔNG CÓ ẢNH TRONG ONYX)
+        // Nếu $thumb_url vẫn rỗng -> Lấy Featured Image của WordPress
+        if (empty($thumb_url)) {
+            if (has_post_thumbnail()) {
+                $thumb_url = get_the_post_thumbnail_url($post_id, 'medium_large');
+            } else {
+                // Nếu không có cả Featured Image -> Lấy ảnh giữ chỗ
+                $thumb_url = class_exists('\Elementor\Utils') 
+                    ? \Elementor\Utils::get_placeholder_image_src() 
+                    : 'https://via.placeholder.com/600x400/cccccc/969696?text=No+Image';
+            }
+        }
+
+        // 3. XỬ LÝ NỘI DUNG (Title, Excerpt...)
+        $content = get_post_field('post_content', $post_id);
         $word_count = str_word_count(strip_tags($content));
         $reading_time = ceil($word_count / 200);
 
-        // 2. Xử lý Ảnh (Đã đồng bộ với Ajax để có hiệu ứng Hover)
-        $thumb_url = '';
-
-        // Lấy URL ảnh placeholder chuẩn của Elementor (nếu có)
-        $placeholder_img = 'https://via.placeholder.com/600x400/cccccc/969696?text=No+Image';
-        if (class_exists('\Elementor\Utils')) {
-            $placeholder_img = \Elementor\Utils::get_placeholder_image_src();
-        }
-
-        // Lấy URL ảnh đại diện
-        if (has_post_thumbnail()) {
-            $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'medium_large');
-        } else {
-            $thumb_url = $placeholder_img;
-        }
-
-        // 3. Xử lý Mô tả ngắn (Excerpt)
-        $excerpt = get_the_excerpt();
+        $excerpt = get_the_excerpt($post_id);
         if (empty($excerpt)) {
             $excerpt = wp_trim_words(strip_tags($content), 20, '...');
         } else {
             $excerpt = wp_trim_words($excerpt, 20, '...');
         }
     ?>
-        <div class="news-item-card js-news-item" style="opacity: 1; visibility: visible;">
+        <div class="news-item-card js-news-item">
             <div class="card-thumb">
-                <a href="<?php the_permalink(); ?>">
+                <a href="<?php echo get_permalink($post_id); ?>">
                     <img src="<?php echo esc_url($thumb_url); ?>"
-                        alt="<?php the_title_attribute(); ?>"
+                        alt="<?php echo esc_attr(get_the_title($post_id)); ?>"
                         class="attachment-medium_large size-medium_large wp-post-image"
-                        style="width:100%; height:auto; object-fit:cover; display:block; min-height: 200px; background-color: #eee;">
+                        style="width:100%; height:240px; object-fit:cover; display:block; background-color: #f0f0f0;">
                 </a>
             </div>
             <div class="card-body">
-                <div class="card-meta"><?php echo get_the_date('F j, Y'); ?> • <?php echo $reading_time; ?> min read</div>
-                <h3 class="card-title js-search-target"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                <div class="card-meta"><?php echo get_the_date('F j, Y', $post_id); ?> • <?php echo $reading_time; ?> min read</div>
+                <h3 class="card-title js-search-target">
+                    <a href="<?php echo get_permalink($post_id); ?>"><?php echo get_the_title($post_id); ?></a>
+                </h3>
                 <div class="card-desc js-search-target"><?php echo $excerpt; ?></div>
-                <a href="<?php the_permalink(); ?>" class="btn-card-full">
+                <a href="<?php echo get_permalink($post_id); ?>" class="btn-card-full">
                     <span class="icon-box">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="7" y1="7" x2="17" y2="17"></line>
@@ -255,6 +282,6 @@ class Onyx_News_Grid_Widget extends \Elementor\Widget_Base
                 </a>
             </div>
         </div>
-<?php
+    <?php
     }
 }

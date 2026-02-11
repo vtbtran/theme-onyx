@@ -1,136 +1,159 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Đảm bảo chạy sau khi mọi thứ tải xong (để tính toán kích thước đúng)
-    if (document.readyState === 'complete') {
-        initSliderAllInOne();
-    } else {
-        window.addEventListener('load', initSliderAllInOne);
-    }
-});
-
-function initSliderAllInOne() {
-    const track = document.querySelector('.product-track');
-    const nextBtn = document.querySelector('.slider-nav-outside.next');
-    const prevBtn = document.querySelector('.slider-nav-outside.prev');
-
-    if (!track || !nextBtn || !prevBtn) return;
-
-    // --- PHẦN 1: BƠM CSS BẰNG JS (KHÔNG CẦN SỬA FILE CSS) ---
-    // Ép khung chứa dài vô tận và nằm ngang
-    track.style.display = 'flex';
-    track.style.flexWrap = 'nowrap'; 
-    track.style.width = 'max-content'; 
-    track.style.gap = '30px'; 
-    track.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
-    track.style.willChange = 'transform'; // Tối ưu hiệu năng để ko giật
-
-    // Ép từng thẻ sản phẩm không được co lại (Fix lỗi mất khối)
-    function enforceItemStyle(item) {
-        item.style.flexShrink = '0';
-        item.style.flexGrow = '0';
-        item.style.height = 'auto'; 
-        // Nếu ảnh bị mất, ép hiển thị block
-        const img = item.querySelector('img');
-        if(img) img.style.display = 'block';
-    }
-
-    // Áp dụng style cho các thẻ gốc
-    Array.from(track.children).forEach(enforceItemStyle);
-
-
-    // --- PHẦN 2: LOGIC NHÂN BẢN (CLONE) ---
-    const originalItems = Array.from(track.children);
-    const originalCount = originalItems.length;
-
-    // Nếu ít sản phẩm, nhân bản lên 10 lần để tạo "vùng đệm" khổng lồ
-    // Giúp bấm Next/Prev thoải mái mà không chạm đáy
-    if (originalCount > 0) {
-        const fragment = document.createDocumentFragment();
-        for (let i = 0; i < 10; i++) { // Clone 10 bộ
-            originalItems.forEach(item => {
-                const clone = item.cloneNode(true);
-                enforceItemStyle(clone); // Nhớ ép style cho thẻ clone luôn
-                fragment.appendChild(clone);
-            });
-        }
-        track.appendChild(fragment);
-    }
-
-    // --- PHẦN 3: LOGIC TRƯỢT MƯỢT ---
-    let currentIndex = 0;
-    let isAnimating = false;
-
-    function getStep() {
-        const firstCard = track.firstElementChild;
-        // Lấy chiều rộng chính xác
-        const width = firstCard.getBoundingClientRect().width; 
-        const gap = 30; // Khớp với gap bên trên
-        return width + gap;
-    }
-
-    function updateSlide(animate = true) {
-        const step = getStep();
-        if (animate) {
-            track.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
-        } else {
-            track.style.transition = 'none'; // Tắt hiệu ứng để nhảy tức thì
-        }
-        track.style.transform = `translateX(-${currentIndex * step}px)`;
-    }
-
-    // --- Xử lý Next ---
-    nextBtn.onclick = () => {
-        if (isAnimating) return;
-        isAnimating = true;
-        currentIndex++;
-        updateSlide(true);
-    };
-
-    // --- Xử lý Prev ---
-    prevBtn.onclick = () => {
-        if (isAnimating) return;
-        isAnimating = true;
+(function() {
+    function initSliderAllInOne() {
+        const sliders = document.querySelectorAll('.product-slider-outer');
         
-        // Nếu đang ở vị trí 0 mà bấm lùi -> Nhảy tới vị trí tương đương ở xa tít
-        if (currentIndex <= 0) {
-            track.style.transition = 'none';
-            // Nhảy đến giữa danh sách clone (ví dụ vị trí số 10)
-            currentIndex = originalCount * 5; 
-            updateSlide(false);
-            
-            // Ép trình duyệt vẽ lại (Anti-jerk)
-            void track.offsetWidth; 
-            
-            // Sau đó mới cho lùi về
-            requestAnimationFrame(() => {
-                currentIndex--;
+        sliders.forEach(sliderContainer => {
+            if (sliderContainer.classList.contains('onyx-init-done')) return;
+            sliderContainer.classList.add('onyx-init-done');
+            const track = sliderContainer.querySelector('.product-track');
+            const nextBtn = sliderContainer.querySelector('.slider-nav-outside.next');
+            const prevBtn = sliderContainer.querySelector('.slider-nav-outside.prev');
+            if (!track || !nextBtn || !prevBtn) return;
+            track.style.display = 'flex';
+            track.style.flexWrap = 'nowrap';
+            track.style.width = 'max-content';
+            track.style.gap = '30px';
+            track.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+            track.style.willChange = 'transform';
+
+            function enforceItemStyle(item) {
+                item.style.flexShrink = '0';
+                item.style.flexGrow = '0';
+                item.style.height = 'auto';
+                const rect = item.getBoundingClientRect();
+                if (rect.width < 50) item.style.minWidth = '300px';
+                
+                const img = item.querySelector('img');
+                if(img) { img.style.display = 'block'; img.style.width = '100%'; }
+            }
+
+            const originalItems = Array.from(track.children);
+            originalItems.forEach(enforceItemStyle);
+
+            if (originalItems.length > 0) {
+                const fragment = document.createDocumentFragment();
+                for (let i = 0; i < 4; i++) { 
+                    originalItems.forEach(item => {
+                        const clone = item.cloneNode(true);
+                        enforceItemStyle(clone);
+                        clone.classList.add('is-clone');
+                        fragment.appendChild(clone);
+                    });
+                }
+                track.appendChild(fragment);
+            }
+            let currentIndex = 0;
+            let isAnimating = false;
+            let stepSize = 0;
+
+            function updateMetrics() {
+                const firstCard = track.firstElementChild;
+                if (firstCard) {
+                    const rect = firstCard.getBoundingClientRect();
+                    const width = rect.width > 50 ? rect.width : 300; 
+                    stepSize = width + 30;
+                }
+                updateSlide(false);
+            }
+
+            function updateSlide(animate = true) {
+                if (stepSize === 0) updateMetrics();
+                track.style.transition = animate ? 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)' : 'none';
+                track.style.transform = `translateX(-${currentIndex * stepSize}px)`;
+            }
+
+            // D. SỰ KIỆN NÚT BẤM
+            nextBtn.onclick = (e) => {
+                e.preventDefault();
+                if (isAnimating) return;
+                isAnimating = true;
+                currentIndex++;
                 updateSlide(true);
+            };
+
+            prevBtn.onclick = (e) => {
+                e.preventDefault();
+                if (isAnimating) return;
+                isAnimating = true;
+                if (currentIndex <= 0) {
+                    track.style.transition = 'none';
+                    currentIndex = originalItems.length * 2; 
+                    updateSlide(false);
+                    void track.offsetWidth; 
+                    requestAnimationFrame(() => {
+                        currentIndex--;
+                        updateSlide(true);
+                    });
+                } else {
+                    currentIndex--;
+                    updateSlide(true);
+                }
+            };
+
+            track.addEventListener('transitionend', (e) => {
+                if (e.target !== track) return;
+                isAnimating = false;
+                if (currentIndex >= track.children.length - originalItems.length) {
+                    track.style.transition = 'none';
+                    currentIndex = originalItems.length; 
+                    updateSlide(false);
+                }
             });
-        } else {
-            currentIndex--;
-            updateSlide(true);
-        }
-    };
 
-    // --- Xử lý Reset Ngầm (Tránh đi quá giới hạn) ---
-    track.addEventListener('transitionend', (e) => {
-        if (e.target !== track) return;
-        isAnimating = false;
+            // E. FIX LỖI RESIZE
+            if ('ResizeObserver' in window) {
+                new ResizeObserver(() => updateMetrics()).observe(sliderContainer);
+            } else {
+                window.addEventListener('resize', updateMetrics);
+            }
+            
+            // Khởi chạy lần đầu & check lại sau 0.5s
+            updateMetrics();
+            setTimeout(updateMetrics, 500);
+        });
+    }
 
-        // Nếu đi quá xa về bên phải (gần hết thẻ clone)
-        // Ta âm thầm nhảy lùi về đầu nhưng vẫn giữ đúng hình ảnh đang xem
-        const totalItems = track.children.length;
-        if (currentIndex >= totalItems - originalCount) {
-            track.style.transition = 'none';
-            currentIndex = originalCount; // Reset về vị trí đầu của set clone
-            updateSlide(false);
+    // --- 2. CƠ CHẾ KÍCH HOẠT THÔNG MINH (QUAN TRỌNG) ---
+    
+    // Cách 1: Chạy khi vào trang lần đầu
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initSliderAllInOne);
+    } else {
+        initSliderAllInOne();
+    }
+
+    // Cách 2: Chạy khi Elementor load xong (Dành cho WordPress)
+    if (typeof jQuery !== 'undefined') {
+        jQuery(window).on('elementor/frontend/init', function() {
+            if (typeof elementorFrontend !== 'undefined') {
+                elementorFrontend.hooks.addAction('frontend/element_ready/onyx_product_slider.default', initSliderAllInOne);
+            }
+        });
+    }
+
+    // Cách 3: CAMERA GIÁM SÁT (MutationObserver) - Fix lỗi chuyển trang bị mất khối
+    const observer = new MutationObserver(function(mutations) {
+        let shouldScan = false;
+        mutations.forEach(mutation => {
+            if (mutation.addedNodes.length > 0) {
+                mutation.addedNodes.forEach(node => {
+                    // Nếu phát hiện có slider mới xuất hiện trong DOM
+                    if (node.nodeType === 1 && (node.classList.contains('product-slider-outer') || node.querySelector('.product-slider-outer'))) {
+                        shouldScan = true;
+                    }
+                });
+            }
+        });
+        if (shouldScan) {
+            // Chờ 1 chút cho DOM ổn định rồi chạy lại
+            setTimeout(initSliderAllInOne, 100);
         }
     });
     
-    // Fix lỗi resize màn hình bị lệch
-    window.addEventListener('resize', () => {
-        updateSlide(false);
-    });
-}
+    // Bắt đầu giám sát toàn bộ trang web
+    observer.observe(document.body, { childList: true, subtree: true });
+
+})();
 
 document.addEventListener('DOMContentLoaded', function () {
     // 1. Lấy các phần tử cần thiết

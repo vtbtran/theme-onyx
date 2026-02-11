@@ -59,7 +59,6 @@ class Onyx_News_Hero_Widget extends \Elementor\Widget_Base
     {
         $settings = $this->get_settings_for_display();
 
-        // Cấu hình truy vấn lấy 1 bài viết mới nhất
         $args = [
             'post_type'      => 'post',
             'posts_per_page' => 1,
@@ -75,13 +74,32 @@ class Onyx_News_Hero_Widget extends \Elementor\Widget_Base
         if ($query->have_posts()) :
             while ($query->have_posts()) : $query->the_post();
 
-                // Tính toán thời gian đọc (giả định 200 từ/phút)
-                $content = get_post_field('post_content', get_the_ID());
-                $word_count = str_word_count(strip_tags($content));
-                $reading_time = ceil($word_count / 200);
-
-                // Lấy link bài viết
+                $post_id = get_the_ID();
                 $post_link = get_permalink();
+
+                // --- 1. XỬ LÝ ẢNH ---
+                $thumb_url = '';
+                if (class_exists('Onyx_Editor_Database')) {
+                    $onyx_article = Onyx_Editor_Database::get_article_by_post_id($post_id);
+                    if ($onyx_article && !empty($onyx_article['hero_image'])) {
+                        $hero_data = $onyx_article['hero_image'];
+                        if (is_array($hero_data)) {
+                            if (isset($hero_data['url'])) $thumb_url = $hero_data['url'];
+                            elseif (isset($hero_data['src'])) $thumb_url = $hero_data['src'];
+                        } elseif (is_string($hero_data)) {
+                            $thumb_url = $hero_data;
+                        }
+                    }
+                }
+                if (empty($thumb_url)) {
+                    $thumb_url = has_post_thumbnail() ? get_the_post_thumbnail_url($post_id, 'full') : \Elementor\Utils::get_placeholder_image_src();
+                }
+
+                // --- 2. TÍNH CONTENT ---
+                $content = get_post_field('post_content', $post_id);
+                $reading_time = ceil(str_word_count(strip_tags($content)) / 200);
+                $excerpt = wp_trim_words(get_the_excerpt() ?: $content, 25, '...');
+
 ?>
                 <section class="news-header-section">
                     <div class="container">
@@ -90,11 +108,9 @@ class Onyx_News_Hero_Widget extends \Elementor\Widget_Base
                         <div class="latest-news-card">
                             <div class="latest-img">
                                 <a href="<?php echo esc_url($post_link); ?>">
-                                    <?php if (has_post_thumbnail()) : ?>
-                                        <?php the_post_thumbnail('full'); ?>
-                                    <?php else : ?>
-                                        <img src="<?php echo \Elementor\Utils::get_placeholder_image_src(); ?>" alt="Hero News">
-                                    <?php endif; ?>
+                                    <img src="<?php echo esc_url($thumb_url); ?>"
+                                        alt="<?php echo esc_attr(get_the_title()); ?>"
+                                        style="width:100%; height:100%; object-fit:cover; display:block; border-radius: 16px;">
                                 </a>
                             </div>
                             <div class="latest-content">
@@ -109,7 +125,7 @@ class Onyx_News_Hero_Widget extends \Elementor\Widget_Base
                                 </h2>
 
                                 <div class="latest-excerpt">
-                                    <?php echo wp_trim_words(get_the_excerpt(), 25, '...'); ?>
+                                    <?php echo $excerpt; ?>
                                 </div>
 
                                 <?php if (! empty($settings['btn_text'])) : ?>
@@ -130,7 +146,7 @@ class Onyx_News_Hero_Widget extends \Elementor\Widget_Base
                 </section>
 <?php
             endwhile;
-            wp_reset_postdata(); // Quan trọng để không ảnh hưởng đến các query khác trên trang
+            wp_reset_postdata();
         endif;
     }
 }

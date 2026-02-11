@@ -519,3 +519,25 @@ body:not(.elementor-editor-active) .onyx-animate-active {
     animation: none !important;
     transform: none !important;
 }
+
+/* Style chung cho thông báo Contact Form 7 */
+.wpcf7 form .wpcf7-response-output {
+    border: none !important; /* Bỏ viền xanh mặc định */
+    background: transparent !important; /* Bỏ nền */
+    padding: 10px 0 !important; /* Căn chỉnh khoảng cách */
+    margin: 20px 0 0 0 !important;
+    text-align: center; /* Căn giữa chữ */
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Style riêng cho thông báo Thành công (Gửi được) */
+.wpcf7 form .wpcf7-mail-sent-ok {
+    color: #4cd964 !important; /* Màu xanh lá sáng (hoặc đổi thành #fff nếu muốn trắng) */
+}
+
+/* Style riêng cho thông báo Lỗi (Gửi thất bại) */
+.wpcf7 form .wpcf7-validation-errors,
+.wpcf7 form .wpcf7-spam-blocked {
+    color: #ff3b30 !important; /* Màu đỏ báo lỗi */
+}

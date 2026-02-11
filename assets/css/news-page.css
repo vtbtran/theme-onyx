@@ -178,6 +178,7 @@
 .search-icon svg {
     width: 18px;
     height: 18px;
+    margin-top: 4px;
 }
 
 .search-field {
@@ -709,4 +710,63 @@ body.elementor-editor-active .newsletter-section {
     transform: none !important;   /* Bỏ hiệu ứng bay lên */
     transition: none !important;  /* Bỏ độ trễ */
     visibility: visible !important;
+}
+
+.latest-news-card .latest-img img {
+    border-radius: 16px 16px 0 0; /* Bo tròn góc trên-trái và trên-phải, góc dưới để vuông */
+}
+/* =================================================================
+   FIX LỖI MẤT NỘI DUNG KHI THU GỌN SIDEBAR (PHIÊN BẢN MẠNH NHẤT)
+   ================================================================= */
+
+/* 1. Ép tất cả mọi thứ trong vùng nội dung Elementor phải hiện ra */
+/* Sử dụng selector * để quét sạch mọi phần tử con */
+body.elementor-editor-active .elementor-section-wrap * {
+    opacity: 1 !important;
+    visibility: visible !important;
+    animation: none !important;      /* Tắt mọi chuyển động */
+    transition: none !important;     /* Tắt mọi độ trễ */
+    transform: none !important;      /* Cấm bay nhảy/dịch chuyển */
+}
+
+/* 2. Chống sập khung (Collapse) do JS tính sai chiều rộng/cao */
+body.elementor-editor-active .elementor-container, 
+body.elementor-editor-active .elementor-row,
+body.elementor-editor-active .elementor-widget-container {
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;    /* Cấm ẩn nội dung tràn ra */
+    display: block !important;       /* Ép hiển thị dạng khối */
+}
+
+/* 3. Khôi phục lại bố cục Grid/Flex cho các phần tử đặc biệt */
+/* Vì dòng display: block ở trên có thể làm vỡ layout ngang, ta cần set lại cho grid/flex */
+body.elementor-editor-active .news-grid,
+body.elementor-editor-active .product-track,
+body.elementor-editor-active .about-container,
+body.elementor-editor-active .newsletter-container,
+body.elementor-editor-active .recent-header-row,
+body.elementor-editor-active .elementor-section,
+body.elementor-editor-active .elementor-container {
+    display: flex !important;
+}
+
+/* Riêng Grid thì phải là Grid */
+body.elementor-editor-active .news-grid {
+    display: grid !important;
+}
+
+/* 4. Fix riêng cho Slider (Tránh bị JS bóp về 0px) */
+body.elementor-editor-active .product-track {
+    width: max-content !important; /* Ép dài ra để thấy nội dung */
+    min-width: 100% !important;
+}
+body.elementor-editor-active .product-slider-outer {
+    overflow-x: auto !important;   /* Cho phép cuộn ngang nếu dài quá trong lúc sửa */
+}
+
+/* 5. Đảm bảo Z-Index (Nội dung phải nằm trên nền) */
+body.elementor-editor-active .elementor-widget {
+    z-index: 99 !important;
+    position: relative !important;
 }
