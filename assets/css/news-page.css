@@ -515,9 +515,76 @@
     border: none !important;
     color: #faff00;
 }
+
 /* =========================================
-   RESPONSIVE MOBILE
+   ONYX PAGINATION STYLE
    ========================================= */
+
+.onyx-pagination-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 50px 0;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Style chung cho các con số và nút điều hướng */
+.onyx-pagination-wrapper .page-numbers {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #e5e7eb; /* Viền xám nhạt đồng bộ với Card */
+    border-radius: 8px;
+    color: #111827;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+/* Trang hiện tại */
+.onyx-pagination-wrapper .page-numbers.current {
+    background: #111827; /* Nền đen đậm */
+    color: #ffffff;
+    border-color: #111827;
+}
+
+/* Hiệu ứng Hover cho các nút không phải trang hiện tại */
+.onyx-pagination-wrapper .page-numbers:hover:not(.current) {
+    border-color: #f97316; /* Đổi sang màu cam thương hiệu */
+    color: #f97316;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.1);
+}
+
+/* Style cho nút Prev/Next (có icon) */
+.onyx-pagination-wrapper .prev.page-numbers,
+.onyx-pagination-wrapper .next.page-numbers {
+    background: #f4f6f8; /* Nền xám nhạt cho nút điều hướng */
+}
+
+/* Dấu ba chấm (...) */
+.onyx-pagination-wrapper .dots {
+    border: none;
+    color: #9ca3af;
+    cursor: default;
+}
+
+/* Responsive cho Mobile */
+@media (max-width: 768px) {
+    .onyx-pagination-wrapper {
+        gap: 6px;
+    }
+    .onyx-pagination-wrapper .page-numbers {
+        width: 38px;
+        height: 38px;
+        font-size: 14px;
+    }
+}
 
 @media (max-width: 991px) {
 

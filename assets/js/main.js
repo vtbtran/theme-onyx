@@ -451,3 +451,28 @@ document.addEventListener("DOMContentLoaded", function() {
         observer.observe(el);
     });
 });
+
+jQuery(document).ready(function($) {
+    // Sử dụng 'body' để ủy quyền sự kiện (event delegation) 
+    // giúp script vẫn chạy tốt ngay cả khi widget được load qua Elementor Editor
+    $('body').on('click', '.onyx-thumb-item', function() {
+        // 1. Lấy link ảnh to từ thẻ data-full-image
+        var fullImageUrl = $(this).attr('data-full-image');
+        
+        if (!fullImageUrl) return;
+
+        // 2. Cập nhật trạng thái Active (viền cam) cho thumbnail
+        $('.onyx-thumb-item').removeClass('active');
+        $(this).addClass('active');
+
+        // 3. Thay đổi ảnh chính với hiệu ứng mượt
+        var $mainImage = $('.onyx-main-image img');
+        
+        $mainImage.css('opacity', '0.4'); // Làm mờ nhanh
+        
+        setTimeout(function() {
+            $mainImage.attr('src', fullImageUrl); // Đổi nguồn ảnh
+            $mainImage.css('opacity', '1'); // Hiện rõ lại
+        }, 150);
+    });
+});

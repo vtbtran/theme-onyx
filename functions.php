@@ -11,6 +11,8 @@ function theme_onyx_setup()
         'flex-width'  => true,
     ));
 
+    add_theme_support('woocommerce');
+
     // Đăng ký vị trí Menu
     register_nav_menus(array(
         'primary' => __('Primary Menu', 'theme-onyx'),
@@ -49,12 +51,12 @@ function theme_onyx_scripts()
         array('onyx-main-style'),
         '1.0.0'
     );
-    // 4.1. CSS cho Bài viết chi tiết (Single Post)
+    // 4.1. CSS cho Sản phẩm chi tiết (Single Product)
     if (is_single()) {
         wp_enqueue_style(
-            'onyx-single-post-css', 
-            get_template_directory_uri() . '/assets/css/single-page.css', 
-            array('onyx-main-style'), 
+            'onyx-single-product-css',
+            get_template_directory_uri() . '/assets/css/single-product.css',
+            array('onyx-main-style'),
             time()
         );
     }
@@ -225,9 +227,30 @@ function register_custom_elementor_widgets($widgets_manager)
     $file_footer = get_template_directory() . '/widgets/footer-widget.php';
     if (file_exists($file_footer)) {
         require_once($file_footer);
-        if ( class_exists( 'Onyx_Footer_Widget' ) ) {
+        if (class_exists('Onyx_Footer_Widget')) {
             $widgets_manager->register(new \Onyx_Footer_Widget());
         }
+    }
+
+    $file_product_info = get_template_directory() . '/widgets/product-info.php';
+    if (file_exists($file_product_info)) {
+        require_once($file_product_info);
+        // Tên class trong file product-info.php phải là Onyx_Product_Info_Widget
+        if (class_exists('Onyx_Product_Info_Widget')) {
+            $widgets_manager->register(new \Onyx_Product_Info_Widget());
+        }
+    }
+
+    $file_tabs = get_template_directory() . '/widgets/product-tabs.php';
+    if (file_exists($file_tabs)) {
+        require_once($file_tabs);
+        $widgets_manager->register(new \Onyx_Product_Tabs_Widget());
+    }
+
+    $file_related = get_template_directory() . '/widgets/related-products.php';
+    if (file_exists($file_related)) {
+        require_once($file_related);
+        $widgets_manager->register(new \Onyx_Related_Products_Widget());
     }
 }
 add_action('elementor/widgets/register', 'register_custom_elementor_widgets');
@@ -260,57 +283,7 @@ function onyx_force_restore_mailpoet_permissions()
         }
     }
 }
-/* --- CẤU HÌNH GIAO DIỆN BÀI VIẾT (NEWS TEMPLATE) --- */
 
-// 1. Tạo Metabox chọn giao diện
-function onyx_add_post_layout_metabox() {
-    add_meta_box(
-        'onyx_post_layout',           // ID
-        'Cấu hình Giao diện',         // Tiêu đề hiển thị
-        'onyx_render_layout_metabox', // Hàm hiển thị HTML
-        'post',                       // Áp dụng cho bài viết (Post)
-        'side',                       // Vị trí: Cột bên phải
-        'default'
-    );
-}
-add_action('add_meta_boxes', 'onyx_add_post_layout_metabox');
-
-// 2. Hiển thị HTML của Metabox
-function onyx_render_layout_metabox($post) {
-    // Lấy giá trị đã lưu trong Database
-    $value = get_post_meta($post->ID, '_onyx_post_layout', true);
-    ?>
-    <label for="onyx_post_layout_select" style="font-weight:600;">Chọn kiểu hiển thị:</label>
-    <select name="onyx_post_layout" id="onyx_post_layout_select" style="width:100%; margin-top:10px; padding: 5px;">
-        <option value="style-1" <?php selected($value, 'style-1'); ?>>Style 1: Có Sidebar (Chuẩn)</option>
-        <option value="style-2" <?php selected($value, 'style-2'); ?>>Style 2: Full Width (Hero)</option>
-    </select>
-    <p style="font-size:12px; color:#666; margin-top:5px;">
-        *Style 1: Nội dung trái, Sidebar phải.<br>
-        *Style 2: Ảnh nền to, nội dung ở giữa.
-    </p>
-    <?php
-}
-
-// 3. Lưu dữ liệu khi bấm "Cập nhật" bài viết
-function onyx_save_post_layout($post_id) {
-    if (array_key_exists('onyx_post_layout', $_POST)) {
-        update_post_meta(
-            $post_id,
-            '_onyx_post_layout',
-            sanitize_text_field($_POST['onyx_post_layout'])
-        );
-    }
-}
-add_action('save_post', 'onyx_save_post_layout');
-
-// --- PHẦN XỬ LÝ AJAX LOAD MORE (ĐÃ SỬA LỖI HOÀN TOÀN) ---
-add_action('wp_ajax_onyx_load_more_posts', 'onyx_load_more_posts_handler');
-add_action('wp_ajax_nopriv_onyx_load_more_posts', 'onyx_load_more_posts_handler');
-
-/* --- DÁN ĐÈ VÀO FUNCTIONS.PHP (CODE KIỂM TRA LỖI) --- */
-
-/* --- DÁN VÀO CUỐI FILE FUNCTIONS.PHP (CODE ĐÃ SỬA LỖI HIỂN THỊ) --- */
 
 // 1. Xóa các action cũ để tránh xung đột
 remove_action('wp_ajax_onyx_load_more_posts', 'onyx_load_more_posts_handler');
@@ -320,7 +293,8 @@ remove_action('wp_ajax_nopriv_onyx_load_more_posts', 'onyx_load_more_posts_handl
 add_action('wp_ajax_onyx_load_more_posts', 'onyx_load_more_posts_handler');
 add_action('wp_ajax_nopriv_onyx_load_more_posts', 'onyx_load_more_posts_handler');
 
-function onyx_load_more_posts_handler() {
+function onyx_load_more_posts_handler()
+{
     // 1. Nhận dữ liệu từ Ajax
     $offset = isset($_POST['offset']) ? intval($_POST['offset']) : 0;
     $card_btn_text = isset($_POST['card_btn_text']) ? sanitize_text_field($_POST['card_btn_text']) : 'Read More';
@@ -333,14 +307,11 @@ function onyx_load_more_posts_handler() {
         'posts_per_page' => -1, // Mặc định lấy hết bài còn lại
     ];
 
-    // --- LOGIC QUAN TRỌNG: PHÂN BIỆT TÌM KIẾM VS LOAD MORE ---
     if (!empty($keyword)) {
-        // Nếu có từ khóa -> Chế độ TÌM KIẾM
-        $args['s'] = $keyword; // Tham số tìm kiếm của WordPress
-        $args['offset'] = 0;   // Tìm kiếm thì phải tìm từ đầu, không bỏ qua bài nào
+        $args['s'] = $keyword;
+        $args['offset'] = 0;
     } else {
-        // Nếu không có từ khóa -> Chế độ LOAD MORE
-        $args['offset'] = $offset; // Bỏ qua số bài đã hiện
+        $args['offset'] = $offset;
     }
 
     $query = new WP_Query($args);
@@ -348,17 +319,17 @@ function onyx_load_more_posts_handler() {
     // 3. Xuất HTML
     if ($query->have_posts()) :
         while ($query->have_posts()) : $query->the_post();
-            
+
             // Xử lý dữ liệu hiển thị (Giữ nguyên logic cũ của bạn)
             $content = get_post_field('post_content', get_the_ID());
             $word_count = str_word_count(strip_tags($content));
             $reading_time = ceil($word_count / 200);
-            
+
             $thumb_url = '';
             // Ưu tiên dùng Placeholder của Elementor nếu có
             $placeholder_img = 'https://via.placeholder.com/600x400/cccccc/969696?text=No+Image';
             if (class_exists('\Elementor\Utils')) {
-                 $placeholder_img = \Elementor\Utils::get_placeholder_image_src(); 
+                $placeholder_img = \Elementor\Utils::get_placeholder_image_src();
             }
 
             if (has_post_thumbnail()) {
@@ -370,15 +341,15 @@ function onyx_load_more_posts_handler() {
             $excerpt = get_the_excerpt();
             if (empty($excerpt)) $excerpt = wp_trim_words(strip_tags($content), 20, '...');
             else $excerpt = wp_trim_words($excerpt, 20, '...');
-            ?>
-            
+?>
+
             <div class="news-item-card js-news-item" style="opacity: 1; visibility: visible;">
                 <div class="card-thumb">
                     <a href="<?php the_permalink(); ?>">
-                        <img src="<?php echo esc_url($thumb_url); ?>" 
-                             alt="<?php the_title_attribute(); ?>" 
-                             class="attachment-medium_large size-medium_large wp-post-image"
-                             style="width:100%; height:auto; object-fit:cover; display:block; min-height: 200px; background-color: #eee;">
+                        <img src="<?php echo esc_url($thumb_url); ?>"
+                            alt="<?php the_title_attribute(); ?>"
+                            class="attachment-medium_large size-medium_large wp-post-image"
+                            style="width:100%; height:auto; object-fit:cover; display:block; min-height: 200px; background-color: #eee;">
                     </a>
                 </div>
                 <div class="card-body">
@@ -387,18 +358,39 @@ function onyx_load_more_posts_handler() {
                     <div class="card-desc js-search-target"><?php echo $excerpt; ?></div>
                     <a href="<?php the_permalink(); ?>" class="btn-card-full">
                         <span class="icon-box">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="7" x2="17" y2="17"></line><polyline points="17 7 17 17 7 17"></polyline></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="7" y1="7" x2="17" y2="17"></line>
+                                <polyline points="17 7 17 17 7 17"></polyline>
+                            </svg>
                         </span>
                         <?php echo esc_html($card_btn_text); ?>
                     </a>
                 </div>
             </div>
 
-            <?php
+<?php
         endwhile;
     else:
-        // Nếu không tìm thấy bài nào thì không in gì cả (để JS xử lý hiển thị thông báo)
     endif;
     wp_reset_postdata();
     die();
 }
+
+function create_product_cpt()
+{
+    register_post_type(
+        'product',
+        array(
+            'labels'      => array(
+                'name'          => __('Products', 'textdomain'),
+                'singular_name' => __('Product', 'textdomain'),
+            ),
+            'public'      => true,
+            'has_archive' => true,
+            'rewrite'     => array('slug' => 'products'),
+            'supports'    => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
+            'show_in_rest' => true,
+        )
+    );
+}
+add_action('init', 'create_product_cpt');

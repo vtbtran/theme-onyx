@@ -7,14 +7,17 @@ class Onyx_News_Grid_Widget extends \Elementor\Widget_Base
     {
         return 'onyx_news_grid';
     }
+
     public function get_title()
     {
         return 'Onyx: News Grid';
     }
+
     public function get_icon()
     {
         return 'eicon-posts-grid';
     }
+
     public function get_categories()
     {
         return ['general'];
@@ -30,14 +33,11 @@ class Onyx_News_Grid_Widget extends \Elementor\Widget_Base
 
         // Query Settings
         $this->start_controls_section('sec_query', ['label' => 'Cấu hình bài viết', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
-        $this->add_control('posts_per_page', ['label' => 'Số lượng ban đầu', 'type' => \Elementor\Controls_Manager::NUMBER, 'default' => 6]);
+        $this->add_control('posts_per_page', ['label' => 'Số bài mỗi trang', 'type' => \Elementor\Controls_Manager::NUMBER, 'default' => 6]);
         $this->add_control('card_btn_text', ['label' => 'Chữ nút (Mỗi thẻ)', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Read More']);
         $this->end_controls_section();
 
-        // Footer Button
-        $this->start_controls_section('sec_footer', ['label' => 'Nút View All', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
-        $this->add_control('btn_text', ['label' => 'Chữ nút', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'View All']);
-        $this->end_controls_section();
+        // (Phần Footer Button "View All" đã được loại bỏ vì thay bằng Phân trang)
     }
 
     protected function render()
@@ -45,19 +45,21 @@ class Onyx_News_Grid_Widget extends \Elementor\Widget_Base
         $settings = $this->get_settings_for_display();
         $widget_id = $this->get_id();
 
-        // 1. QUERY BAN ĐẦU: Chỉ lấy số lượng giới hạn (ví dụ 6 bài)
+        // 1. XỬ LÝ BIẾN PHÂN TRANG (PAGED)
+        // WordPress dùng 'page' cho Trang chủ tĩnh và 'paged' cho các trang khác
+        $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+        if (is_front_page()) {
+            $paged = (get_query_var('page')) ? get_query_var('page') : 1;
+        }
+
         $ppp = (int) $settings['posts_per_page'];
         $args = [
             'post_type'      => 'post',
             'posts_per_page' => $ppp,
             'post_status'    => 'publish',
-            'paged'          => 1,
+            'paged'          => $paged,
         ];
         $query = new \WP_Query($args);
-
-        // Kiểm tra xem có còn bài để load không (Tổng bài > Số bài hiển thị)
-        $total_posts = $query->found_posts;
-        $has_more = $total_posts > $ppp;
 ?>
         <section class="recent-news-section" id="onyx-news-<?php echo esc_attr($widget_id); ?>">
             <div class="container">
@@ -81,26 +83,31 @@ class Onyx_News_Grid_Widget extends \Elementor\Widget_Base
                             $this->render_post_card($settings);
                         endwhile;
                         wp_reset_postdata();
+                    else :
+                        echo '<p style="text-align:center; width:100%;">No posts found.</p>';
                     endif;
                     ?>
                 </div>
 
-                <div id="no-results-<?php echo esc_attr($widget_id); ?>" style="display:none; text-align:center; width:100%; padding: 20px; color:#666;">
+                <div id="no-results-<?php echo esc_attr($widget_id); ?>" style="display:none; text-align:center; width:100%; padding: 40px; color:#666;">
                     No results found.
                 </div>
 
-                <?php if ($has_more) : ?>
-                    <div class="news-bottom-action">
-                        <button type="button"
-                            id="view-all-<?php echo esc_attr($widget_id); ?>"
-                            class="btn-static-event btn-load-more"
-                            data-ppp="<?php echo $ppp; ?>"> <span class="icon-box">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
-                            </span>
-                            <span class="btn-text"><?php echo esc_html($settings['btn_text']); ?></span>
-                        </button>
+                <?php if ($query->max_num_pages > 1) : ?>
+                    <div class="onyx-pagination-wrapper">
+                        <?php
+                        echo paginate_links([
+                            'base'         => str_replace(999999999, '%#%', esc_url(get_pagenum_link(999999999))),
+                            'format'       => '?paged=%#%',
+                            'current'      => max(1, $paged),
+                            'total'        => $query->max_num_pages,
+                            'prev_text'    => '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>',
+                            'next_text'    => '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>',
+                            'type'         => 'plain',
+                            'end_size'     => 2,
+                            'mid_size'     => 3
+                        ]);
+                        ?>
                     </div>
                 <?php endif; ?>
             </div>
@@ -112,51 +119,18 @@ class Onyx_News_Grid_Widget extends \Elementor\Widget_Base
                 var gridSelector = '#news-grid-' + widgetID;
                 var inputSelector = '#news-search-' + widgetID;
                 var noResultSelector = '#no-results-' + widgetID;
-                var btnSelector = '#view-all-' + widgetID;
-                var searchTimer; // Biến dùng để delay (Debounce)
+                var paginationSelector = '.onyx-pagination-wrapper';
+                var searchTimer;
 
-                // --- 1. XỬ LÝ NÚT LOAD MORE (GIỮ NGUYÊN) ---
-                $('.btn-load-more').off('click').on('click', function(e) {
-                    e.preventDefault();
-                    var button = $(this);
-                    var $grid = button.closest('.recent-news-section').find('.news-grid');
-                    var initialPosts = button.attr('data-ppp');
-
-                    button.addClass('loading').css('opacity', '0.6');
-                    button.find('.btn-text').text('Loading...');
-
-                    $.ajax({
-                        url: '<?php echo admin_url('admin-ajax.php'); ?>',
-                        type: 'POST',
-                        data: {
-                            action: 'onyx_load_more_posts',
-                            offset: initialPosts,
-                            card_btn_text: '<?php echo esc_js($settings['card_btn_text']); ?>'
-                        },
-                        success: function(response) {
-                            if (response) {
-                                $grid.append(response); // Thêm vào cuối danh sách
-                                button.parent().fadeOut();
-                            } else {
-                                button.find('.btn-text').text('Hết bài');
-                            }
-                        }
-                    });
-                });
-
-                // --- 2. XỬ LÝ TÌM KIẾM TRONG DATABASE (MỚI) ---
+                // XỬ LÝ TÌM KIẾM AJAX
                 $(inputSelector).on('keyup', function() {
                     var keyword = $(this).val();
                     var $grid = $(gridSelector);
-                    var $btnWrapper = $(btnSelector).parent(); // Lấy div bao ngoài nút View All
+                    var $pagination = $(paginationSelector);
 
-                    // Xóa lệnh cũ để tránh gửi quá nhiều request khi gõ nhanh
                     clearTimeout(searchTimer);
 
-                    // Đợi 500ms sau khi ngừng gõ mới bắt đầu tìm (Debounce)
                     searchTimer = setTimeout(function() {
-
-                        // Hiệu ứng đang tải (làm mờ lưới bài viết)
                         $grid.css('opacity', '0.4');
 
                         $.ajax({
@@ -164,58 +138,48 @@ class Onyx_News_Grid_Widget extends \Elementor\Widget_Base
                             type: 'POST',
                             data: {
                                 action: 'onyx_load_more_posts',
-                                keyword: keyword, // Gửi từ khóa lên PHP
+                                keyword: keyword,
                                 card_btn_text: '<?php echo esc_js($settings['card_btn_text']); ?>'
                             },
                             success: function(response) {
-                                // Tắt hiệu ứng đang tải
                                 $grid.css('opacity', '1');
 
                                 if (response.trim() !== '') {
-                                    // CÓ KẾT QUẢ:
-                                    // Thay thế toàn bộ nội dung lưới bằng kết quả tìm kiếm
                                     $grid.html(response);
                                     $(noResultSelector).hide();
-
-                                    // Nếu đang tìm kiếm thì ẩn nút "View All" đi (vì kết quả đã show hết rồi)
+                                    
+                                    // Ẩn phân trang khi đang tìm kiếm
                                     if (keyword.length > 0) {
-                                        $btnWrapper.hide();
+                                        $pagination.hide();
                                     } else {
-                                        // Nếu xóa trắng ô tìm kiếm -> Reload lại trang để reset về ban đầu cho đẹp
-                                        // Hoặc có thể gọi Ajax load lại 6 bài đầu, nhưng reload là cách an toàn nhất
+                                        // Nếu xóa trắng thì reload để khôi phục trạng thái phân trang chuẩn
                                         location.reload();
                                     }
                                 } else {
-                                    // KHÔNG CÓ KẾT QUẢ:
-                                    $grid.empty(); // Xóa trắng lưới
-                                    $(noResultSelector).show(); // Hiện thông báo "No results"
-                                    $btnWrapper.hide(); // Ẩn nút View All
+                                    $grid.empty();
+                                    $(noResultSelector).show();
+                                    $pagination.hide();
                                 }
                             }
                         });
-                    }, 500); // Thời gian chờ 500ms
+                    }, 500);
                 });
             });
         </script>
     <?php
     }
 
-   private function render_post_card($settings)
+    private function render_post_card($settings)
     {
         $post_id = get_the_ID();
-        $thumb_url = ''; // Biến chứa link ảnh cuối cùng
+        $thumb_url = '';
 
         // 1. LẤY ẢNH TỪ ONYX EDITOR (ƯU TIÊN)
         if (class_exists('Onyx_Editor_Database')) {
-            // Gọi hàm lấy dữ liệu (không cần sửa database.php)
             $onyx_article = Onyx_Editor_Database::get_article_by_post_id($post_id);
-
             if ($onyx_article && !empty($onyx_article['hero_image'])) {
                 $hero_data = $onyx_article['hero_image'];
-
-                // TRƯỜNG HỢP 1: Dữ liệu là Mảng (Do database.php đã json_decode)
                 if (is_array($hero_data)) {
-                    // Kiểm tra các key phổ biến chứa link ảnh
                     if (isset($hero_data['url'])) {
                         $thumb_url = $hero_data['url'];
                     } elseif (isset($hero_data['link'])) {
@@ -223,28 +187,24 @@ class Onyx_News_Grid_Widget extends \Elementor\Widget_Base
                     } elseif (isset($hero_data['src'])) {
                         $thumb_url = $hero_data['src'];
                     }
-                } 
-                // TRƯỜNG HỢP 2: Dữ liệu là Chuỗi (Link trực tiếp)
-                elseif (is_string($hero_data)) {
+                } elseif (is_string($hero_data)) {
                     $thumb_url = $hero_data;
                 }
             }
         }
 
-        // 2. FALLBACK (NẾU KHÔNG CÓ ẢNH TRONG ONYX)
-        // Nếu $thumb_url vẫn rỗng -> Lấy Featured Image của WordPress
+        // 2. FALLBACK
         if (empty($thumb_url)) {
             if (has_post_thumbnail()) {
                 $thumb_url = get_the_post_thumbnail_url($post_id, 'medium_large');
             } else {
-                // Nếu không có cả Featured Image -> Lấy ảnh giữ chỗ
                 $thumb_url = class_exists('\Elementor\Utils') 
                     ? \Elementor\Utils::get_placeholder_image_src() 
                     : 'https://via.placeholder.com/600x400/cccccc/969696?text=No+Image';
             }
         }
 
-        // 3. XỬ LÝ NỘI DUNG (Title, Excerpt...)
+        // 3. NỘI DUNG
         $content = get_post_field('post_content', $post_id);
         $word_count = str_word_count(strip_tags($content));
         $reading_time = ceil($word_count / 200);
@@ -259,21 +219,18 @@ class Onyx_News_Grid_Widget extends \Elementor\Widget_Base
         <div class="news-item-card js-news-item">
             <div class="card-thumb">
                 <a href="<?php echo get_permalink($post_id); ?>">
-                    <img src="<?php echo esc_url($thumb_url); ?>"
-                        alt="<?php echo esc_attr(get_the_title($post_id)); ?>"
-                        class="attachment-medium_large size-medium_large wp-post-image"
-                        style="width:100%; height:240px; object-fit:cover; display:block; background-color: #f0f0f0;">
+                    <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php echo esc_attr(get_the_title($post_id)); ?>">
                 </a>
             </div>
             <div class="card-body">
                 <div class="card-meta"><?php echo get_the_date('F j, Y', $post_id); ?> • <?php echo $reading_time; ?> min read</div>
-                <h3 class="card-title js-search-target">
+                <h3 class="card-title">
                     <a href="<?php echo get_permalink($post_id); ?>"><?php echo get_the_title($post_id); ?></a>
                 </h3>
-                <div class="card-desc js-search-target"><?php echo $excerpt; ?></div>
+                <div class="card-desc"><?php echo $excerpt; ?></div>
                 <a href="<?php echo get_permalink($post_id); ?>" class="btn-card-full">
                     <span class="icon-box">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="7" y1="7" x2="17" y2="17"></line>
                             <polyline points="17 7 17 17 7 17"></polyline>
                         </svg>
