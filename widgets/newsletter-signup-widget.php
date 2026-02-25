@@ -1,32 +1,51 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit;
+if (! defined('ABSPATH')) exit;
 
-class Onyx_Newsletter_Widget extends \Elementor\Widget_Base {
+class Onyx_Newsletter_Widget extends \Elementor\Widget_Base
+{
 
-    public function get_name() { return 'onyx_newsletter'; }
-    public function get_title() { return 'Onyx: Newsletter Signup'; }
-    public function get_icon() { return 'eicon-mail'; }
-    public function get_categories() { return [ 'general' ]; }
+    public function get_name()
+    {
+        return 'onyx_newsletter';
+    }
+    public function get_title()
+    {
+        return 'Onyx: Newsletter Signup';
+    }
+    public function get_icon()
+    {
+        return 'eicon-mail';
+    }
+    public function get_categories()
+    {
+        return ['general'];
+    }
 
-    protected function _register_controls() {
-        $this->start_controls_section('content_section', ['label' => 'Nội dung', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
+    protected function _register_controls()
+    {
+        $this->start_controls_section('content_section', ['label' => 'Content', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
 
         $this->add_control('title', [
-            'label' => 'Tiêu đề', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Get the latest news from ONYX'
+            'label' => 'Title',
+            'type' => \Elementor\Controls_Manager::TEXT,
+            'default' => 'Get the latest news from ONYX'
         ]);
 
         $this->add_control('desc', [
-            'label' => 'Mô tả', 'type' => \Elementor\Controls_Manager::TEXTAREA, 'default' => 'Subscribe to our newsletter and be the first to know...'
+            'label' => 'Description',
+            'type' => \Elementor\Controls_Manager::TEXTAREA,
+            'default' => 'Subscribe to our newsletter and be the first to know...'
         ]);
 
-        // Đã xóa ô nhập Shortcode vì không cần nữa
+        // Shortcode input removed as it is no longer needed
 
         $this->end_controls_section();
     }
 
-    protected function render() {
+    protected function render()
+    {
         $settings = $this->get_settings_for_display();
-        ?>
+?>
         <section class="newsletter-section">
             <div class="container newsletter-container">
 
@@ -45,15 +64,15 @@ class Onyx_Newsletter_Widget extends \Elementor\Widget_Base {
                 </div>
 
                 <div class="newsletter-form-wrapper">
-                    <?php 
+                    <?php
                     // GỌI TRỰC TIẾP SHORTCODE TẠI ĐÂY
                     // Lưu ý: Nếu bạn lỡ tay xóa form bên Contact Form 7 thì code này sẽ lỗi
-                    echo do_shortcode( '[mailpoet_form id="1"]' ); 
+                    echo do_shortcode('[mailpoet_form id="1"]');
                     ?>
                 </div>
 
             </div>
         </section>
-        <?php
+<?php
     }
 }

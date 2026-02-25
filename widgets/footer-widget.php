@@ -1,36 +1,50 @@
 <?php
-if ( ! class_exists( 'Onyx_Footer_Widget' ) ) {
+if (! class_exists('Onyx_Footer_Widget')) {
 
-    class Onyx_Footer_Widget extends \Elementor\Widget_Base {
+    class Onyx_Footer_Widget extends \Elementor\Widget_Base
+    {
 
-        public function get_name() { return 'onyx_footer_widget'; }
-        public function get_title() { return 'Onyx Footer Custom'; }
-        public function get_icon() { return 'eicon-footer'; }
-        public function get_categories() { return [ 'general' ]; }
+        public function get_name()
+        {
+            return 'onyx_footer_widget';
+        }
+        public function get_title()
+        {
+            return 'Onyx Footer Custom';
+        }
+        public function get_icon()
+        {
+            return 'eicon-footer';
+        }
+        public function get_categories()
+        {
+            return ['general'];
+        }
 
-        protected function register_controls() {
-            // --- TAB NỘI DUNG ---
-            $this->start_controls_section('section_content', ['label' => 'Nội dung Footer']);
+        protected function register_controls()
+        {
+            // --- CONTENT TAB ---
+            $this->start_controls_section('section_content', ['label' => 'Footer Content']);
 
             // 1. Copyright Text
             $this->add_control('copyright_text', [
-                'label' => 'Dòng bản quyền',
+                'label' => 'Copyright Text',
                 'type' => \Elementor\Controls_Manager::TEXT,
                 'default' => 'ONYX. All rights reserved',
-                'description' => 'Năm hiện tại ('.date('Y').') sẽ tự động hiển thị phía trước.',
+                'description' => 'Current year (' . date('Y') . ') will be automatically displayed before this text.',
             ]);
 
             $this->add_control('hr_1', ['type' => \Elementor\Controls_Manager::DIVIDER]);
 
-            // 2. Chọn Menu
+            // 2. Select Menu
             $menus = wp_get_nav_menus();
-            $menu_options = [ '' => 'Mặc định (Footer Location)' ];
-            foreach ( $menus as $menu ) {
-                $menu_options[ $menu->slug ] = $menu->name;
+            $menu_options = ['' => 'Default (Footer Location)'];
+            foreach ($menus as $menu) {
+                $menu_options[$menu->slug] = $menu->name;
             }
 
             $this->add_control('selected_menu', [
-                'label' => 'Chọn Menu hiển thị',
+                'label' => 'Select Menu',
                 'type' => \Elementor\Controls_Manager::SELECT,
                 'options' => $menu_options,
                 'default' => '',
@@ -38,13 +52,13 @@ if ( ! class_exists( 'Onyx_Footer_Widget' ) ) {
 
             $this->end_controls_section();
 
-            // --- TAB MẠNG XÃ HỘI (REPEATER) ---
-            $this->start_controls_section('section_socials', ['label' => 'Mạng xã hội']);
+            // --- SOCIAL NETWORKS TAB (REPEATER) ---
+            $this->start_controls_section('section_socials', ['label' => 'Social Networks']);
 
             $repeater = new \Elementor\Repeater();
 
             $repeater->add_control('social_name', [
-                'label' => 'Tên (để SEO)',
+                'label' => 'Name (for SEO)',
                 'type' => \Elementor\Controls_Manager::TEXT,
                 'default' => 'Social Network',
             ]);
@@ -62,11 +76,11 @@ if ( ! class_exists( 'Onyx_Footer_Widget' ) ) {
                 'label' => 'Link',
                 'type' => \Elementor\Controls_Manager::URL,
                 'placeholder' => 'https://...',
-                'default' => [ 'url' => '#' ],
+                'default' => ['url' => '#'],
             ]);
 
             $this->add_control('social_list', [
-                'label' => 'Danh sách Social',
+                'label' => 'Social Networks List',
                 'type' => \Elementor\Controls_Manager::REPEATER,
                 'fields' => $repeater->get_controls(),
                 'default' => [
@@ -92,25 +106,26 @@ if ( ! class_exists( 'Onyx_Footer_Widget' ) ) {
             $this->end_controls_section();
         }
 
-        protected function render() {
+        protected function render()
+        {
             $settings = $this->get_settings_for_display();
-            ?>
+?>
 
             <footer class="site-footer">
                 <div class="footer-container">
-                    
+
                     <div class="footer-copyright">
                         <p>&copy; <?php echo date('Y'); ?> <?php echo esc_html($settings['copyright_text']); ?></p>
                     </div>
 
                     <div class="footer-socials">
-                        <?php foreach ( $settings['social_list'] as $item ) : ?>
-                            <?php 
+                        <?php foreach ($settings['social_list'] as $item) : ?>
+                            <?php
                             $target = $item['social_link']['is_external'] ? ' target="_blank"' : '';
                             $nofollow = $item['social_link']['nofollow'] ? ' rel="nofollow"' : '';
                             ?>
-                            <a href="<?php echo esc_url($item['social_link']['url']); ?>" class="social-link" aria-label="<?php echo esc_attr($item['social_name']); ?>"<?php echo $target . $nofollow; ?>>
-                                <?php \Elementor\Icons_Manager::render_icon( $item['social_icon'], [ 'aria-hidden' => 'true' ] ); ?>
+                            <a href="<?php echo esc_url($item['social_link']['url']); ?>" class="social-link" aria-label="<?php echo esc_attr($item['social_name']); ?>" <?php echo $target . $nofollow; ?>>
+                                <?php \Elementor\Icons_Manager::render_icon($item['social_icon'], ['aria-hidden' => 'true']); ?>
                             </a>
                         <?php endforeach; ?>
                     </div>
@@ -124,11 +139,11 @@ if ( ! class_exists( 'Onyx_Footer_Widget' ) ) {
                             'fallback_cb'    => false, // Không hiện menu rác nếu không tìm thấy
                         ];
 
-                        if ( ! empty( $settings['selected_menu'] ) ) {
+                        if (! empty($settings['selected_menu'])) {
                             $menu_args['menu'] = $settings['selected_menu'];
                             wp_nav_menu($menu_args);
                         } else {
-                            if ( has_nav_menu('footer') ) {
+                            if (has_nav_menu('footer')) {
                                 $menu_args['theme_location'] = 'footer';
                                 wp_nav_menu($menu_args);
                             } else {
@@ -145,7 +160,7 @@ if ( ! class_exists( 'Onyx_Footer_Widget' ) ) {
 
                 </div>
             </footer>
-            <?php
+<?php
         }
     }
 }

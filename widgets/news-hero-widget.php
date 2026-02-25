@@ -23,30 +23,30 @@ class Onyx_News_Hero_Widget extends \Elementor\Widget_Base
 
     protected function _register_controls()
     {
-        $this->start_controls_section('content_section', ['label' => 'Cấu hình bài viết', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
+        $this->start_controls_section('content_section', ['label' => 'Post Configuration', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
 
         $this->add_control('sec_title', [
-            'label' => 'Tiêu đề Section',
+            'label' => 'Section Title',
             'type' => \Elementor\Controls_Manager::TEXT,
             'default' => 'Latest News'
         ]);
 
-        // Cho phép chọn chuyên mục cụ thể
+        // Allow selecting a specific category
         $categories = get_categories();
-        $options = ['0' => 'Tất cả chuyên mục'];
+        $options = ['0' => 'All Categories'];
         foreach ($categories as $category) {
             $options[$category->term_id] = $category->name;
         }
 
         $this->add_control('post_category', [
-            'label' => 'Chọn chuyên mục',
+            'label' => 'Select Category',
             'type' => \Elementor\Controls_Manager::SELECT,
             'options' => $options,
             'default' => '0',
         ]);
 
         $this->add_control('btn_text', [
-            'label' => 'Chữ trên Nút',
+            'label' => 'Button Text',
             'type' => \Elementor\Controls_Manager::TEXT,
             'default' => 'Read Full Article',
             'separator' => 'before',
@@ -54,7 +54,6 @@ class Onyx_News_Hero_Widget extends \Elementor\Widget_Base
 
         $this->end_controls_section();
     }
-
     protected function render()
     {
         $settings = $this->get_settings_for_display();

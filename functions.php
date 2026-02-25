@@ -204,19 +204,19 @@ function register_custom_elementor_widgets($widgets_manager)
         require_once($file_contact);
         $widgets_manager->register(new \Onyx_Contact_Grid_Widget());
     }
-    $file_contact = get_template_directory() . '/widgets/news-hero-widget.php';
-    if (file_exists($file_contact)) {
-        require_once($file_contact);
+    $file_news = get_template_directory() . '/widgets/news-hero-widget.php';
+    if (file_exists($file_news)) {
+        require_once($file_news);
         $widgets_manager->register(new \Onyx_News_Hero_Widget());
     }
-    $file_contact = get_template_directory() . '/widgets/news-grid-widget.php';
-    if (file_exists($file_contact)) {
-        require_once($file_contact);
+    $file_news = get_template_directory() . '/widgets/news-grid-widget.php';
+    if (file_exists($file_news)) {
+        require_once($file_news);
         $widgets_manager->register(new \Onyx_News_Grid_Widget());
     }
-    $file_contact = get_template_directory() . '/widgets/newsletter-signup-widget.php';
-    if (file_exists($file_contact)) {
-        require_once($file_contact);
+    $file_news = get_template_directory() . '/widgets/newsletter-signup-widget.php';
+    if (file_exists($file_news)) {
+        require_once($file_news);
         $widgets_manager->register(new \Onyx_Newsletter_Widget());
     }
     $file_header = get_template_directory() . '/widgets/header-widget.php';

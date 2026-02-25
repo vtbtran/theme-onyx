@@ -8,52 +8,55 @@ class Onyx_Service_Grid_Widget extends \Elementor\Widget_Base {
     public function get_icon() { return 'eicon-gallery-grid'; }
     public function get_categories() { return [ 'general' ]; }
 
-    protected function _register_controls() {
+protected function _register_controls() {
 
-        // --- TIÊU ĐỀ ---
+        // --- HEADER SECTION ---
         $this->start_controls_section('section_header', ['label' => 'Header Section', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
         $this->add_control('sec_title', [
-            'label' => 'Tiêu đề Section', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Our Service'
+            'label' => 'Section Title', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Our Service'
         ]);
         $this->end_controls_section();
 
-        // --- DANH SÁCH DỊCH VỤ (REPEATER) ---
-        $this->start_controls_section('section_services', ['label' => 'Danh sách Dịch vụ', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
+        // --- SERVICES LIST (REPEATER) ---
+        $this->start_controls_section('section_services', ['label' => 'Services List', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
         
         $repeater = new \Elementor\Repeater();
 
         $repeater->add_control('img', [
-            'label' => 'Ảnh', 'type' => \Elementor\Controls_Manager::MEDIA, 'default' => ['url' => \Elementor\Utils::get_placeholder_image_src()]
+            'label' => 'Image', 'type' => \Elementor\Controls_Manager::MEDIA, 'default' => ['url' => \Elementor\Utils::get_placeholder_image_src()]
         ]);
         $repeater->add_control('tag', [
-            'label' => 'Tag (VD: Technology)', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Technology'
+            'label' => 'Tag (e.g., Technology)', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Technology'
         ]);
         $repeater->add_control('tag_color_class', [
-            'label' => 'Class màu Tag (VD: tag-yellow)', 'type' => \Elementor\Controls_Manager::TEXT, 'description' => 'Để trống hoặc nhập "tag-yellow" nếu muốn màu vàng.', 'default' => ''
+            'label' => 'Tag Color Class (e.g., tag-yellow)', 
+            'type' => \Elementor\Controls_Manager::TEXT, 
+            'description' => 'Leave empty or enter "tag-yellow" for yellow color scheme.', 
+            'default' => ''
         ]);
         $repeater->add_control('title', [
-            'label' => 'Tên Dịch vụ', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'AI Camera Integration'
+            'label' => 'Service Name', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'AI Camera Integration'
         ]);
         $repeater->add_control('desc', [
-            'label' => 'Mô tả ngắn', 'type' => \Elementor\Controls_Manager::TEXTAREA, 'default' => 'Complete AI camera system setup...'
+            'label' => 'Short Description', 'type' => \Elementor\Controls_Manager::TEXTAREA, 'default' => 'Complete AI camera system setup...'
         ]);
         $repeater->add_control('features', [
-            'label' => 'Danh sách tính năng (Mỗi dòng 1 cái)', 
+            'label' => 'Features List (One per line)', 
             'type' => \Elementor\Controls_Manager::WYSIWYG, 
             'default' => '<ul><li>Custom Installation</li><li>System Configuration</li></ul>'
         ]);
         $repeater->add_control('price', [
-            'label' => 'Giá (VD: Starting at $2,999)', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Starting at $2,999'
+            'label' => 'Price (e.g., Starting at $2,999)', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Starting at $2,999'
         ]);
         $repeater->add_control('duration', [
-            'label' => 'Thời gian (VD: 2-4 weeks)', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => '2-4 weeks'
+            'label' => 'Duration (e.g., 2-4 weeks)', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => '2-4 weeks'
         ]);
         $repeater->add_control('link', [
-            'label' => 'Link nút Learn More', 'type' => \Elementor\Controls_Manager::URL, 'default' => ['url' => '#']
+            'label' => 'Learn More Link', 'type' => \Elementor\Controls_Manager::URL, 'default' => ['url' => '#']
         ]);
 
         $this->add_control('services_list', [
-            'label' => 'Các thẻ Dịch vụ',
+            'label' => 'Service Cards',
             'type' => \Elementor\Controls_Manager::REPEATER,
             'fields' => $repeater->get_controls(),
             'default' => [
@@ -65,13 +68,13 @@ class Onyx_Service_Grid_Widget extends \Elementor\Widget_Base {
         ]);
         $this->end_controls_section();
 
-        // --- NÚT DƯỚI CÙNG ---
-        $this->start_controls_section('section_footer_btn', ['label' => 'Nút dưới cùng', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
+        // --- BOTTOM BUTTON ---
+        $this->start_controls_section('section_footer_btn', ['label' => 'Bottom Button', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
         $this->add_control('btn_text', [
-            'label' => 'Chữ trên nút', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'View Product'
+            'label' => 'Button Text', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'View Product'
         ]);
         $this->add_control('btn_link', [
-            'label' => 'Link nút', 'type' => \Elementor\Controls_Manager::URL, 'default' => ['url' => '/products']
+            'label' => 'Button Link', 'type' => \Elementor\Controls_Manager::URL, 'default' => ['url' => '/products']
         ]);
         $this->end_controls_section();
     }

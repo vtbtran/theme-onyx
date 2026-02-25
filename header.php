@@ -19,10 +19,7 @@
   ?>
 
   <?php
-  // --- BƯỚC QUAN TRỌNG: CẤU HÌNH HEADER ---
-  
-  // 1. Nhập ID của Elementor Header Template vào đây (Lấy từ URL post=xxxx)
-  // Nếu chưa có hoặc muốn dùng code tay thì để số 0.
+
   $elementor_header_id = 3365; 
 
 

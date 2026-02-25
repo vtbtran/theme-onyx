@@ -23,21 +23,20 @@ class Onyx_News_Grid_Widget extends \Elementor\Widget_Base
         return ['general'];
     }
 
-    protected function _register_controls()
+   protected function _register_controls()
     {
         // Header & Search
         $this->start_controls_section('sec_header', ['label' => 'Header & Search', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
-        $this->add_control('sec_title', ['label' => 'Tiêu đề Section', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Recent News']);
-        $this->add_control('search_placeholder', ['label' => 'Placeholder Tìm kiếm', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Search news articles...']);
+        $this->add_control('sec_title', ['label' => 'Section Title', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Recent News']);
+        $this->add_control('search_placeholder', ['label' => 'Search Placeholder', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Search news articles...']);
         $this->end_controls_section();
 
         // Query Settings
-        $this->start_controls_section('sec_query', ['label' => 'Cấu hình bài viết', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
-        $this->add_control('posts_per_page', ['label' => 'Số bài mỗi trang', 'type' => \Elementor\Controls_Manager::NUMBER, 'default' => 6]);
-        $this->add_control('card_btn_text', ['label' => 'Chữ nút (Mỗi thẻ)', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Read More']);
+        $this->start_controls_section('sec_query', ['label' => 'Post Configuration', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
+        $this->add_control('posts_per_page', ['label' => 'Posts Per Page', 'type' => \Elementor\Controls_Manager::NUMBER, 'default' => 6]);
+        $this->add_control('card_btn_text', ['label' => 'Button Text (Per Card)', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Read More']);
         $this->end_controls_section();
-
-        // (Phần Footer Button "View All" đã được loại bỏ vì thay bằng Phân trang)
+        
     }
 
     protected function render()

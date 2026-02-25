@@ -23,26 +23,25 @@
 
         protected function _register_controls()
         {
-
-            // --- TAB 1: DANH SÁCH THẺ (REPEATER) ---
-            $this->start_controls_section('section_cards', ['label' => 'Các thẻ (Mission/Vision)', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
+            // --- TAB 1: CARDS LIST (REPEATER) ---
+            $this->start_controls_section('section_cards', ['label' => 'Cards (Mission/Vision)', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
 
             $repeater = new \Elementor\Repeater();
 
             $repeater->add_control('card_title', [
-                'label' => 'Tiêu đề',
+                'label' => 'Title',
                 'type' => \Elementor\Controls_Manager::TEXT,
                 'default' => 'Our Mission'
             ]);
 
             $repeater->add_control('card_desc', [
-                'label' => 'Mô tả',
+                'label' => 'Description',
                 'type' => \Elementor\Controls_Manager::TEXTAREA,
                 'default' => 'To democratize access...'
             ]);
 
             $this->add_control('cards_list', [
-                'label' => 'Danh sách thẻ',
+                'label' => 'Cards List',
                 'type' => \Elementor\Controls_Manager::REPEATER,
                 'fields' => $repeater->get_controls(),
                 'default' => [
@@ -60,24 +59,23 @@
 
             $this->end_controls_section();
 
-            // --- TAB 2: NÚT BẤM DƯỚI CÙNG ---
-            $this->start_controls_section('section_button', ['label' => 'Nút bấm (Core Values)', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
+            // --- TAB 2: BOTTOM BUTTON ---
+            $this->start_controls_section('section_button', ['label' => 'Button (Core Values)', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
 
             $this->add_control('btn_text', [
-                'label' => 'Chữ trên nút',
+                'label' => 'Button Text',
                 'type' => \Elementor\Controls_Manager::TEXT,
                 'default' => 'Our Core Values'
             ]);
 
             $this->add_control('btn_link', [
-                'label' => 'Link nút',
+                'label' => 'Button Link',
                 'type' => \Elementor\Controls_Manager::URL,
                 'default' => ['url' => '#']
             ]);
 
             $this->end_controls_section();
         }
-
         protected function render()
         {
             $settings = $this->get_settings_for_display();

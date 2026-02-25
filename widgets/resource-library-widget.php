@@ -21,46 +21,46 @@ class Onyx_Resource_Library_Widget extends \Elementor\Widget_Base
         return ['general'];
     }
 
-    protected function _register_controls()
+protected function _register_controls()
     {
 
         // --- TAB 1: HERO SECTION ---
-        $this->start_controls_section('sec_hero', ['label' => 'Phần Hero & Search', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
-        $this->add_control('hero_title', ['label' => 'Tiêu đề Hero', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Learning Resources']);
-        $this->add_control('hero_subtitle', ['label' => 'Mô tả Hero', 'type' => \Elementor\Controls_Manager::WYSIWYG, 'default' => '<b>Access our comprehensive library...</b>']);
-        $this->add_control('search_placeholder', ['label' => 'Placeholder Tìm kiếm', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Search Resources']);
+        $this->start_controls_section('sec_hero', ['label' => 'Hero & Search Section', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
+        $this->add_control('hero_title', ['label' => 'Hero Title', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Learning Resources']);
+        $this->add_control('hero_subtitle', ['label' => 'Hero Description', 'type' => \Elementor\Controls_Manager::WYSIWYG, 'default' => '<b>Access our comprehensive library...</b>']);
+        $this->add_control('search_placeholder', ['label' => 'Search Placeholder', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Search Resources']);
 
         $repeater_filters = new \Elementor\Repeater();
-        $repeater_filters->add_control('filter_label', ['label' => 'Tên nút', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Technology']);
-        $repeater_filters->add_control('filter_slug', ['label' => 'Mã lọc (Slug)', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'tech']);
-        $this->add_control('filters_list', ['label' => 'Danh sách Bộ lọc', 'type' => \Elementor\Controls_Manager::REPEATER, 'fields' => $repeater_filters->get_controls(), 'default' => [['filter_label' => 'Technology', 'filter_slug' => 'technology']], 'title_field' => '{{{ filter_label }}}']);
+        $repeater_filters->add_control('filter_label', ['label' => 'Button Label', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Technology']);
+        $repeater_filters->add_control('filter_slug', ['label' => 'Filter Slug', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'tech']);
+        $this->add_control('filters_list', ['label' => 'Filters List', 'type' => \Elementor\Controls_Manager::REPEATER, 'fields' => $repeater_filters->get_controls(), 'default' => [['filter_label' => 'Technology', 'filter_slug' => 'technology']], 'title_field' => '{{{ filter_label }}}']);
         $this->end_controls_section();
 
         // --- TAB 2: RESOURCE GRID ---
-        $this->start_controls_section('sec_grid', ['label' => 'Danh sách Tài liệu', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
-        $this->add_control('grid_heading', ['label' => 'Tiêu đề lưới', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Featured Resources']);
+        $this->start_controls_section('sec_grid', ['label' => 'Resources List', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
+        $this->add_control('grid_heading', ['label' => 'Grid Title', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Featured Resources']);
 
         $repeater_items = new \Elementor\Repeater();
-        $repeater_items->add_control('res_img', ['label' => 'Ảnh bìa', 'type' => \Elementor\Controls_Manager::MEDIA, 'default' => ['url' => \Elementor\Utils::get_placeholder_image_src()]]);
-        $repeater_items->add_control('res_cat_slug', ['label' => 'Mã lọc (Slug)', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'technology']);
-        $repeater_items->add_control('res_cat_label', ['label' => 'Tên Tag', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Technology']);
-        $repeater_items->add_control('res_type', ['label' => 'Loại file (Góc phải)', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Guide']);
-        $repeater_items->add_control('res_title', ['label' => 'Tiêu đề bài', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'AI Camera Setup Guide']);
-        $repeater_items->add_control('res_desc', ['label' => 'Mô tả ngắn', 'type' => \Elementor\Controls_Manager::TEXTAREA, 'default' => 'Complete step-by-step guide...']);
-        $repeater_items->add_control('res_file_info', ['label' => 'Thông tin file', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'PDF • 2.5 MB']);
+        $repeater_items->add_control('res_img', ['label' => 'Cover Image', 'type' => \Elementor\Controls_Manager::MEDIA, 'default' => ['url' => \Elementor\Utils::get_placeholder_image_src()]]);
+        $repeater_items->add_control('res_cat_slug', ['label' => 'Filter Slug', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'technology']);
+        $repeater_items->add_control('res_cat_label', ['label' => 'Tag Label', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Technology']);
+        $repeater_items->add_control('res_type', ['label' => 'File Type (Right Corner)', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Guide']);
+        $repeater_items->add_control('res_title', ['label' => 'Resource Title', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'AI Camera Setup Guide']);
+        $repeater_items->add_control('res_desc', ['label' => 'Short Description', 'type' => \Elementor\Controls_Manager::TEXTAREA, 'default' => 'Complete step-by-step guide...']);
+        $repeater_items->add_control('res_file_info', ['label' => 'File Information', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'PDF • 2.5 MB']);
 
-        // --- NÂNG CẤP: THÊM CONTROL CHỮ NÚT ---
+        // --- UPGRADE: BUTTON TEXT CONTROL ---
         $repeater_items->add_control('res_btn_text', [
-            'label' => 'Chữ trên nút',
+            'label' => 'Button Text',
             'type' => \Elementor\Controls_Manager::TEXT,
-            'default' => 'Download', // Mặc định là Download
-            'placeholder' => 'VD: Download, Xem ngay...'
+            'default' => 'Download', 
+            'placeholder' => 'e.g., Download, View Now...'
         ]);
 
-        $repeater_items->add_control('res_link', ['label' => 'Link tải', 'type' => \Elementor\Controls_Manager::URL, 'default' => ['url' => '#']]);
+        $repeater_items->add_control('res_link', ['label' => 'Download Link', 'type' => \Elementor\Controls_Manager::URL, 'default' => ['url' => '#']]);
 
         $this->add_control('items_list', [
-            'label' => 'Các thẻ tài liệu',
+            'label' => 'Resource Cards',
             'type' => \Elementor\Controls_Manager::REPEATER,
             'fields' => $repeater_items->get_controls(),
             'default' => [
@@ -69,8 +69,8 @@ class Onyx_Resource_Library_Widget extends \Elementor\Widget_Base
             'title_field' => '{{{ res_title }}}',
         ]);
 
-        $this->add_control('view_news_text', ['label' => 'Chữ nút dưới cùng', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'View News']);
-        $this->add_control('view_news_link', ['label' => 'Link nút dưới cùng', 'type' => \Elementor\Controls_Manager::URL, 'default' => ['url' => '#']]);
+        $this->add_control('view_news_text', ['label' => 'Bottom Button Text', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'View News']);
+        $this->add_control('view_news_link', ['label' => 'Bottom Button Link', 'type' => \Elementor\Controls_Manager::URL, 'default' => ['url' => '#']]);
         $this->end_controls_section();
     }
 

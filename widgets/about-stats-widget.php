@@ -4,43 +4,62 @@ if (! defined('ABSPATH')) exit;
 class Onyx_About_Stats_Widget extends \Elementor\Widget_Base
 {
 
-    public function get_name() { return 'onyx_about_stats'; }
-    public function get_title() { return 'Onyx: About & Stats'; }
-    public function get_icon() { return 'eicon-info-box'; }
-    public function get_categories() { return ['general']; }
+    public function get_name()
+    {
+        return 'onyx_about_stats';
+    }
+    public function get_title()
+    {
+        return 'Onyx: About & Stats';
+    }
+    public function get_icon()
+    {
+        return 'eicon-info-box';
+    }
+    public function get_categories()
+    {
+        return ['general'];
+    }
 
     protected function _register_controls()
     {
-        // --- CỘT TRÁI: NỘI DUNG ---
-        $this->start_controls_section('section_left_content', ['label' => 'Nội dung (About)', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
+        // --- LEFT COLUMN: CONTENT ---
+        $this->start_controls_section('section_left_content', ['label' => 'Content (About)', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
 
         $this->add_control('title', [
-            'label' => 'Tiêu đề lớn', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'About Us'
+            'label' => 'Main Title',
+            'type' => \Elementor\Controls_Manager::TEXT,
+            'default' => 'About Us'
         ]);
 
         $this->add_control('description', [
-            'label' => 'Mô tả', 'type' => \Elementor\Controls_Manager::WYSIWYG, 
+            'label' => 'Description',
+            'type' => \Elementor\Controls_Manager::WYSIWYG,
             'default' => '<strong>Pioneering Mission in Technology & Education.</strong> We connect advanced AI technology with STEM education...'
         ]);
 
         $this->add_control('btn_text', [
-            'label' => 'Chữ trên nút', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Meet Our Leader Team'
+            'label' => 'Button Text',
+            'type' => \Elementor\Controls_Manager::TEXT,
+            'default' => 'Meet Our Leader Team'
         ]);
 
         $this->add_control('btn_link', [
-            'label' => 'Link nút', 'type' => \Elementor\Controls_Manager::URL, 'default' => ['url' => '#']
+            'label' => 'Button Link',
+            'type' => \Elementor\Controls_Manager::URL,
+            'default' => ['url' => '#']
         ]);
 
         $this->end_controls_section();
 
-        // --- CỘT PHẢI: THỐNG KÊ ---
-        $this->start_controls_section('section_right_stats', ['label' => 'Thống kê (Stats)', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
+        // --- RIGHT COLUMN: STATISTICS ---
+        $this->start_controls_section('section_right_stats', ['label' => 'Statistics (Stats)', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
 
         $repeater = new \Elementor\Repeater();
 
-        // 1. Control chọn Ảnh (Đã sửa đúng)
+        // 1. Image Control
         $repeater->add_control('stat_image', [
-            'label' => 'Hình ảnh minh họa',
+            'label' => 'Image',
             'type' => \Elementor\Controls_Manager::MEDIA,
             'default' => [
                 'url' => \Elementor\Utils::get_placeholder_image_src(),
@@ -48,18 +67,22 @@ class Onyx_About_Stats_Widget extends \Elementor\Widget_Base
         ]);
 
         $repeater->add_control('stat_number', [
-            'label' => 'Con số', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => '50K+'
+            'label' => 'Number',
+            'type' => \Elementor\Controls_Manager::TEXT,
+            'default' => '50K+'
         ]);
 
         $repeater->add_control('stat_label', [
-            'label' => 'Nhãn mô tả', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => 'Students Educated'
+            'label' => 'Label',
+            'type' => \Elementor\Controls_Manager::TEXT,
+            'default' => 'Students Educated'
         ]);
 
         $this->add_control('stats_list', [
-            'label' => 'Danh sách thẻ',
+            'label' => 'Stats List',
             'type' => \Elementor\Controls_Manager::REPEATER,
             'fields' => $repeater->get_controls(),
-            // Cập nhật lại default để có ảnh placeholder
+            // Update default to include placeholder image
             'default' => [
                 ['stat_number' => '50K+', 'stat_label' => 'Students Educated', 'stat_image' => ['url' => \Elementor\Utils::get_placeholder_image_src()]],
                 ['stat_number' => '200+', 'stat_label' => 'Schools Partnered', 'stat_image' => ['url' => \Elementor\Utils::get_placeholder_image_src()]],
@@ -71,11 +94,10 @@ class Onyx_About_Stats_Widget extends \Elementor\Widget_Base
 
         $this->end_controls_section();
     }
-
     protected function render()
     {
         $settings = $this->get_settings_for_display();
-        ?>
+?>
         <section class="about-us-section">
             <div class="container about-container">
 
@@ -106,23 +128,24 @@ class Onyx_About_Stats_Widget extends \Elementor\Widget_Base
                 <div class="about-stats-grid">
                     <?php if ($settings['stats_list']) : foreach ($settings['stats_list'] as $item) : ?>
 
-                        <div class="stat-card animate-on-scroll delay-100">
-                            <div class="stat-icon-wrapper">
-                                <?php if ( ! empty( $item['stat_image']['url'] ) ) : ?>
-                                    <img src="<?php echo esc_url( $item['stat_image']['url'] ); ?>" 
-                                         alt="<?php echo esc_attr( $item['stat_label'] ); ?>" 
-                                         class="stat-img-custom">
-                                <?php endif; ?>
+                            <div class="stat-card animate-on-scroll delay-100">
+                                <div class="stat-icon-wrapper">
+                                    <?php if (! empty($item['stat_image']['url'])) : ?>
+                                        <img src="<?php echo esc_url($item['stat_image']['url']); ?>"
+                                            alt="<?php echo esc_attr($item['stat_label']); ?>"
+                                            class="stat-img-custom">
+                                    <?php endif; ?>
+                                </div>
+                                <div class="stat-number"><?php echo esc_html($item['stat_number']); ?></div>
+                                <div class="stat-label"><?php echo esc_html($item['stat_label']); ?></div>
                             </div>
-                            <div class="stat-number"><?php echo esc_html($item['stat_number']); ?></div>
-                            <div class="stat-label"><?php echo esc_html($item['stat_label']); ?></div>
-                        </div>
 
-                    <?php endforeach; endif; ?>
+                    <?php endforeach;
+                    endif; ?>
                 </div>
 
             </div>
         </section>
-        <?php
+<?php
     }
 }

@@ -22,51 +22,51 @@ class Onyx_Product_Slider_Widget extends \Elementor\Widget_Base
 
     protected function _register_controls()
     {
-        // --- CONTENT TAB: Cấu hình sản phẩm ---
-        $this->start_controls_section('content_section', ['label' => 'Cấu hình sản phẩm', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
+        // --- CONTENT TAB: Product Configuration ---
+        $this->start_controls_section('content_section', ['label' => 'Product Configuration', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
 
         $this->add_control('sec_title', [
-            'label' => 'Tiêu đề Section',
+            'label' => 'Section Title',
             'type' => \Elementor\Controls_Manager::TEXT,
             'default' => 'Product'
         ]);
 
         $this->add_control('posts_per_page', [
-            'label' => 'Số lượng hiển thị',
+            'label' => 'Number of Posts',
             'type' => \Elementor\Controls_Manager::NUMBER,
             'default' => 6,
         ]);
 
         $this->end_controls_section();
 
-        // --- CONTENT TAB: Nút Footer ---
-        $this->start_controls_section('footer_btn', ['label' => 'Nút Footer', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
+        // --- CONTENT TAB: Footer Button ---
+        $this->start_controls_section('footer_btn', ['label' => 'Footer Button', 'tab' => \Elementor\Controls_Manager::TAB_CONTENT]);
 
         $this->add_control('show_ft_btn', [
-            'label' => 'Hiển thị nút',
+            'label' => 'Show Button',
             'type' => \Elementor\Controls_Manager::SWITCHER,
             'default' => 'yes',
         ]);
 
         $this->add_control('ft_btn_text', [
-            'label' => 'Chữ',
+            'label' => 'Button Text',
             'type' => \Elementor\Controls_Manager::TEXT,
             'default' => 'View our Process'
         ]);
 
         $this->add_control('ft_btn_link', [
-            'label' => 'Link',
+            'label' => 'Button Link',
             'type' => \Elementor\Controls_Manager::URL,
             'default' => ['url' => '#process', 'is_external' => false, 'nofollow' => false],
         ]);
 
         $this->end_controls_section();
 
-        // --- STYLE TAB: Tùy chỉnh Nút ---
-        $this->start_controls_section('style_footer_btn', ['label' => 'Style Nút Process', 'tab' => \Elementor\Controls_Manager::TAB_STYLE]);
+        // --- STYLE TAB: Button Style ---
+        $this->start_controls_section('style_footer_btn', ['label' => 'Process Button Style', 'tab' => \Elementor\Controls_Manager::TAB_STYLE]);
 
         $this->add_responsive_control('ft_btn_margin_top', [
-            'label' => 'Khoảng cách trên (Margin Top)',
+            'label' => 'Margin Top',
             'type' => \Elementor\Controls_Manager::SLIDER,
             'size_units' => ['px', '%'],
             'range' => ['px' => ['min' => 0, 'max' => 100]],
